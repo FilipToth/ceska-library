@@ -1,0 +1,28 @@
+.Button-Div {
+    /* Search-Btn */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+
+    width: 35px;
+    height: 35px;
+
+    background: #00F27E;
+    box-shadow: 1px 1px 20px 6px rgba(0, 0, 0, 0.13);
+    border-radius: 6px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.Image {
+    width: 33px;
+    height: 33px;
+
+}
