@@ -1,6 +1,6 @@
 import './SearchSuggestion.css'
 
-function SearchSuggestion() {
+const SearchSuggestion = () => {
     return (
         <div className='Suggestion'>
             <p1 className='Suggestion-Text'>Suggestion...</p1>

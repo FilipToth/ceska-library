@@ -1,8 +1,8 @@
 import './SearchButton.css';
 
-function SearchButton() {
+const SearchButton = () => {
 
-    function btnClick() {
+    const btnClick = () => {
         console.log('test');
     }
 

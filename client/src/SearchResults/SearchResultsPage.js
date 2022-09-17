@@ -1,6 +1,6 @@
 import './SearchResults.css'
 
-function SearchResultsPage() {
+const SearchResultsPage = () => {
     return (
         <div>
             <p1>FuckTheCustomer!</p1>

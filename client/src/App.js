@@ -3,8 +3,7 @@ import SearchResultsPage from './SearchResults/SearchResultsPage';
 import './App.css'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom' 
 
-function App() {
-    
+const App = () => {
     return (
         <Router>
             <div className='App-Container'>
