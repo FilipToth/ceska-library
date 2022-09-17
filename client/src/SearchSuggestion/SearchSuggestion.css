@@ -1,0 +1,45 @@
+.Suggestion {
+    /* suggestion-btn */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 11px;
+    gap: 10px;
+
+    width: 540px;
+    height: 23px;
+
+    /* Primary */
+    background: linear-gradient(0deg, #5C8A74, #5C8A74), #FFFFFF;
+    border-radius: 10px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Suggestion-Text {
+    /* Suggestion... */
+
+    width: 88px;
+    height: 14px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
