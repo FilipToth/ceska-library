@@ -1,9 +1,11 @@
 import './SearchButton.css';
+import { useHistory } from "react-router-dom";
 
 const SearchButton = () => {
 
+    const history = useHistory();
     const btnClick = () => {
-        console.log('test');
+        history.push(`/results?search=${'Lorem Ipsum'}`);
     }
 
     return (

@@ -6,16 +6,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 const App = () => {
     return (
         <Router>
-            <div className='App-Container'>
-                <Switch>
-                    <Route exact path='/'>
-                        <SearchPage />
-                    </Route>
-                    <Route path='/results'>
-                        <SearchResultsPage />
-                    </Route>
-                </Switch>
-            </div>
+            <Switch>
+                <Route exact path='/'>
+                    <SearchPage />
+                </Route>
+                <Route path='/results'>
+                    <SearchResultsPage />
+                </Route>
+            </Switch>
         </Router>
     );
 }

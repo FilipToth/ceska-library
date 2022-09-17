@@ -1,8 +1,13 @@
 import './SearchResultsPage.css'
 import SearchResultEntry from '../SearchResultEntry'
 import SearchBar from '../SearchBar'
+import queryString from 'query-string'
 
 const SearchResultsPage = () => {
+   const queries = queryString.parse(window.location.href);
+   const queryValues = Object.values(queries);
+   console.log(queryValues[0]);
+
     return (
         <div className='App-Container'>
             <SearchBar />
