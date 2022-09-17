@@ -1,5 +1,5 @@
-import Search from './Search'
-import SearchResults from './SearchResults';
+import SearchPage from './SearchPage/SearchPage';
+import SearchResultsPage from './SearchResults/SearchResultsPage';
 import './App.css'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom' 
 
@@ -10,10 +10,10 @@ function App() {
             <div className='App-Container'>
                 <Switch>
                     <Route exact path='/'>
-                        <Search />
+                        <SearchPage />
                     </Route>
                     <Route path='/results'>
-                        <SearchResults />
+                        <SearchResultsPage />
                     </Route>
                 </Switch>
             </div>

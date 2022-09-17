@@ -2,7 +2,7 @@ import './Search.css'
 import SearchButton from '../SearchButton';
 import SearchSuggestion from '../SearchSuggestion';
 
-function Search() {
+function SearchBar() {
     return (
         <div className='Search-Container'>
             <div className='Suggest-Book-Div-Button'>
@@ -26,4 +26,4 @@ function Search() {
     )
 }
 
-export default Search;
+export default SearchBar;
