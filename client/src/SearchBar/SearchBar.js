@@ -1,4 +1,4 @@
-import './Search.css'
+import './SearchBar.css'
 import SearchButton from '../SearchButton';
 import SearchSuggestion from '../SearchSuggestion';
 

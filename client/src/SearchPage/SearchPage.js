@@ -1,7 +1,7 @@
 import './SearchPage.css'
 import SearchBar from '../SearchBar';
 
-function SearchPage() {
+const SearchPage = () => {
     return (
         <div className='App-Container'>
             <SearchBar />

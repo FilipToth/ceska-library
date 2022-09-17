@@ -1,0 +1,76 @@
+.App-Container {
+    /* Desktop-Search-Results */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    padding-top: 50px;
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+
+    background: #E5EAF1;
+}
+
+.Footer-Wrapper {
+    /* Footer */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    gap: 12px;
+
+    width: 517px;
+    height: 38px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 3;
+    flex-grow: 0;
+}
+
+.Footer-Image {
+    /* icons8-wtf-100 1 */
+
+    width: 30px;
+    height: 30px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Footer-Text {
+    /* That would be it for the search results, I guess... */
+
+    width: 259px;
+    height: 14px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
