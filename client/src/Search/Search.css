@@ -1,0 +1,159 @@
+.Search-Container {
+    /* Search-Parent-Frame */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 7px;
+
+    width: 560px;
+    height: 252px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Lower-Search-Container {
+    /* Search-Frame */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+    gap: 13px;
+
+    width: 560px;
+    height: 60px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.Suggest-Book-Div-Button {
+    /* Suggest-Book-Btn */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 32px;
+    gap: 10px;
+
+    width: 171px;
+    height: 24px;
+
+    background: #5C8A74;
+    border-radius: 13px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+    /* Animation */
+    transition: 0s;
+}
+
+.Suggest-Book-Div-Button:hover {
+    background: linear-gradient(91.79deg, #00F27E 5.22%, #45CDD6 99.64%);
+
+    /* Animation */
+    transition: 2s;
+}
+
+.Suggest-Book-Text {
+    /* Suggest me a book! */
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 14px;
+
+    color: #FFFFFF;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Search-Div {
+    /* Search */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 10px;
+
+    width: 540px;
+    height: 45px;
+
+    /* Primary */
+    background: linear-gradient(0deg, #5C8A74, #5C8A74), #FFFFFF;
+    box-shadow: 1px 1px 20px 15px rgba(0, 242, 126, 0.2);
+    border-radius: 10px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Search-Books-Text {
+    /* Search Books... */
+
+    width: 475px;
+    height: 17px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Suggestions-Div {
+    /* Frame 4 */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 7px;
+
+    width: 560px;
+    height: 133px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 10px rgba(71, 113, 93, 0.25);
+    border-radius: 10px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
