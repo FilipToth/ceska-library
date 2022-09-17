@@ -6,11 +6,11 @@ import queryString from 'query-string'
 const SearchResultsPage = () => {
    const queries = queryString.parse(window.location.href);
    const queryValues = Object.values(queries);
-   console.log(queryValues[0]);
+   const searchTerm = queryValues[0];
 
     return (
         <div className='App-Container'>
-            <SearchBar />
+            <SearchBar searchQuery={searchTerm}/>
             <SearchResultEntry />
             <SearchResultEntry />
             <div className='Footer-Wrapper'>

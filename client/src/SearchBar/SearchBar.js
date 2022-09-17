@@ -2,7 +2,25 @@ import './SearchBar.css'
 import SearchButton from '../SearchButton';
 import SearchSuggestion from '../SearchSuggestion';
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+    let searchQuery = props.searchQuery;
+    if (searchQuery == undefined)
+        searchQuery = "Search Books...";
+    
+    let suggestionsJSX;
+    const renderSuggestions = false;
+    if (renderSuggestions)
+    {
+        suggestionsJSX = (
+            <div className='Suggestions-Div'>
+                <SearchSuggestion />
+                <SearchSuggestion />
+                <SearchSuggestion />
+                <SearchSuggestion />
+            </div>
+        )
+    }
+    
     return (
         <div className='Search-Container'>
             <div className='Suggest-Book-Div-Button'>
@@ -11,17 +29,12 @@ const SearchBar = () => {
             
             <div className='Lower-Search-Container'>
                 <div className='Search-Div'>
-                    <p1 className='Search-Books-Text'>Search Books...</p1>
+                    <p1 className='Search-Books-Text'>{searchQuery}</p1>
                     <SearchButton />
                 </div>
             </div>
 
-            <div className='Suggestions-Div'>
-                <SearchSuggestion />
-                <SearchSuggestion />
-                <SearchSuggestion />
-                <SearchSuggestion />
-            </div>
+            {suggestionsJSX}
         </div>
     )
 }
