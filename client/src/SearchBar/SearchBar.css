@@ -52,7 +52,8 @@
     width: 171px;
     height: 24px;
 
-    background: #5C8A74;
+    background: linear-gradient(91.79deg, #5C8A74 5.22%, #0000 99.64%);;
+    background-color: #5C8A74;
     border-radius: 13px;
 
     /* Inside auto layout */
@@ -61,7 +62,7 @@
     flex-grow: 0;
 
     /* Animation */
-    transition: all 200ms ease-in;
+    transition: all 300ms ease-in;
 }
 
 .Suggest-Book-Div-Button:hover {

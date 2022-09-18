@@ -11,7 +11,8 @@
     width: 35px;
     height: 35px;
 
-    background: #00F27E;
+    background: linear-gradient(138.88deg, #0000 8.38%, #00F27E 93.05%);;
+    background-color: #00F27E;
     box-shadow: 1px 1px 20px 6px rgba(0, 0, 0, 0.13);
     border-radius: 6px;
 
@@ -25,6 +26,7 @@
 
 .Button-Div:hover {
     border-radius: 40px;
+    background-color: #49FFDE;
 }
 
 .Image {

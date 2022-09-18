@@ -12,13 +12,21 @@
     height: 23px;
 
     /* Primary */
-    background: linear-gradient(0deg, #5C8A74, #5C8A74), #FFFFFF;
+    background: linear-gradient(90.1deg, #0000 0%, #5C8A74 100.92%);
+    background-color: #5C8A74;
     border-radius: 10px;
 
     /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
+
+    /* Animation */
+    transition: all 300ms ease-in;
+}
+
+.Suggestion:hover {
+    background-color: #00F27E;
 }
 
 .Suggestion-Text {

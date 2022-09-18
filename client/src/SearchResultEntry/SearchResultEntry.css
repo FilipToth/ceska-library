@@ -159,7 +159,8 @@
     width: 200px;
     height: 24px;
 
-    background: #00F27E;
+    background: linear-gradient(265.27deg, #0000 20.55%, #00F27E 94.17%);
+    background-color: #00F27E;
     box-shadow: 1px 1px 20px 7px rgba(73, 255, 168, 0.53);
     border-radius: 10px;
 
@@ -167,6 +168,13 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+
+    /* Animation */
+    transition: all 400ms ease-in;
+}
+
+.Availability-Button:hover {
+    background-color: #00FFE0;
 }
 
 .Availability-Text {
