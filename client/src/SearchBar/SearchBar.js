@@ -5,13 +5,12 @@ import ContentEditable from 'react-contenteditable'
 import { useState } from 'react';
 
 const SearchBar = (props) => {
-
-    const searchPlaceholder = "Search Books..."
-    const [search, setSearch] = useState({ html: `${searchPlaceholder}`});
-
     let searchQuery = props.searchQuery;
+    const searchPlaceholder = "Search Books..."
     if (searchQuery == undefined)
         searchQuery = searchPlaceholder;
+
+    const [search, setSearch] = useState({ html: `${searchQuery}`});
     
     let suggestionsJSX;
     const renderSuggestions = false;
@@ -28,7 +27,7 @@ const SearchBar = (props) => {
     }
 
     const searchFieldSelected = () => {
-        if (search.html == searchPlaceholder)
+        if (search.html == searchQuery)
             setSearch({ html: '' });
     };
 
