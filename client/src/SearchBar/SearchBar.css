@@ -61,14 +61,16 @@
     flex-grow: 0;
 
     /* Animation */
-    transition: 0s;
+    transition: all 200ms ease-in;
 }
 
 .Suggest-Book-Div-Button:hover {
-    background: linear-gradient(91.79deg, #00F27E 5.22%, #45CDD6 99.64%);
+    border-radius: 50px;
+    background-color: #00F27E;
+}
 
-    /* Animation */
-    transition: 2s;
+.Suggest-Book-Div-Button:hover > .Suggest-Book-Text {
+    color: black;
 }
 
 .Suggest-Book-Text {
