@@ -1,0 +1,15 @@
+.Info-Container {
+    /* Book-Info-Frame */
+
+    width: 753px;
+    height: 466px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
+    border-radius: 20px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}

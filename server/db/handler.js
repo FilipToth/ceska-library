@@ -1,6 +1,6 @@
-import Connector from "./connector";
+const Connector = require('./connector');
 
-class Database
+class DatabaseHandler
 {
     constructor() {
         this.connector = new Connector();
@@ -13,9 +13,9 @@ class Database
     }
 
     getBooks = async () => {
-        const doc = this.connector.getDoc(this.bookColName, this.bookColID);
+        const doc = await this.connector.getDoc(this.bookColName, this.bookColID);
         console.log(doc);
     }
 }
 
-export default Database;
+module.exports = DatabaseHandler;

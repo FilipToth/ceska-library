@@ -12,7 +12,6 @@ const SearchResultsPage = () => {
         <div className='App-Container'>
             <SearchBar searchQuery={searchTerm}/>
             <SearchResultEntry />
-            <SearchResultEntry />
             <div className='Footer-Wrapper'>
                 <img className='Footer-Image' src='images/icons8-wtf-100.png'></img>
                 <p1 className='Footer-Text'>That would be it for the search results, I guess...</p1>

@@ -1,4 +1,5 @@
 import './SearchResultEntry.css'
+import BookInfo from '../BookInfo';
 
 const SearchResultEntry = () => {
     return (
@@ -15,6 +16,7 @@ const SearchResultEntry = () => {
                     </div>
                 </div>
             </div>
+            <BookInfo />
         </div>
     )
 }
