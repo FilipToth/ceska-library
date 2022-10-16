@@ -1,0 +1,3 @@
+ - [ ] .env file credentials
+ - [ ] Add query cloud function to fauna
+ - [ ] express integration with front-end
