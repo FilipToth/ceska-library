@@ -14,7 +14,7 @@ class DatabaseHandler
 
     getBooks = async () => {
         const doc = await this.connector.getDoc(this.bookColName, this.bookColID);
-        console.log(doc);
+        return doc.data;
     }
 }
 

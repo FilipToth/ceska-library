@@ -11,9 +11,13 @@ router.get('/', (req, res, next) => {
     res.render('index', { title: 'Express' });
 });
 
-router.get('/books', (req, res, next) => {
-    db.getBooks();
-    res.send({ ok: true });
+router.get('/books', async (req, res, next) => {
+    const books = await db.getBooks();
+    res.send(books);
+});
+
+router.get('/search', async (req, res, next) => {
+    res.send('not implemented...');
 });
 
 module.exports = router;

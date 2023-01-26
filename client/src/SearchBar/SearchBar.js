@@ -1,8 +1,12 @@
 import './SearchBar.css'
-import SearchButton from '../SearchButton';
 import SearchSuggestion from '../SearchSuggestion';
-import ContentEditable from 'react-contenteditable'
 import { useState } from 'react';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, SearchBox, connectSearchBox, Hits } from 'react-instantsearch-dom';
+import SearchButton from '../SearchButton';
+import ContentEditable from 'react-contenteditable'
+
+const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
 
 const SearchBar = (props) => {
     let searchQuery = props.searchQuery;
@@ -10,46 +14,31 @@ const SearchBar = (props) => {
     if (searchQuery == undefined)
         searchQuery = searchPlaceholder;
 
-    const [search, setSearch] = useState({ html: `${searchQuery}`});
-    
-    let suggestionsJSX;
-    const renderSuggestions = false;
-    if (renderSuggestions)
-    {
-        suggestionsJSX = (
-            <div className='Suggestions-Div'>
-                <SearchSuggestion />
-                <SearchSuggestion />
-                <SearchSuggestion />
-                <SearchSuggestion />
-            </div>
-        )
-    }
+    const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
+        return (
+            <div className='Search-Container'>
+                <div className='Suggest-Book-Div-Button'>
+                    <p1 className='Suggest-Book-Text'>Suggest me a book!</p1>
+                </div>
 
-    const searchFieldSelected = () => {
-        if (search.html == searchQuery)
-            setSearch({ html: '' });
-    };
+                <div className='Lower-Search-Container'>
+                    <div className='Search-Div'>
+                        <input type="text" placeholder='Search books!' value={currentRefinement} onFocus={() => props.onFocus()} onBlur={() => props.onBlur()} onChange={(e) => {refine(e.target.value)}} ></input>
+                        <SearchButton />
+                    </div>
+                </div>
 
-    const searchFieldChanged = (ev) => {
-        setSearch({ html: ev.target.value } );
-    }
-    
-    return (
-        <div className='Search-Container'>
-            <div className='Suggest-Book-Div-Button'>
-                <p1 className='Suggest-Book-Text'>Suggest me a book!</p1>-
-            </div>
-            
-            <div className='Lower-Search-Container'>
-                <div className='Search-Div'>
-                    <ContentEditable html={search.html} onChange={searchFieldChanged} className='Search-Books-Text' onSelect={searchFieldSelected} />
-                    <SearchButton />
+                <div className='Suggestions-Div'>
+                    <Hits hitComponent={SearchSuggestion}/>
                 </div>
             </div>
-
-            {suggestionsJSX}
-        </div>
+        );
+    });
+    
+    return (
+        <InstantSearch searchClient={searchClient} indexName="books">
+            <MySearchBox />
+        </InstantSearch>
     )
 }
 
