@@ -1,10 +1,8 @@
 import './SearchBar.css'
 import SearchSuggestion from '../SearchSuggestion';
-import { useState } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectSearchBox, Hits } from 'react-instantsearch-dom';
 import SearchButton from '../SearchButton';
-import ContentEditable from 'react-contenteditable'
 
 const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
 

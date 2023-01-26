@@ -3,7 +3,7 @@ import './SearchSuggestion.css'
 const SearchSuggestion = ({ hit }) => {
     return (
         <div className='Suggestion'>
-            <p1 className='Suggestion-Text'>{hit.name}</p1>
+            <p1 className='Suggestion-Text'>yidb</p1>
         </div>
     )
 }
