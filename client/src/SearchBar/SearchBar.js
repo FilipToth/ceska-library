@@ -1,7 +1,7 @@
 import './SearchBar.css'
 import SearchSuggestion from '../SearchSuggestion';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, connectSearchBox, Hits } from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
 import SearchButton from '../SearchButton';
 
 const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
@@ -26,9 +26,18 @@ const SearchBar = (props) => {
                     </div>
                 </div>
 
-                <div className='Suggestions-Div'>
-                    <Hits hitComponent={SearchSuggestion}/>
-                </div>
+                <MyHits/>
+            </div>
+        );
+    });
+
+    const MyHits = connectHits(({ hits }) => {
+        console.log(hits)
+        return (
+            <div className='Suggestions-Div'>
+                {hits.map(hit => (
+                    <SearchSuggestion searchHit={hit}/>
+                ))}
             </div>
         );
     });

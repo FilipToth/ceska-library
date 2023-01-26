@@ -1,9 +1,9 @@
 import './SearchSuggestion.css'
 
-const SearchSuggestion = ({ hit }) => {
+const SearchSuggestion = ({ searchHit }) => {
     return (
         <div className='Suggestion'>
-            <p1 className='Suggestion-Text'>yidb</p1>
+            <p1 className='Suggestion-Text'>{searchHit.name}</p1>
         </div>
     )
 }
