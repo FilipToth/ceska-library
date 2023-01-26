@@ -6,7 +6,6 @@ class Connector {
         this.fauna = require('faunadb');
 
         const key = process.env.FAUNA_KEY;
-        console.log(key);
         this.client = new this.fauna.Client({
              secret: key,
              domain: "db.eu.fauna.com"
