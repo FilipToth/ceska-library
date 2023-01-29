@@ -8,9 +8,9 @@
     align-items: center;
     gap: 60px;
 
-    position: absolute;
+    position: relative;
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     margin: 0px;
 
     background: #E5EAF1;

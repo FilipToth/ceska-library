@@ -53,58 +53,6 @@ input[type="text"] {
     flex-grow: 0;
 }
 
-.Suggest-Book-Div-Button {
-    /* Suggest-Book-Btn */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px 32px;
-    gap: 10px;
-
-    width: 171px;
-    height: 24px;
-
-    background: linear-gradient(91.79deg, #5C8A74 5.22%, #0000 99.64%);;
-    background-color: #5C8A74;
-    border-radius: 13px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-    /* Animation */
-    transition: all 300ms ease-in;
-}
-
-.Suggest-Book-Div-Button:hover {
-    border-radius: 50px;
-    background-color: #00F27E;
-}
-
-.Suggest-Book-Div-Button:hover > .Suggest-Book-Text {
-    color: black;
-}
-
-.Suggest-Book-Text {
-    /* Suggest me a book! */
-
-    font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 14px;
-
-    color: #FFFFFF;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
 .Search-Div {
     /* Search */
 

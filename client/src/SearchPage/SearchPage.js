@@ -4,7 +4,7 @@ import SearchBar from '../SearchBar';
 const SearchPage = () => {
     return (
         <div className='App-Container'>
-            <SearchBar />
+            <SearchBar renderSuggestBtn={true} />
         </div>
     )
 }

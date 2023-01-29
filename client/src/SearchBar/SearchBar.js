@@ -3,39 +3,57 @@ import SearchSuggestion from '../SearchSuggestion';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
 import SearchButton from '../SearchButton';
+import SuggestBtn from '../SuggestBtn'
+import { useState } from 'react';
 
 const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
 
-const SearchBar = (props) => {
-    let searchQuery = props.searchQuery;
-    const searchPlaceholder = "Search Books..."
-    if (searchQuery == undefined)
-        searchQuery = searchPlaceholder;
+const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
+    // const [renderHits, setRenderHits] = useState(false)
+    var renderHits = false;
 
     const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
+        if (query != undefined)
+            currentRefinement = query;
+
+        let suggestBtn = undefined;
+        if (renderSuggestBtn)
+        {
+            suggestBtn = <SuggestBtn />;
+        }
+        
+        const change = (e) => {
+            refine(e.target.value);
+
+            const trimmed = e.target.value.trim();
+            if (renderHits == false)
+                renderHits = true;
+
+            if (trimmed == "")
+                renderHits = false;
+        };
+        
         return (
             <div className='Search-Container'>
-                <div className='Suggest-Book-Div-Button'>
-                    <p1 className='Suggest-Book-Text'>Suggest me a book!</p1>
-                </div>
-
+                {suggestBtn}
                 <div className='Lower-Search-Container'>
                     <div className='Search-Div'>
-                        <input type="text" placeholder='Search books!' value={currentRefinement} onFocus={() => props.onFocus()} onBlur={() => props.onBlur()} onChange={(e) => {refine(e.target.value)}} ></input>
+                        <input type="text" placeholder='Search books!' value={currentRefinement} onChange={change} ></input>
                         <SearchButton />
                     </div>
                 </div>
 
-                <MyHits/>
+                {renderHits &&
+                    <MyHits/>
+                }
             </div>
         );
     });
 
     const MyHits = connectHits(({ hits }) => {
-        console.log(hits)
         return (
             <div className='Suggestions-Div'>
-                {hits.map(hit => (
+                {renderHits && hits.map(hit => (
                     <SearchSuggestion searchHit={hit}/>
                 ))}
             </div>

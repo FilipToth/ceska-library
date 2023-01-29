@@ -16,9 +16,11 @@ const SearchResultEntry = () => {
                     </div>
                 </div>
             </div>
-            <BookInfo />
+            
         </div>
     )
 }
+
+// <BookInfo />
 
 export default SearchResultEntry;
