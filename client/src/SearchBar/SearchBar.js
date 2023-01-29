@@ -4,16 +4,14 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
 import SearchButton from '../SearchButton';
 import SuggestBtn from '../SuggestBtn'
-import { useState } from 'react';
 
 const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
 
 const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
-    // const [renderHits, setRenderHits] = useState(false)
     var renderHits = false;
-
+    var addInitialQuery = true;
     const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
-        if (query != undefined)
+        if (addInitialQuery && query != undefined)
             currentRefinement = query;
 
         let suggestBtn = undefined;
@@ -23,12 +21,15 @@ const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
         }
         
         const change = (e) => {
+            if (addInitialQuery)
+                addInitialQuery = false;
+            
             refine(e.target.value);
 
-            const trimmed = e.target.value.trim();
             if (renderHits == false)
                 renderHits = true;
 
+            const trimmed = e.target.value.trim();
             if (trimmed == "")
                 renderHits = false;
         };
