@@ -5,7 +5,7 @@ import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'r
 import { useHistory } from "react-router-dom";
 import SuggestBtn from '../SuggestBtn'
 
-const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
+const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_KEY);
 
 const SearchBar = ({ query, renderSuggestBtn }) => {
     const history = useHistory();
