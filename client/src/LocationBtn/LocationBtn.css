@@ -1,0 +1,23 @@
+.Button-Frame {
+    /* Location-Btn */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px;
+    gap: 5px;
+
+    width: 209px;
+    height: 55px;
+
+    background: #00F27E;
+    box-shadow: 1px 1px 20px 5px rgba(92, 138, 116, 0.17);
+    border-radius: 15px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}

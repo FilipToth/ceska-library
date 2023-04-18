@@ -2,12 +2,14 @@ import './SearchBar.css'
 import SearchSuggestion from '../SearchSuggestion';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
-import SearchButton from '../SearchButton';
+import { useHistory } from "react-router-dom";
 import SuggestBtn from '../SuggestBtn'
 
 const searchClient = algoliasearch('99PSKVXAQJ', '26781912edacd5f1ba0ccb248375d828');
 
-const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
+const SearchBar = ({ query, renderSuggestBtn }) => {
+    const history = useHistory();
+
     var renderHits = false;
     var addInitialQuery = true;
     const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
@@ -16,9 +18,7 @@ const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
 
         let suggestBtn = undefined;
         if (renderSuggestBtn)
-        {
             suggestBtn = <SuggestBtn />;
-        }
         
         const change = (e) => {
             if (addInitialQuery)
@@ -33,6 +33,10 @@ const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
             if (trimmed == "")
                 renderHits = false;
         };
+
+        const btnClick = () => {
+            history.push(`/results?search=${currentRefinement}`);
+        }
         
         return (
             <div className='Search-Container'>
@@ -40,7 +44,9 @@ const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
                 <div className='Lower-Search-Container'>
                     <div className='Search-Div'>
                         <input type="text" placeholder='Search books!' value={currentRefinement} onChange={change} ></input>
-                        <SearchButton />
+                        <div className='Button-Div' onClick={btnClick}>
+                            <img className='Image' src='images/Search-Icon.png'></img>
+                        </div>
                     </div>
                 </div>
 
@@ -52,6 +58,9 @@ const SearchBar = ({ query, renderSuggestBtn, renderInitialHits }) => {
     });
 
     const MyHits = connectHits(({ hits }) => {
+        if (hits.length == 0)
+            return undefined;
+
         return (
             <div className='Suggestions-Div'>
                 {renderHits && hits.map(hit => (

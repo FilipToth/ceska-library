@@ -17,6 +17,7 @@ const SearchResultEntry = () => {
                 </div>
             </div>
             
+            <BookInfo />
         </div>
     )
 }

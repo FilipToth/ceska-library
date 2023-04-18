@@ -9,10 +9,6 @@
     padding: 0px;
     gap: 25px;
 
-    width: 753px;
-    height: 235px;
-
-
     /* Inside auto layout */
     flex: none;
     flex-grow: 0;
