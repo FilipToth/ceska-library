@@ -1,4 +1,4 @@
-import 'assets/ForeignSearchResultEntry.css'
+import 'assets/SearchResultEntry.css'
 import BookInfo from './BookInfo';
 
 const ForeignSearchResultEntry = () => {

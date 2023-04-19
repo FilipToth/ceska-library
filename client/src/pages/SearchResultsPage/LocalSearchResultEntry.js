@@ -1,5 +1,5 @@
-import 'assets/LocalSearchResultEntry.css';
-import 'assets/ForeignSearchResultEntry.css';
+import 'assets/SearchResultEntry.css';
+import LocationInfo from './LocationInfo';
 
 const LocalSearchResultEntry = () => {
     return (
@@ -12,10 +12,11 @@ const LocalSearchResultEntry = () => {
                         <p1 className='Author-Name-Text'>By Dolor Sit Amet</p1>
                     </div>
                     <div className='Availability-Button'>
-                        <p1 className='Availability-Text'>Check Availability</p1>
+                        <p1 className='Availability-Text'>Check Location</p1>
                     </div>
                 </div>
             </div>
+            <LocationInfo />
         </div>
     )
 }
