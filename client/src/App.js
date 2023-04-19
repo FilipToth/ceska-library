@@ -1,6 +1,6 @@
-import SearchPage from './SearchPage';
-import SearchResultsPage from './SearchResultsPage';
-import './App.css'
+import 'assets/App.css'
+import SearchPage from 'pages/SearchPage';
+import SearchResultsPage from 'pages/SearchResultsPage';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => {

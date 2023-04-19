@@ -1,4 +1,4 @@
-import './SuggestBtn.css'
+import 'assets/SuggestBtn.css'
 
 const SuggestBtn = () => {
     return (

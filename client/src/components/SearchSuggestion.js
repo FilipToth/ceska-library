@@ -1,4 +1,4 @@
-import './SearchSuggestion.css'
+import 'assets/SearchSuggestion.css'
 
 const SearchSuggestion = ({ searchHit }) => {
     return (

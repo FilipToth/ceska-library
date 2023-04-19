@@ -1,10 +1,10 @@
-import './SearchResultEntry.css'
-import BookInfo from '../BookInfo';
+import 'assets/LocalSearchResultEntry.css';
+import 'assets/ForeignSearchResultEntry.css';
 
-const ForeignSearchResultEntry = () => {
+const LocalSearchResultEntry = () => {
     return (
         <div className='Entry-Wrapper'>
-            <div className='Entry'>
+           <div className='Entry'>
                 <img className='Book-Image' src='images/break_over.jpg'></img>
                 <div className='Right-Wrapper'>
                     <div className='Info-Wrapper'>
@@ -16,10 +16,8 @@ const ForeignSearchResultEntry = () => {
                     </div>
                 </div>
             </div>
-            
-            <BookInfo />
         </div>
     )
 }
 
-export default ForeignSearchResultEntry;
+export default LocalSearchResultEntry;

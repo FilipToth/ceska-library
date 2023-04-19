@@ -1,5 +1,5 @@
-import './SearchPage.css'
-import SearchBar from '../SearchBar';
+import 'assets/SearchPage.css'
+import SearchBar from 'components/SearchBar';
 
 const SearchPage = () => {
     return (

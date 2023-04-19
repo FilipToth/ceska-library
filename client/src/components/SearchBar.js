@@ -1,9 +1,9 @@
-import './SearchBar.css'
-import SearchSuggestion from '../SearchSuggestion';
+import 'assets/SearchBar.css'
+import SearchSuggestion from 'components/SearchSuggestion';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
 import { useHistory } from "react-router-dom";
-import SuggestBtn from '../SuggestBtn'
+import SuggestBtn from 'components/SuggestBtn'
 
 const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_KEY);
 
