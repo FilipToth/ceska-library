@@ -16,7 +16,7 @@ const LocalSearchResultEntry = () => {
                     </div>
                 </div>
             </div>
-            <LocationInfo />
+            <LocationInfo row={3} column={4}/>
         </div>
     )
 }

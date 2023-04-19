@@ -1,6 +1,10 @@
 import 'assets/LocationInfo.css';
+import getOrginal from 'utils/ordinal';
 
-const LocationInfo = () => {
+const LocationInfo = ({row, column}) => {
+    const rowOrdinal = getOrginal(row);
+    const columnOrdinal = getOrginal(column);
+
     return (
         <div className='Location-Info'>
             <div className='Header-Wrapper'>
@@ -10,9 +14,9 @@ const LocationInfo = () => {
             <div className='Location-Wrapper'>
                 <div className='Column-Row-Wrapper'>
                     <div className='Number-Wrapper'>
-                        <p1 className='Number-Text'>3</p1>
+                        <p1 className='Number-Text'>{row}</p1>
                         <div className='Ordinal-Wrapper'>
-                            <p1 className='Ordinal-Suffix-Text'>rd</p1>
+                            <p1 className='Ordinal-Suffix-Text'>{rowOrdinal}</p1>
                             <div className='Underline-Div'></div>
                         </div>
                     </div>
@@ -20,9 +24,9 @@ const LocationInfo = () => {
                 </div>
                 <div className='Column-Row-Wrapper'>
                     <div className='Number-Wrapper'>
-                        <p1 className='Number-Text'>2</p1>
+                        <p1 className='Number-Text'>{column}</p1>
                         <div className='Ordinal-Wrapper'>
-                            <p1 className='Ordinal-Suffix-Text'>nd</p1>
+                            <p1 className='Ordinal-Suffix-Text'>{columnOrdinal}</p1>
                             <div className='Underline-Div'></div>
                         </div>
                     </div>
