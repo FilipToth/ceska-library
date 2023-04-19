@@ -1,7 +1,7 @@
 import './SearchResultEntry.css'
 import BookInfo from '../BookInfo';
 
-const SearchResultEntry = () => {
+const ForeignSearchResultEntry = () => {
     return (
         <div className='Entry-Wrapper'>
             <div className='Entry'>
@@ -22,6 +22,4 @@ const SearchResultEntry = () => {
     )
 }
 
-// <BookInfo />
-
-export default SearchResultEntry;
+export default ForeignSearchResultEntry;
