@@ -1,7 +1,7 @@
 import 'assets/SearchResultsPage.css'
 import queryString from 'query-string'
 import SearchBar from 'components/SearchBar'
-import LocalResultEntry from 'components/LocalSearchResultEntry'
+import LocalResultEntry from './LocalSearchResultEntry'
 
 const SearchResultsPage = () => {
    const queries = queryString.parse(window.location.href);

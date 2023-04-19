@@ -1,4 +1,4 @@
-import './LocationBtn.css'
+import 'assets/LocationBtn.css'
 
 const LocationButton = () => {
     return (

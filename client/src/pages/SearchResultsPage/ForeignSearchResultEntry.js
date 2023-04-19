@@ -1,5 +1,5 @@
 import 'assets/ForeignSearchResultEntry.css'
-import BookInfo from '../BookInfo';
+import BookInfo from './BookInfo';
 
 const ForeignSearchResultEntry = () => {
     return (

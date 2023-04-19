@@ -1,5 +1,5 @@
-import LocationBtn from '../LocationBtn';
-import './BookInfo.css'
+import 'assets/BookInfo.css'
+import LocationBtn from './LocationBtn';
 
 const BookInfo = () => {
     return (
