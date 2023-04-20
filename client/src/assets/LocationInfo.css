@@ -1,5 +1,49 @@
+@keyframes location-opening-animation {
+    0% {
+        top: -240px;
+    }
+    100% {
+        top: 0px;
+    }
+}
+
+@keyframes location-closing-animation {
+    0% {
+        top: 0px;
+    }
+    100% {
+        top: -240px;
+    }
+}
+
 .Location-Info {
     /* Location-Info */
+    position: relative;
+
+    animation: 0.5s ease-out 0s 1 location-opening-animation;
+    z-index: -1;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 5px 5px;
+    gap: 10px;
+
+    width: 467px;
+    height: 240px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
+    border-radius: 20px;
+}
+
+.Location-Info-Closing {
+    /* Location-Info */
+    position: relative;
+
+    animation: 0.5s ease-out 0s 1 location-closing-animation;
+    z-index: -1;
 
     /* Auto layout */
     display: flex;

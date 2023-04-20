@@ -1,12 +1,17 @@
 import 'assets/LocationInfo.css';
 import getOrginal from 'utils/ordinal';
 
-const LocationInfo = ({row, column}) => {
+const LocationInfo = ({row, column, playClosingAnim}) => {
     const rowOrdinal = getOrginal(row);
     const columnOrdinal = getOrginal(column);
 
+    let locationInfoClassName = 'Location-Info';
+    if (playClosingAnim) {
+        locationInfoClassName = 'Location-Info-Closing';
+    }
+
     return (
-        <div className='Location-Info'>
+        <div className={locationInfoClassName}>
             <div className='Header-Wrapper'>
                 <p1 className='Head-To-Text'>Head down to</p1>
                 <p1 className='Library-Name-Text'>“Ceska 10 2nd Floor Library”</p1>

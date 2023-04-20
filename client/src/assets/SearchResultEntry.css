@@ -1,4 +1,6 @@
 .Entry-Wrapper {
+    z-index: 1;
+
     /* Search-Entry-With-Expandable-Frame */
 
     /* Auto layout */
