@@ -1,11 +1,10 @@
 import 'assets/SearchBar.css'
 import SearchSuggestion from 'components/SearchSuggestion';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
+import { InstantSearch, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
 import { useHistory } from "react-router-dom";
 import SuggestBtn from 'components/SuggestBtn'
-
-const searchClient = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID, process.env.REACT_APP_ALGOLIA_KEY);
+import algolia from 'services/algolia';
 
 const SearchBar = ({ query, renderSuggestBtn }) => {
     const history = useHistory();
@@ -34,7 +33,7 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
                 renderHits = false;
         };
 
-        const btnClick = () => {
+        const btnClick = async () => {
             history.push(`/results?search=${currentRefinement}`);
         }
         
@@ -71,7 +70,7 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
     });
     
     return (
-        <InstantSearch searchClient={searchClient} indexName="books">
+        <InstantSearch searchClient={algolia.client} indexName="books">
             <MySearchBox />
         </InstantSearch>
     )

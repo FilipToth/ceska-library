@@ -2,11 +2,20 @@ import 'assets/SearchResultsPage.css'
 import queryString from 'query-string'
 import SearchBar from 'components/SearchBar'
 import LocalResultEntry from './LocalSearchResultEntry'
+import algolia from 'services/algolia';
 
 const SearchResultsPage = () => {
-   const queries = queryString.parse(window.location.href);
-   const queryValues = Object.values(queries);
-   const searchTerm = queryValues[0];
+    const queries = queryString.parse(window.location.href);
+    const queryValues = Object.values(queries);
+    const searchTerm = queryValues[0];
+
+    let entries = <></>;
+    const search = async () => {
+        let res = await algolia.search(searchTerm);
+        res.forEach((res) => {
+            
+        });
+    }
 
     return (
         <div className='App-Container'>
