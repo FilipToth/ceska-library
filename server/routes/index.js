@@ -17,7 +17,9 @@ router.get('/books', async (req, res, next) => {
 });
 
 router.get('/search', async (req, res, next) => {
-    res.send('not implemented...');
+    const query = req.query.id;
+    const book = await db.searchBook(query);
+    res.send(book);
 });
 
 module.exports = router;

@@ -16,6 +16,14 @@ class DatabaseHandler
         const doc = await this.connector.getDoc(this.bookColName, this.bookColID);
         return doc.data;
     }
+
+    searchBook = async (id) => {
+        // TODO: Use fauna indexes...
+
+        const books = await this.getBooks();
+        const book = books[id];
+        return book;
+    }
 }
 
 module.exports = DatabaseHandler;

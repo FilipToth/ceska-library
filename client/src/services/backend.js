@@ -1,6 +1,9 @@
+import axios from "axios";
+
 class Backend {
-    getNameAndImage(id) {
-        
+    async getNameAndImage(id) {
+        const books = await axios.get('localhost:8080/?id=' + id);
+        console.log(books);
     }
 }
 

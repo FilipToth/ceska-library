@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import SearchBar from 'components/SearchBar'
 import LocalResultEntry from './LocalSearchResultEntry'
 import algolia from 'services/algolia';
+import backend from 'services/backend';
 
 const SearchResultsPage = () => {
     const queries = queryString.parse(window.location.href);
@@ -11,10 +12,14 @@ const SearchResultsPage = () => {
 
     let entries = <></>;
     const search = async () => {
-        let res = await algolia.search(searchTerm);
-        res.forEach((res) => {
-            
+        const res = await algolia.search(searchTerm);
+        res.forEach(async (res) => {
+            let book = await backend.getNameAndImage(res);
         });
+    }
+
+    if (searchTerm != undefined) {
+        search();
     }
 
     return (
