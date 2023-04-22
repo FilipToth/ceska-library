@@ -8,10 +8,22 @@ class DatabaseHandler
         this.bookColID = process.env.BOOKS_COL_ID;
         this.locationsColName = process.env.LOCATIONS_COL_NAME;
         this.locationsColID = process.env.LOCATIONS_COL_ID;
+        this.usersColName = process.env.USERS_COL_NAME;
+        this.usersColId = process.env.USERS_COL_ID;
     }
 
     getBooks = async () => {
         const doc = await this.connector.getDoc(this.bookColName, this.bookColID);
+        return doc.data;
+    }
+
+    getLocations = async () => {
+        const doc = await this.connector.getDoc(this.locationsColName, this.locationsColID);
+        return doc.data;
+    }
+
+    getUsers = async () => {
+        const doc = await this.connector.getDoc(this.usersColName, this.usersColId);
         return doc.data;
     }
 
@@ -20,11 +32,6 @@ class DatabaseHandler
         const books = await this.getBooks();
         const book = books[id];
         return book;
-    }
-
-    getLocations = async () => {
-        const doc = await this.connector.getDoc(this.locationsColName, this.locationsColID);
-        return doc.data;
     }
 
     getLocation = async (id) => {
