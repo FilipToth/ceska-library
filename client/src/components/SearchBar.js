@@ -34,7 +34,7 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
         };
 
         const btnClick = async () => {
-            history.push(`192.168.0.1:3000/results?search=${currentRefinement}`);
+            history.push(`/results?search=${currentRefinement}`);
         }
         
         return (

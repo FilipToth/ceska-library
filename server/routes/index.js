@@ -16,7 +16,7 @@ router.get('/books', async (req, res, next) => {
     res.send(books);
 });
 
-router.get('/search', async (req, res, next) => {
+router.get('/id', async (req, res, next) => {
     const query = req.query.id;
     const book = await db.searchBook(query);
     res.send(book);
