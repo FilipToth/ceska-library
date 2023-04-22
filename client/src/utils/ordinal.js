@@ -1,4 +1,8 @@
 const getOrginal = (num) => {
+    if (num == undefined) {
+        return '';
+    }
+    
     if ((num % 100) >= 11 && (num % 100) <= 13) {
         return "th";
     } else {

@@ -1,14 +1,27 @@
 import 'assets/LocationInfo.css';
 import getOrginal from 'utils/ordinal';
+import { useEffect, useState } from 'react';
+import backend from 'services/backend';
 
-const LocationInfo = ({row, column, playClosingAnim}) => {
-    const rowOrdinal = getOrginal(row);
-    const columnOrdinal = getOrginal(column);
-
+const LocationInfo = ({id, playClosingAnim}) => {
     let locationInfoClassName = 'Location-Info';
     if (playClosingAnim) {
         locationInfoClassName = 'Location-Info-Closing';
     }
+
+    const [location, setLocation] = useState({});
+    useEffect(() => {
+        // get location
+        const setLocationFromAPI = async () => {
+            const res = await backend.getLocation(id);
+            setLocation(res);
+        };
+
+        setLocationFromAPI();
+    }, []);
+
+    const rowOrdinal = getOrginal(location.row);
+    const columnOrdinal = getOrginal(location.column);
 
     return (
         <div className={locationInfoClassName}>
@@ -19,7 +32,7 @@ const LocationInfo = ({row, column, playClosingAnim}) => {
             <div className='Location-Wrapper'>
                 <div className='Column-Row-Wrapper'>
                     <div className='Number-Wrapper'>
-                        <p1 className='Number-Text'>{row}</p1>
+                        <p1 className='Number-Text'>{location.row}</p1>
                         <div className='Ordinal-Wrapper'>
                             <p1 className='Ordinal-Suffix-Text'>{rowOrdinal}</p1>
                             <div className='Underline-Div'></div>
@@ -29,7 +42,7 @@ const LocationInfo = ({row, column, playClosingAnim}) => {
                 </div>
                 <div className='Column-Row-Wrapper'>
                     <div className='Number-Wrapper'>
-                        <p1 className='Number-Text'>{column}</p1>
+                        <p1 className='Number-Text'>{location.column}</p1>
                         <div className='Ordinal-Wrapper'>
                             <p1 className='Ordinal-Suffix-Text'>{columnOrdinal}</p1>
                             <div className='Underline-Div'></div>

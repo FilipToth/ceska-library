@@ -2,7 +2,7 @@ import 'assets/SearchResultEntry.css';
 import LocationInfo from './LocationInfo';
 import { useState } from 'react';
 
-const LocalSearchResultEntry = ({ bookName, authorName, locationOpenByDefault }) => {
+const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefault }) => {
     const [locationOpen, setLocationOpen] = useState(locationOpenByDefault);
     const [closedLocationWidget, setClosedLocationWidget] = useState(false);
     const showLocClick = () => {
@@ -17,9 +17,9 @@ const LocalSearchResultEntry = ({ bookName, authorName, locationOpenByDefault })
 
     let locationWidget = <></>;
     if (locationOpen) {
-        locationWidget = <LocationInfo row={2} column={3} playClosingAnim={false} />;
+        locationWidget = <LocationInfo id={id} playClosingAnim={false} />;
     } else if (closedLocationWidget) {
-        locationWidget = <LocationInfo row={2} column={3} playClosingAnim={true} />;
+        locationWidget = <LocationInfo id={id} playClosingAnim={true} />;
         
         // destroy location widget after animation
         setTimeout(() => {

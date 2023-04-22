@@ -19,8 +19,9 @@ const SearchResultsPage = () => {
             const res = await algolia.search(searchTerm);
 
             for (let i = 0; i < res.length; i++) {
-                let book = await backend.getNameAndImage(res[i]);
-                const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} locationOpenByDefault={false} />
+                const id = res[i];
+                let book = await backend.getNameAndImage(id);
+                const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} id={id} locationOpenByDefault={false} />
                 entries.push(entry);
             }
     
