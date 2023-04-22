@@ -22,6 +22,8 @@
 
     /* Animation */
     transition: all 300ms ease-in;
+    
+    cursor: pointer;
 }
 
 .Suggest-Book-Div-Button:hover {

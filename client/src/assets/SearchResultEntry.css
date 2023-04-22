@@ -170,6 +170,8 @@
 
     /* Animation */
     transition: all 400ms ease-in;
+    
+    cursor: pointer;
 }
 
 .Availability-Button:hover {

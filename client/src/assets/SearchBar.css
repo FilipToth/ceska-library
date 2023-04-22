@@ -146,6 +146,8 @@ input[type="text"] {
     flex-grow: 0;
 
     transition: all 200ms ease-in;
+    
+    cursor: pointer;
 }
 
 .Button-Div:hover {

@@ -23,6 +23,8 @@
 
     /* Animation */
     transition: all 300ms ease-in;
+    
+    cursor: pointer;
 }
 
 .Suggestion:hover {
