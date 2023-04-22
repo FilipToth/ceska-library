@@ -20,14 +20,12 @@ const SearchResultsPage = () => {
 
             for (let i = 0; i < res.length; i++) {
                 let book = await backend.getNameAndImage(res[i]);
-                console.log(res[i]);
-                console.log(book);
                 const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} locationOpenByDefault={false} />
                 entries.push(entry);
             }
     
             setEntryDiv((
-                <div>
+                <div className='Results-Wrapper'>
                     {entries.map((v) => {
                         return v;
                     })}

@@ -16,6 +16,23 @@
     background: #E5EAF1;
 }
 
+.Results-Wrapper {
+    /* Frame 21 */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 25px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
 .Footer-Wrapper {
     /* Footer */
 
