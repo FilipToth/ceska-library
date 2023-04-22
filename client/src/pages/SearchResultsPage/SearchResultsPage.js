@@ -7,21 +7,27 @@ import LocalSearchResultEntry from './LocalSearchResultEntry';
 import { useState, useEffect } from 'react';
 
 const SearchResultsPage = () => {
-    const queries = queryString.parse(window.location.href);
-    const queryValues = Object.values(queries);
-    const searchTerm = queryValues[0];
+    const queries = queryString.parse(window.location.search);
+    const searchTerm = queries['search'];
+    const searchID = queries['id'];
     
     let [entryDiv, setEntryDiv] = useState(<></>);
     useEffect(() => {
         // use search apis
+        const getEntryById = async (id, openByDefault) => {
+            let book = await backend.getNameAndImage(id);
+            console.log(id);
+            const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} id={id} locationOpenByDefault={openByDefault} />
+            return entry;
+        }
+
         const search = async () => {  
             let entries = [];
             const res = await algolia.search(searchTerm);
 
             for (let i = 0; i < res.length; i++) {
                 const id = res[i];
-                let book = await backend.getNameAndImage(id);
-                const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} id={id} locationOpenByDefault={false} />
+                const entry = await getEntryById(id, false);
                 entries.push(entry);
             }
     
@@ -34,8 +40,19 @@ const SearchResultsPage = () => {
             ));
         }
 
+        const searchByID = async () => {
+            const entry = await getEntryById(searchID, true);
+            setEntryDiv((
+                <div className='Results-Wrapper'>
+                    {entry}
+                </div>
+            ));
+        }
+
         if (searchTerm != undefined) {
             search();
+        } else {
+            searchByID();
         }
     }, []);
 
