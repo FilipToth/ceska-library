@@ -1,6 +1,7 @@
 import 'assets/App.css'
 import SearchPage from 'pages/SearchPage';
 import SearchResultsPage from 'pages/SearchResultsPage';
+import LoginPage from 'pages/LoginPage';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => {
@@ -12,6 +13,9 @@ const App = () => {
                 </Route>
                 <Route path='/results'>
                     <SearchResultsPage />
+                </Route>
+                <Route path='/login'>
+                    <LoginPage />
                 </Route>
             </Switch>
         </Router>

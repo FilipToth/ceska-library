@@ -11,6 +11,7 @@
     "content-editable": "^2.0.1",
     "query-string": "^7.1.1",
     "react": "^18.2.0",
+    "react-auth-kit": "^2.12.2",
     "react-contenteditable": "^3.3.6",
     "react-dom": "^18.2.0",
     "react-instantsearch-dom": "^6.39.0",

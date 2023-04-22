@@ -1,9 +1,8 @@
-.Suggest-Book-Div-Button {
-    /* Suggest-Book-Btn */
-
+.Custom-Button {
     /* Auto layout */
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     padding: 10px 32px;
     gap: 10px;
@@ -26,19 +25,17 @@
     cursor: pointer;
 }
 
-.Suggest-Book-Div-Button:hover {
+.Custom-Button:hover {
     border-radius: 50px;
     background: linear-gradient(91.79deg, #00F27E 5.22%, #0000 99.64%);
     background-color: #45CDD6;
 }
 
-.Suggest-Book-Div-Button:hover > .Suggest-Book-Text {
+.Custom-Button:hover > .Custom-Button-Text {
     color: black;
 }
 
-.Suggest-Book-Text {
-    /* Suggest me a book! */
-
+.Custom-Button-Text {    
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 400;

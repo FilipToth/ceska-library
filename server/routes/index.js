@@ -1,5 +1,6 @@
 var handler = require('../db/handler');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 var express = require('express');
 var router = express.Router();
@@ -35,7 +36,10 @@ router.get('/auth', async(req, res, next) => {
 
     const hashedEnteredPassword = crypto.createHash('md5').update(enteredPasswordPlain).digest('hex');
     if (user.password === hashedEnteredPassword) {
-        res.send({ success: true });
+        // generate json web token
+        const token = jwt.sign({ username: username }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        res.send({ success: true, token: token });
+        return;
     }
 
     res.send({ success: false });

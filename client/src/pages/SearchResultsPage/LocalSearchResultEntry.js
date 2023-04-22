@@ -1,6 +1,7 @@
 import 'assets/SearchResultEntry.css';
 import LocationInfo from './LocationInfo';
 import { useState } from 'react';
+import CustomButton from 'components/CustomButton';
 
 const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefault }) => {
     const [locationOpen, setLocationOpen] = useState(locationOpenByDefault);
@@ -36,9 +37,7 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
                         <p1 className='Book-Name-Text'>{bookName}</p1>
                         <p1 className='Author-Name-Text'>By {authorName}</p1>
                     </div>
-                    <div className='Availability-Button' onClick={showLocClick}>
-                        <p1 className='Availability-Text'>Check Location</p1>
-                    </div>
+                    <CustomButton msg='Check Location' onClick={showLocClick} />
                 </div>
             </div>
 

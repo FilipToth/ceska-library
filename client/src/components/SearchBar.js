@@ -1,9 +1,8 @@
 import 'assets/SearchBar.css'
 import SearchSuggestion from 'components/SearchSuggestion';
-import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
 import { useHistory } from "react-router-dom";
-import SuggestBtn from 'components/SuggestBtn'
+import CustomButton from 'components/CustomButton'
 import algolia from 'services/algolia';
 
 const SearchBar = ({ query, renderSuggestBtn }) => {
@@ -17,7 +16,7 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
 
         let suggestBtn = undefined;
         if (renderSuggestBtn)
-            suggestBtn = <SuggestBtn />;
+            suggestBtn = <CustomButton msg={'Suggest me a book!'} />;
         
         const change = (e) => {
             if (addInitialQuery)

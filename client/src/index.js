@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import 'assets/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from 'react-auth-kit';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
+  <React.StrictMode
+    authType={'cookie'}
+    authName={'userauth'}
+    cookieDomain={'window.location.hostname'}
+    cookieSecure={false}>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 
