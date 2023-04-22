@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode
     authType={'cookie'}
-    authName={'userauth'}
+    authName={'_userauth'}
     cookieDomain={'window.location.hostname'}
     cookieSecure={false}>
     <AuthProvider>

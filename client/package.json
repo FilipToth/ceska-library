@@ -16,7 +16,7 @@
     "react-dom": "^18.2.0",
     "react-instantsearch-dom": "^6.39.0",
     "react-instantsearch-hooks-web": "^6.38.3",
-    "react-router-dom": "^5.3.3",
+    "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },

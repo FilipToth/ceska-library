@@ -1,10 +1,10 @@
 import 'assets/SearchSuggestion.css'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SearchSuggestion = ({ searchHit }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const click = () => {
-        history.push(`/results?id=${searchHit.id}`);
+        navigate(`/results?id=${searchHit.id}`);
     };
 
     return (

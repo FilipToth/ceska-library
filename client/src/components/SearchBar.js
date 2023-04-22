@@ -1,12 +1,12 @@
 import 'assets/SearchBar.css'
 import SearchSuggestion from 'components/SearchSuggestion';
 import { InstantSearch, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomButton from 'components/CustomButton'
 import algolia from 'services/algolia';
 
 const SearchBar = ({ query, renderSuggestBtn }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     var renderHits = false;
     var addInitialQuery = true;
@@ -33,7 +33,7 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
         };
 
         const btnClick = async () => {
-            history.push(`/results?search=${currentRefinement}`);
+            navigate(`/results?search=${currentRefinement}`);
         }
         
         return (
