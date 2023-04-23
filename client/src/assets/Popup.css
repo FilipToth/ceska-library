@@ -1,0 +1,74 @@
+@keyframes location-opening-animation {
+    0% {
+        top: -100px;
+    }
+    100% {
+        top: 100px;
+    }
+}
+
+@keyframes location-closing-animation {
+    0% {
+        top: 100px;
+    }
+    100% {
+        top: -100px;
+    }
+}
+
+.Popup-Wrapper {
+    position: relative;
+    animation: 0.5s ease-out 0s 1 location-opening-animation;
+    animation-fill-mode: forwards;
+    width:fit-content;
+
+    padding: 20px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 10px rgba(92, 138, 116, 0.25);
+    border-radius: 20px;
+}
+
+.Popup-Wrapper-Closing {
+    position: relative;
+    top: -100px;
+    animation: 0.5s ease-out 0s 1 location-closing-animation;
+    width:fit-content;
+
+    padding: 20px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 10px rgba(92, 138, 116, 0.25);
+    border-radius: 20px;
+}
+
+.Popup-Horizontal-Wrapper {
+    position: absolute;
+    top: 0%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 100%;
+}
+
+.Popup-Text {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #858585;
+
+
+    /* Inside auto layout */
+    flex: none;
+    flex-grow: 0;
+}

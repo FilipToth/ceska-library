@@ -2,6 +2,7 @@ import 'assets/AdminPage.css';
 import CustomButton from "components/CustomButton";
 import NavBar from "components/NavBar";
 import NavBarLink from "components/NavBarLink";
+import Popup from 'components/Popup';
 import { useSignOut } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -19,7 +20,8 @@ const AdminPage = () => {
         let values = Object.values(tabs);
         setAppState({
             navBarChildren: getTabChildren(tabs, index),
-            subWidget: <div>{values[index]}</div>
+            subWidget: <div>{values[index]}</div>,
+            popup: appState.popup
         });
     }
 
@@ -41,14 +43,25 @@ const AdminPage = () => {
         return children;
     }
 
-    const tabs = { 'Book Management': <div></div>, 'Add Books': <AddBook />, 'Library Management': <div></div> };
+    const showPopup = (text, waitTime = 2000, red = true) => {
+        const waitCallback = () => {
+            setPopup(<></>);
+        };
+
+        setPopup(<Popup text={text} waitTime={waitTime} waitCallback={waitCallback} red={red} />);
+    }
+
+    const tabs = { 'Book Management': <div>1</div>, 'Add Books': <AddBook popupFunction={showPopup} />, 'Library Management': <div>3</div> };
+    const [popup, setPopup] = useState(<></>);
     const [appState, setAppState] = useState({
         navBarChildren: getTabChildren(tabs),
-        subWidget: <div>0</div>
+        subWidget: <div>1</div>,
+        popup: <></>
     });
 
     return (
         <div className="Admin-Panel-App-Container">
+            {popup}
             <NavBar leftChildren={appState.navBarChildren} rightChildren={[
                 <CustomButton msg={'Sign Out'} onClick={signOutClick} paddingHeight={7} paddingWidth={30} /> 
             ]}>
