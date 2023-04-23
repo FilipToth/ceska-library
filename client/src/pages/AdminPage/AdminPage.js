@@ -43,9 +43,9 @@ const AdminPage = () => {
     });
 
     return (
-        <div className="App-Container">
+        <div className="Admin-Panel-App-Container">
             <NavBar leftChildren={appState.navBarChildren} rightChildren={[
-                <CustomButton msg={'Sign Out'} onClick={signOutClick} /> 
+                <CustomButton msg={'Sign Out'} onClick={signOutClick} paddingHeight={7} paddingWidth={30} /> 
             ]}>
             </NavBar>
             {appState.subWidget}

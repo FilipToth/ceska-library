@@ -7,7 +7,7 @@ const NavBarLink = ({ onClick, text, selected, index }) => {
 
     return (
         <div className={cssClass} onClick={() => { onClick(index) }}>
-            <p1 className='Nav-Bar-Link-Text'>{text}{}</p1>
+            <p1 className='Nav-Bar-Link-Text'>{text}</p1>
         </div>
     )
 }

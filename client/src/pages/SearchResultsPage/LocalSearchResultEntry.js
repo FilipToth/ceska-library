@@ -37,7 +37,7 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
                         <p1 className='Book-Name-Text'>{bookName}</p1>
                         <p1 className='Author-Name-Text'>By {authorName}</p1>
                     </div>
-                    <CustomButton msg='Check Location' onClick={showLocClick} />
+                    <CustomButton msg='Check Location' onClick={showLocClick} paddingWidth={40} paddingHeight={10} width={130} />
                 </div>
             </div>
 

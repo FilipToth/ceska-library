@@ -3,7 +3,7 @@ import SearchBar from 'components/SearchBar';
 
 const SearchPage = () => {
     return (
-        <div className='App-Container'>
+        <div className='Search-Page-App-Container'>
             <SearchBar renderSuggestBtn={true} />
         </div>
     )

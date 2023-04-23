@@ -39,7 +39,7 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="App-Container">
+        <div className="Login-Page-App-Container">
             <div className='Login-Wrapper'>
                 <p1 className='Login-Header-Text'>Login</p1>
                 <div className='Fields-Wrapper'>

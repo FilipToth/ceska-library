@@ -57,7 +57,7 @@ const SearchResultsPage = () => {
     }, []);
 
     return (
-        <div className='App-Container'>
+        <div className='Search-Results-Page-App-Container'>
             <SearchBar query={searchTerm} />
             {entryDiv}
             <div className='Footer-Wrapper'>
