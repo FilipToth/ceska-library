@@ -1,9 +1,11 @@
+import 'assets/AdminPage.css';
 import CustomButton from "components/CustomButton";
 import NavBar from "components/NavBar";
 import NavBarLink from "components/NavBarLink";
 import { useSignOut } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import AddBook from './AddBook';
 
 const AdminPage = () => {
     const navigate = useNavigate();
@@ -14,29 +16,32 @@ const AdminPage = () => {
     };
 
     const select = (index) => {
+        let values = Object.values(tabs);
         setAppState({
             navBarChildren: getTabChildren(tabs, index),
-            subWidget: <div>{index}</div>
+            subWidget: <div>{values[index]}</div>
         });
     }
 
     const getTabChildren = (tabs, selectedIndex = 0) => {
         let children = [];
-        for (let i = 0; i < tabs.length; i++) {
+        let keys = Object.keys(tabs);
+        for (let i = 0; i < keys.length; i++) {
             let selected = false;
             if (i == selectedIndex) {
                 selected = true;
             }
 
+            const text = keys[i];
             children.push(
-                <NavBarLink text={tabs[i]} onClick={select} selected={selected} index={i} />
+                <NavBarLink text={text} onClick={select} selected={selected} index={i} />
             );
         }
 
         return children;
     }
 
-    const tabs = ['Book Management', 'Library Management'];
+    const tabs = { 'Book Management': <div></div>, 'Add Books': <AddBook />, 'Library Management': <div></div> };
     const [appState, setAppState] = useState({
         navBarChildren: getTabChildren(tabs),
         subWidget: <div>0</div>

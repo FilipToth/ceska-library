@@ -1,0 +1,162 @@
+.Admin-Panel-App-Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+
+    background: #E5EAF1;
+}
+
+.Add-Book-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    gap: 27px;
+
+    width: 478px;
+    height: 411px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
+    border-radius: 20px;
+}
+
+.Add-Book-Form-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    width: 418px;
+    height: 224px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    flex-grow: 0;
+}
+
+.Add-Book-Form-Key-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
+
+    width: 58px;
+    height: 224px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Add-Book-Form-Key {
+    width: 58px;
+    height: 29px;
+
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #5F5F5F;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.Add-Book-Input-Wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    width: 360px;
+    height: 224px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.Add-Book-Header-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    gap: 7px;
+
+    /* Inside auto layout */
+    flex: none;
+    flex-grow: 0;
+}
+
+.Add-Book-Header {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 28px;
+
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #5C8A74;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Add-Book-Subheader {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 11px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #5F5F5F;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
