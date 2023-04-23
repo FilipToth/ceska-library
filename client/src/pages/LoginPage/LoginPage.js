@@ -14,6 +14,11 @@ const LoginPage = () => {
     const login = () => {
         // get auth token from api
         backend.getAuthentication(username, password).then((data) => {
+            if (data.success === false) {
+                alert('Invalid credentials');
+                return;
+            }
+
             signIn({
                 token: data.token,
                 expiresIn: '3600',

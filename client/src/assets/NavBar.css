@@ -1,0 +1,57 @@
+.Nav-Bar {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-top: 0.1vw;
+    padding-bottom: 0.1vw;
+
+    width: 95%;
+    height: 54px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
+    border-radius: 20px;
+
+    position: absolute;
+    top: 2vh;
+}
+
+.Left-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    /* Inside auto layout */
+    flex: none;
+    flex-grow: 0;
+}
+
+.Right-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    /* Inside auto layout */
+    flex: none;
+    flex-grow: 0;
+}
+
+.Spacer {
+    /* Inside auto layout */
+    flex: none;
+    align-self: stretch;
+    flex-grow: 1;
+}
