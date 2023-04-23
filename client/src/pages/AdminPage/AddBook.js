@@ -2,6 +2,7 @@ import CustomButton from "components/CustomButton";
 import TextBoxField from "components/TextBoxField";
 import backend from "services/backend";
 import { useAuthHeader } from "react-auth-kit";
+import isbnProvider from "services/isbn";
 
 const AddBook = ({ popupFunction }) => {
     const authHeader = useAuthHeader();
@@ -59,6 +60,19 @@ const AddBook = ({ popupFunction }) => {
         popupFunction('Book added!', 2000, false);
     };
 
+    const searchIsbn = () => {
+        isbnProvider.getBook(isbn).then((book) => {
+            title = book.name;
+            author = book.author;
+
+            const titleField = document.getElementById('title');
+            titleField.value = book.name;
+
+            const authorField = document.getElementById('author');
+            authorField.value = book.author;
+        });
+    };
+
     return (
         <div className='Add-Book-Wrapper'>
             <div className='Add-Book-Header-Wrapper'>
@@ -75,9 +89,9 @@ const AddBook = ({ popupFunction }) => {
                     <p1 className='Add-Book-Form-Key'>Column</p1>
                 </div>
                 <div className="Add-Book-Input-Wrapper">
-                    <TextBoxField onChange={isbnChange} placeholder={'...'} text={''} addSearchButton={true} />
-                    <TextBoxField onChange={titleChange} placeholder={'...'} text={''} />
-                    <TextBoxField onChange={authorChange} placeholder={'...'} text={''} />
+                    <TextBoxField onChange={isbnChange} placeholder={'...'} text={''} addSearchButton={true} searchButtonOnClick={searchIsbn} />
+                    <TextBoxField onChange={titleChange} placeholder={'...'} text={''} id='title' />
+                    <TextBoxField onChange={authorChange} placeholder={'...'} text={''} id='author' />
                     <TextBoxField onChange={libraryChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={rowChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={columnChange} placeholder={'...'} text={''} />
