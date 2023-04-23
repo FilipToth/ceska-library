@@ -55,3 +55,42 @@
     align-self: stretch;
     flex-grow: 1;
 }
+
+@keyframes nav-bar-hover {
+    0% {
+    }
+    100% {
+        border-radius: 50px;
+        background: linear-gradient(252.1deg, #00F27E 5.12%, #0000 88.36%);
+        background-color: #45CDD6;
+    }
+}
+
+.Nav-Bar-Link {
+    /* Frame 28 */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 7px 12px;
+    gap: 10px;
+
+    background: #FFFFFF;
+    box-shadow: 1px 1px 10px 2px rgba(0, 242, 126, 0.25);
+    border-radius: 10px;
+    
+    cursor: pointer;
+}
+
+.Nav-Bar-Link:hover {
+    animation: nav-bar-hover 300ms;
+    animation-fill-mode: forwards;
+}
+
+.Nav-Bar-Link-Selected {
+    border-radius: 50px;
+    background: linear-gradient(252.1deg, #00F27E 5.12%, #0000 88.36%);
+    background-color: #45CDD6;
+}
