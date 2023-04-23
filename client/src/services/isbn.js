@@ -3,7 +3,6 @@ import axios from "axios";
 class ISBNProvider {
     async getAuthor(authorID) {
         // example author id: /authors/OL34184A
-        console.log(`https://openlibrary.org${authorID}.json`);
         const resp = await axios.get(`https://openlibrary.org${authorID}.json`);
         const data = resp.data;
 
@@ -25,10 +24,19 @@ class ISBNProvider {
         const author = await this.getAuthor(data.authors[0].key);
         const book = {
             name: data.title,
-            author: author.name
+            author: author.name,
+            bookID: data.key
         };
 
         return book;
+    }
+
+    async getImage(isbn) {
+        // get book id
+        const book = await this.getBook(isbn);
+        const bookID = book.bookID;
+        const image = `https://covers.openlibrary.org/b/olid/${bookID.replace('/books/', '')}-M.jpg`;
+        return image;
     }
 }
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const SearchSuggestion = ({ searchHit }) => {
     const navigate = useNavigate();
     const click = () => {
-        navigate(`/results?id=${searchHit.id}`);
+        navigate(`/results?id=${searchHit.objectID}`);
     };
 
     return (

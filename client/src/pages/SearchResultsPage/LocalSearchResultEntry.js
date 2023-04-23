@@ -1,11 +1,13 @@
 import 'assets/SearchResultEntry.css';
 import LocationInfo from './LocationInfo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomButton from 'components/CustomButton';
+import isbnProvider from 'services/isbn';
 
 const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefault }) => {
     const [locationOpen, setLocationOpen] = useState(locationOpenByDefault);
     const [closedLocationWidget, setClosedLocationWidget] = useState(false);
+    const [image, setImage] = useState('images/break_over.jpg');
     const showLocClick = () => {
         if (locationOpen == true) {
             setClosedLocationWidget(true);
@@ -28,10 +30,19 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
         }, 500);
     }
 
+    useEffect(() => {
+        const getImage = async () => {
+            const image = await isbnProvider.getImage(id);
+            setImage(image);
+        }
+
+        getImage();
+    })
+
     return (
         <div className='Entry-Wrapper'>
            <div className='Entry'>
-                <img className='Book-Image' src='images/break_over.jpg'></img>
+                <img className='Book-Image' src={image}></img>
                 <div className='Right-Wrapper'>
                     <div className='Info-Wrapper'>
                         <p1 className='Book-Name-Text'>{bookName}</p1>
