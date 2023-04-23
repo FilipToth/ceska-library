@@ -7,6 +7,7 @@ import { useSignOut } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AddBook from './AddBook';
+import RemoveBook from './RemoveBook';
 
 const AdminPage = () => {
     const navigate = useNavigate();
@@ -51,11 +52,11 @@ const AdminPage = () => {
         setPopup(<Popup text={text} waitTime={waitTime} waitCallback={waitCallback} red={red} />);
     }
 
-    const tabs = { 'Book Management': <div>1</div>, 'Add Books': <AddBook popupFunction={showPopup} />, 'Library Management': <div>3</div> };
+    const tabs = { 'Add Books': <AddBook popupFunction={showPopup} />, 'Remove Books': <RemoveBook popupFunction={showPopup} />, 'Change Book Details': <div>4</div> };
     const [popup, setPopup] = useState(<></>);
     const [appState, setAppState] = useState({
-        navBarChildren: getTabChildren(tabs),
-        subWidget: <div>1</div>,
+        navBarChildren: getTabChildren(tabs, 0),
+        subWidget: Object.values(tabs)[0],
         popup: <></>
     });
 

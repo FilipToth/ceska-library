@@ -58,11 +58,13 @@ router.get('/add-book', async(req, res, next) => {
     const token = req.query.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
         if (err) {
+            console.log(err);
             res.send({ success: false });
             return;
         }
 
         if (decoded.username == undefined || decoded.username == '') {
+            console.log(decoded.username);
             res.send({ success: false });
             return;
         }
@@ -76,9 +78,30 @@ router.get('/add-book', async(req, res, next) => {
         const column = req.query.column;
 
         await handler.addBook(isbn, title, author, library, row, column);
+        res.send({ success: true });
     });
+});
 
-    res.send({ success: true });
+router.get('/remove-book', async(req, res, next) => {
+    const token = req.query.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (err) {
+            console.log(err);
+            res.send({ success: false });
+            return;
+        }
+
+        if (decoded.username == undefined || decoded.username == '') {
+            console.log(decoded.username);
+            res.send({ success: false });
+            return;
+        }
+
+        // remove book from database
+        const id = req.query.id;
+        await handler.removeBook(id);
+        res.send({ success: true });
+    });
 });
 
 module.exports = router;

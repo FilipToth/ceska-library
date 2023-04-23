@@ -20,6 +20,11 @@ class Backend {
         const resp = await axios.get(`http://127.0.0.1:8080/add-book?token=${token}&isbn=${book.isbn}&title=${book.title}&author=${book.author}&library=${book.library}&row=${book.row}&column=${book.column}`);
         return resp.data;
     }
+
+    async removeBook(isbn, token) {
+        const resp = await axios.get(`http://127.0.0.1:8080/remove-book?token=${token}&id=${isbn}`);
+        return resp.data;
+    }
 }
 
 const backend = new Backend();

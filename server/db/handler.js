@@ -48,7 +48,7 @@ class DatabaseHandler
         const algoliaObject = [{
             name: title,
             author: author,
-            id: isbn,
+            objectID: isbn,
         }];
 
         let success = true;
@@ -84,6 +84,34 @@ class DatabaseHandler
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     }
+
+    removeBook = async (isbn) => {
+        // remove from algolia
+        let success = true;
+        const index = this.algoliaClient.initIndex(process.env.ALGOLIA_INDEX_NAME);
+        await index.deleteObject(isbn).catch((err) => {
+            success = false;
+            console.log(err);
+        });
+
+        if (!success)
+            return;
+
+        // remove from faunadb
+        const bookData = {
+            data: { }
+        };
+
+        const locationData = {
+            data: { }
+        };
+
+        bookData.data[isbn] = null;
+        locationData.data[isbn] = null;
+
+        await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
+        await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
+    };
 }
 
 const handler = new DatabaseHandler();
