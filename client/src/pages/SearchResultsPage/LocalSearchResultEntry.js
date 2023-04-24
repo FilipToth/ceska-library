@@ -39,13 +39,18 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
         getImage();
     })
 
+    const booknameFontSize = bookName.length > 30 ? '1.1rem' : '1.5rem';
+    const booknameStyle = {
+        fontSize: booknameFontSize
+    }
+
     return (
         <div className='Entry-Wrapper'>
            <div className='Entry'>
                 <img className='Book-Image' src={image}></img>
                 <div className='Right-Wrapper'>
                     <div className='Info-Wrapper'>
-                        <p1 className='Book-Name-Text'>{bookName}</p1>
+                        <p1 className='Book-Name-Text' style={booknameStyle}>{bookName}</p1>
                         <p1 className='Author-Name-Text'>By {authorName}</p1>
                     </div>
                     <CustomButton msg='Check Location' onClick={showLocClick} paddingWidth={40} paddingHeight={10} width={130} />
