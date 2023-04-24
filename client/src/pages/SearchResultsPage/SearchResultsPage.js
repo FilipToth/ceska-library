@@ -15,7 +15,7 @@ const SearchResultsPage = () => {
     useEffect(() => {
         // use search apis
         const getEntryById = async (id, openByDefault) => {
-            let book = await backend.getNameAndImage(id);
+            let book = await backend.getBookInfoByID(id);
             console.log(id);
             const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} id={id} locationOpenByDefault={openByDefault} />
             return entry;
