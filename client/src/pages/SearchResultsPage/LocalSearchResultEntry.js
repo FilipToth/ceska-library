@@ -32,8 +32,8 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
 
     useEffect(() => {
         const getImage = async () => {
-            const image = await isbnProvider.getImage(id);
-            setImage(image);
+            const book = await isbnProvider.getBook(id);
+            setImage(book.image);
         }
 
         getImage();
