@@ -17,8 +17,12 @@
     box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
     border-radius: 20px;
 
-    position: absolute;
+    /* The position type is set by the style prop in the component */
     top: 2vh;
+    
+    /* Alignment */
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .Left-Wrapper {

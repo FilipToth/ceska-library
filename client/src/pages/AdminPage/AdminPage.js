@@ -20,28 +20,10 @@ const AdminPage = () => {
     const select = (index) => {
         let values = Object.values(tabs);
         setAppState({
-            navBarChildren: getTabChildren(tabs, index),
+            navBarChildren: NavBar.getTabChildren(tabs, select, index),
             subWidget: <div>{values[index]}</div>,
             popup: appState.popup
         });
-    }
-
-    const getTabChildren = (tabs, selectedIndex = 0) => {
-        let children = [];
-        let keys = Object.keys(tabs);
-        for (let i = 0; i < keys.length; i++) {
-            let selected = false;
-            if (i == selectedIndex) {
-                selected = true;
-            }
-
-            const text = keys[i];
-            children.push(
-                <NavBarLink text={text} onClick={select} selected={selected} index={i} />
-            );
-        }
-
-        return children;
     }
 
     const showPopup = (text, waitTime = 2000, red = true) => {
@@ -52,10 +34,14 @@ const AdminPage = () => {
         setPopup(<Popup text={text} waitTime={waitTime} waitCallback={waitCallback} red={red} />);
     }
 
-    const tabs = { 'Add Books': <AddBook popupFunction={showPopup} />, 'Remove Books': <RemoveBook popupFunction={showPopup} /> };
+    const tabs = {
+        'Add Books': <AddBook popupFunction={showPopup} />,
+        'Remove Books': <RemoveBook popupFunction={showPopup} />
+    };
+
     const [popup, setPopup] = useState(<></>);
     const [appState, setAppState] = useState({
-        navBarChildren: getTabChildren(tabs, 0),
+        navBarChildren: NavBar.getTabChildren(tabs, select, 0),
         subWidget: Object.values(tabs)[0],
         popup: <></>
     });

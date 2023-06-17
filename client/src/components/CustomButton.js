@@ -16,7 +16,6 @@ const CustomButton = ({ msg, onClick, paddingHeight = 11, paddingWidth = 30, wid
 
     return (
         <div className='Custom-Button' style={style} onClick={onClick}>
-
             <p1 className='Custom-Button-Text'>{msg}</p1>
         </div>
     )
