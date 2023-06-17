@@ -9,13 +9,14 @@ class Algolia {
     async search(query) {
         const searchResult = await this.index.search(query);
         const hits = searchResult.hits;
+        console.log(hits);
         if (hits.length == 0) {
             return [];
         }
         
         let res = [];
         hits.forEach((hit) => {
-            res.push(hit.id);
+            res.push(hit.objectID);
         });
 
         return res;

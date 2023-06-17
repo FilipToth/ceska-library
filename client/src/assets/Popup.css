@@ -1,4 +1,4 @@
-@keyframes location-opening-animation {
+@keyframes popup-opening-animation {
     0% {
         top: -100px;
     }
@@ -7,7 +7,7 @@
     }
 }
 
-@keyframes location-closing-animation {
+@keyframes popip-closing-animation {
     0% {
         top: 100px;
     }
@@ -18,7 +18,7 @@
 
 .Popup-Wrapper {
     position: relative;
-    animation: 0.5s ease-out 0s 1 location-opening-animation;
+    animation: 0.5s ease-out 0s 1 popup-opening-animation;
     animation-fill-mode: forwards;
     width:fit-content;
 
@@ -32,7 +32,7 @@
 .Popup-Wrapper-Closing {
     position: relative;
     top: -100px;
-    animation: 0.5s ease-out 0s 1 location-closing-animation;
+    animation: 0.5s ease-out 0s 1 popup-closing-animation;
     width:fit-content;
 
     padding: 20px;
