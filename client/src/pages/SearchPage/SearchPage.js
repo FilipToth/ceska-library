@@ -1,21 +1,24 @@
 import 'assets/SearchPage.css'
-import CustomButton from 'components/CustomButton';
+import { useState } from 'react';
+import BookView from './BookView';
 import NavBar from 'components/NavBar';
 import SearchBar from 'components/SearchBar';
-import { useState } from 'react';
 
 const SearchPage = () => {
     const select = (index) => {
         let values = Object.values(tabs);
         setPageState({
             navBarChildren: NavBar.getTabChildren(tabs, select, index),
-            subWidget: <div>{values[index]}</div>,
+            subWidget: values[index],
         });
     }
     
     const tabs = {
-        'Fiction': <p1>Hello!</p1>,
-        'Non-Fiction': <div></div>,
+        'All Books': <BookView genre='All Books' />,
+        'Fiction': <BookView genre='Fiction' />,
+        'Science Fiction': <BookView genre='Science Fiction' />,
+        'Non-Fiction': <BookView genre='Non-Fiction' />,
+        'Thriller': <BookView genre='Thriller' />
     };
 
     const [pageState, setPageState] = useState({
