@@ -31,12 +31,24 @@ class NavBar extends React.Component {
     }
 
     render() {
+        
+        let spacer = <div className='Spacer'></div>
+        let leftWrapperStyle = {
+            flexGrow: 0,
+        }
+
+        
+        if (this.props.rightChildren == undefined || this.props.rightChildren.length == 0) {
+            spacer = <></>
+            leftWrapperStyle.flexGrow = 1;
+        }
+
         return (
             <div className='Nav-Bar' style={this.style}>
-                <div className='Left-Wrapper'>
+                <div className='Left-Wrapper' style={leftWrapperStyle}>
                     {this.props.leftChildren}
                 </div>
-                <div className='Spacer'></div>
+                {spacer}
                 {this.props.rightChildren}
             </div>
         )

@@ -51,8 +51,7 @@ const AdminPage = () => {
             {popup}
             <NavBar leftChildren={appState.navBarChildren} rightChildren={[
                 <CustomButton msg={'Sign Out'} onClick={signOutClick} paddingHeight={7} paddingWidth={30} /> 
-            ]}>
-            </NavBar>
+            ]} />
             {appState.subWidget}
         </div>
     )

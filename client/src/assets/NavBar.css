@@ -36,6 +36,8 @@
 
     /* Inside auto layout */
     flex: none;
+
+    /* Flex grow will be set in the component */
     flex-grow: 0;
 }
 

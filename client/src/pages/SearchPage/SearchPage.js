@@ -27,11 +27,7 @@ const SearchPage = () => {
         <div className='Search-Page-App-Container'>
             <SearchBar renderSuggestBtn={false} />
             <div className='Book-List-Div'>
-                <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={
-                    <CustomButton msg={'Sign Out'}></CustomButton>
-                }>
-
-                </NavBar>
+                <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} />
                 {pageState.subWidget}
             </div>
         </div>
