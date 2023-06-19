@@ -23,8 +23,8 @@ input[type="text"] {
     padding: 0px;
     gap: 7px;
 
-    padding-top: 4vh;
-    padding-bottom: 2vh;
+    padding-top: 0vh;
+    padding-bottom: 4vh;
 
     /* Inside auto layout */
     flex: none;

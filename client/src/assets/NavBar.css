@@ -5,12 +5,11 @@
     align-items: center;
     gap: 10px;
 
-    padding-left: 0.5vw;
-    padding-right: 0.5vw;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
     padding-top: 0.1vw;
     padding-bottom: 0.1vw;
 
-    width: 95%;
     height: 54px;
 
     background: #E5EAF1;
@@ -18,7 +17,6 @@
     border-radius: 20px;
 
     /* The position type is set by the style prop in the component */
-    top: 2vh;
     
     /* Alignment */
     left: 50%;

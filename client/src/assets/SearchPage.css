@@ -20,23 +20,3 @@
     width: 100%;
     height: 70vh;
 }
-
-.Book-View-Wrapper {
-    width: 100%;
-    height: 62vh;
-    
-    position: absolute;
-    bottom: 0px;
-
-/*     display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);  */
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-
-    gap: 2rem;
-}

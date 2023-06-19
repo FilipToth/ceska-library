@@ -28,9 +28,9 @@ const SearchPage = () => {
 
     return (
         <div className='Search-Page-App-Container'>
-            <SearchBar renderSuggestBtn={false} />
+            <SearchBar renderSuggestBtn={false} paddingTop={0} paddingBottom={4} />
             <div className='Book-List-Div'>
-                <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} />
+                <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} fitContent={true} />
                 {pageState.subWidget}
             </div>
         </div>

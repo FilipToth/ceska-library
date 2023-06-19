@@ -8,7 +8,9 @@ class NavBar extends React.Component {
         
         console.log(props);
         this.style = {
-            position: props.useRelativePosition ? 'relative' : 'absolute'
+            position: props.useRelativePosition ? 'relative' : 'absolute',
+            top: props.useRelativePosition ? 'auto' : '2vh',
+            width: props.fitContent ? 'fit-content' : '93%'
         }
     }
 

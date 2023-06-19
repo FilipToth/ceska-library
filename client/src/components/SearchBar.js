@@ -1,11 +1,11 @@
 import 'assets/SearchBar.css'
 import SearchSuggestion from 'components/SearchSuggestion';
-import { InstantSearch, connectSearchBox, Hits, connectHits } from 'react-instantsearch-dom';
+import { InstantSearch, connectSearchBox, connectHits } from 'react-instantsearch-dom';
 import { useNavigate } from "react-router-dom";
 import CustomButton from 'components/CustomButton'
 import algolia from 'services/algolia';
 
-const SearchBar = ({ query, renderSuggestBtn }) => {
+const SearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 }) => {
     const navigate = useNavigate();
 
     var renderHits = false;
@@ -24,7 +24,7 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
             
             refine(e.target.value);
 
-            if (renderHits == false)
+            if (renderHits == false)    
                 renderHits = true;
 
             const trimmed = e.target.value.trim();
@@ -35,9 +35,14 @@ const SearchBar = ({ query, renderSuggestBtn }) => {
         const btnClick = async () => {
             navigate(`/results?search=${currentRefinement}`);
         }
+
+        const containerStyle = {
+            paddingTop: paddingTop + 'vh',
+            paddingBottom: paddingBottom + 'vh'
+        }
         
         return (
-            <div className='Search-Container'>
+            <div className='Search-Container' style={containerStyle}>
                 {suggestBtn}
                 <div className='Lower-Search-Container'>
                     <div className='Search-Div'>
