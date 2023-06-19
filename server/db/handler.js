@@ -38,6 +38,7 @@ class DatabaseHandler
     }
 
     getLocation = async (id) => {
+        console.log(id)
         const locations = await this.getLocations();
         const location = locations[id];
         return location;
