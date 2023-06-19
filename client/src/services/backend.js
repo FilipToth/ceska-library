@@ -11,6 +11,16 @@ class Backend {
         return location.data;
     }
 
+    async getAllBooks() {
+        const books = await axios.get(`http://127.0.0.1:8080/books`);
+        return books.data;
+    }
+
+    async getBooksByGenre(genre) {
+        const books = await axios.get(`http://127.0.0.1:8080/books?genre=${genre}`);
+        return books.data;
+    }
+
     async getAuthentication(username, password ) {
         const auth = await axios.get(`http://127.0.0.1:8080/auth?username=${username}&password=${password}`);
         return auth.data;

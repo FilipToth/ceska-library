@@ -4,7 +4,6 @@ class ISBNProvider {
     async getBook(isbn) {
         const resp = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
         const data = resp.data;
-        console.log(data);
 
         if (data == undefined) {
             return undefined;

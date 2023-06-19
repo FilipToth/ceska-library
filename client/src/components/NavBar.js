@@ -6,7 +6,6 @@ class NavBar extends React.Component {
     constructor(props) {
         super(props);
         
-        console.log(props);
         this.style = {
             position: props.useRelativePosition ? 'relative' : 'absolute',
             top: props.useRelativePosition ? 'auto' : '2vh',

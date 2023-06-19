@@ -9,7 +9,6 @@ class Algolia {
     async search(query) {
         const searchResult = await this.index.search(query);
         const hits = searchResult.hits;
-        console.log(hits);
         if (hits.length == 0) {
             return [];
         }

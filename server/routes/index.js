@@ -12,7 +12,22 @@ router.get('/', (req, res, next) => {
 
 router.get('/books', async (req, res, next) => {
     const books = await handler.getBooks();
-    res.send(books);
+
+    const genre = req.query.genre;
+    if (genre == undefined || genre == '*') {
+        res.send(books);
+        return;
+    }
+
+    const filteredBooks = {};
+    for (const [key, book] of Object.entries(books)) {
+        const bookGenre = book.genre;
+        if (bookGenre == genre) {
+            filteredBooks[key] = book;
+        }
+    }
+
+    res.send(filteredBooks);
 });
 
 router.get('/id', async (req, res, next) => {

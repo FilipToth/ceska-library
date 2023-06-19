@@ -24,7 +24,7 @@ const SearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 
             
             refine(e.target.value);
 
-            if (renderHits == false)    
+            if (renderHits == false)
                 renderHits = true;
 
             const trimmed = e.target.value.trim();
