@@ -11,6 +11,11 @@ class Backend {
         return location.data;
     }
 
+    async getAllLocations() {
+        const locations = await axios.get(`http://127.0.0.1:8080/loc`);
+        return locations.data;
+    }
+
     async getAllBooks() {
         const books = await axios.get(`http://127.0.0.1:8080/books`);
         return books.data;

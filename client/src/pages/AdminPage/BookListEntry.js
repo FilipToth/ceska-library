@@ -1,18 +1,66 @@
+import { useState } from 'react';
 import 'assets/BookListEntry.css';
 import CustomButton from 'components/CustomButton';
 
-const BookListEntry = () => {
+const BookListEntry = ({ isbn, title, authorName, row, column, genre}) => {
+    const buttonPaddingHeight = 4;
+    const buttonPaddingWidth = 10;
+
+    const [state, setState] = useState({
+        row: row,
+        column: column,
+        genre: genre,
+    });
+
+    const changeRow = (event) => {
+        setState((state) => {
+            return {
+                row: event.target.value,
+                column: state.column,
+                genre: state.genre,
+            };
+        });
+    };
+
+    const changeColumn = (event) => {
+        setState((state) => {
+            return {
+                row: state.row,
+                column: event.target.value,
+                genre: state.genre,
+            };
+        });
+    };
+
+    const changeGenre = (event) => {
+        setState((state) => {
+            return {
+                row: state.row,
+                column: state.column,
+                genre: event.target.value,
+            };
+        });
+    };
+    
     return (
         <div className='Book-List-Entry-Wrapper'>
-            <p1>Book name</p1>
-            <p1>Author name</p1>
-            <p1>row:</p1>
-            <input placeholder='Row' value={1}></input>
-            <p1>column:</p1>
-            <input placeholder='Column' value={1}></input>
-            <p1>genre:</p1>
-            <input placeholder='Genre' value={'Fiction'}></input>
-            <CustomButton msg='Save Edits' paddingHeight={4} paddingWidth={20} />
+            <p1>{title}</p1>
+            <p1>{authorName}</p1>
+            <div className='Field-Group-Wrapper'>
+                <p1 className='Field-Text'>row:</p1>
+                <input value={state.row} size={2} onChange={changeRow} />
+            </div>
+            <div className='Field-Group-Wrapper'>
+                <p1 className='Field-Text'>column:</p1>
+                <input value={state.column} size={2} onChange={changeColumn} />
+            </div>
+            <div className='Field-Group-Wrapper'>
+                <p1 className='Field-Text'>genre:</p1>
+                <input value={state.genre} size={10} onChange={changeGenre} />
+            </div>
+            <CustomButton msg={'Save Edits'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
+            <CustomButton msg={'Check History'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
+            <CustomButton msg={'Checkout'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
         </div>
     );
 }

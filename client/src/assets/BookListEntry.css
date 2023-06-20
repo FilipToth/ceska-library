@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-evenly;
+    gap: 20px;
 
     width: 85vw;
 
@@ -16,4 +16,17 @@
     background: #E5EAF1;
     box-shadow: 1px 1px 20px 10px rgba(92, 138, 116, 0.25);
     border-radius: 20px;
+}
+
+.Field-Group-Wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+
+    gap: 10px;
+}
+
+.Field-Group-Wrapper {
+    text-align: center;
 }

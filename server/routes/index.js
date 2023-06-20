@@ -38,8 +38,16 @@ router.get('/id', async (req, res, next) => {
 
 router.get('/loc', async (req, res, next) => {
     const query = req.query.id;
-    const loc = await handler.getLocation(query);
-    res.send(loc);
+
+    if (query != undefined) {
+        const loc = await handler.getLocation(query);
+        res.send(loc);
+        return;
+    }
+
+    // get all locations
+    const locations = await handler.getLocations();
+    res.send(locations);
 });
 
 router.get('/auth', async(req, res, next) => {
