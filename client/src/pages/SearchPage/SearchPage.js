@@ -1,11 +1,11 @@
 import 'assets/SearchPage.css'
 import BookView from './BookView';
-import SearchBar from 'components/SearchBar';
+import BookSearchBar from 'components/BookSearchBar';
 
 const SearchPage = () => {
     return (
         <div className='Search-Page-App-Container'>
-            <SearchBar renderSuggestBtn={false} paddingTop={1.5} paddingBottom={4} />
+            <BookSearchBar renderSuggestBtn={false} paddingTop={1.5} paddingBottom={4} />
             <BookView />
         </div>
     )

@@ -1,15 +1,16 @@
-import 'assets/SearchBar.css'
+import 'assets/BookSearchBar.css'
 import SearchSuggestion from 'components/SearchSuggestion';
 import { InstantSearch, connectSearchBox, connectHits } from 'react-instantsearch-dom';
 import { useNavigate } from "react-router-dom";
 import CustomButton from 'components/CustomButton'
 import algolia from 'services/algolia';
+import GenericSearchBar from './GenericSearchBar';
 
-const SearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 }) => {
+const BookSearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 }) => {
     const navigate = useNavigate();
 
-    var renderHits = false;
-    var addInitialQuery = true;
+    let renderHits = false;
+    let addInitialQuery = true;
     const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
         if (addInitialQuery && query != undefined)
             currentRefinement = query;
@@ -44,14 +45,8 @@ const SearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 
         return (
             <div className='Search-Container' style={containerStyle}>
                 {suggestBtn}
-                <div className='Lower-Search-Container'>
-                    <div className='Search-Div'>
-                        <input type="text" placeholder='Search books!' value={currentRefinement} onChange={change} ></input>
-                        <div className='Button-Div' onClick={btnClick}>
-                            <img className='Image' src='images/Search-Icon.png'></img>
-                        </div>
-                    </div>
-                </div>
+                
+                <GenericSearchBar currentRefinement={currentRefinement} changeFunc={change} renderBtn={true} btnClick={btnClick} />
 
                 {renderHits &&
                     <MyHits/>
@@ -80,4 +75,4 @@ const SearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 
     )
 }
 
-export default SearchBar;
+export default BookSearchBar;

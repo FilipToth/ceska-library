@@ -1,6 +1,6 @@
 import 'assets/SearchResultsPage.css'
 import queryString from 'query-string'
-import SearchBar from 'components/SearchBar'
+import BookSearchBar from 'components/BookSearchBar'
 import algolia from 'services/algolia';
 import backend from 'services/backend';
 import LocalSearchResultEntry from './LocalSearchResultEntry';
@@ -57,7 +57,7 @@ const SearchResultsPage = () => {
 
     return (
         <div className='Search-Results-Page-App-Container'>
-            <SearchBar query={searchTerm} />
+            <BookSearchBar query={searchTerm} />
             {entryDiv}
             <div className='Footer-Wrapper'>
                 <img className='Footer-Image' src='images/icons8-wtf-100.png'></img>
