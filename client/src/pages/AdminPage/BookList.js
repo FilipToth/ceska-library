@@ -4,27 +4,73 @@ import { useEffect, useState } from 'react';
 import BookListEntry from "./BookListEntry";
 import CustomButton from 'components/CustomButton';
 import GenericSearchBar from "components/GenericSearchBar";
+import algolia from 'services/algolia';
 
 const maxItemsPerLoad = 10;
 
 const BookList = ({ popupFunction }) => {
     const [pageState, setPageState] = useState({
         books: [],
+        booksToRender: [],
         numItemsToShow: maxItemsPerLoad,
         showMoreButton: <></>,
+        searchQuery: ''
     });
+
+    const searchQueryChanged = (event) => {
+        setPageState((state) => {
+            return {
+                books: state.books,
+                booksToRender: state.booksToRender,
+                numItemsToShow: state.numItemsToShow,
+                showMoreButton: state.showMoreButton,
+                searchQuery: event.target.value,
+            };
+        });
+    };
+
+    const searchBtnClicked = async () => {
+        const hits = await algolia.search(pageState.searchQuery);
+        console.log(hits);
+
+        const bookHits = hits.map((isbn) => {
+            for (const book of pageState.books) {
+                if (book.isbn === isbn) {
+                    return book;
+                }
+            }
+        });
+
+        console.log(bookHits);
+
+        setPageState((state) => {
+            let button = <></>;
+            if (bookHits.length > maxItemsPerLoad) {
+                button = <CustomButton msg='Show me more!' onClick={showMoreClick} width={130} />;
+            }
+
+            return {
+                books: state.books,
+                booksToRender: bookHits,
+                numItemsToShow: maxItemsPerLoad,
+                showMoreButton: button,
+                searchQuery: state.searchQuery,
+            };
+        });
+    };
 
     const showMoreClick = () => {
         setPageState((state) => {
             const toShow = state.numItemsToShow + maxItemsPerLoad;
 
             let button = <></>;
-            if (state.books.length > toShow) {
+            if (state.booksToRender.length > toShow) {
                 button = state.showMoreButton;
             }
 
             return {
                 books: state.books,
+                booksToRender: state.booksToRender,
                 showMoreButton: button,
                 numItemsToShow: toShow,
             };
@@ -58,6 +104,7 @@ const BookList = ({ popupFunction }) => {
             setPageState((state) => {
                 return {
                     books: res,
+                    booksToRender: res,
                     numItemsToShow: state.numItemsToShow,
                     showMoreButton: button,
                 }
@@ -70,11 +117,11 @@ const BookList = ({ popupFunction }) => {
     return (
         <div className='Book-List-Wrapper'>
             <div className='Search-Wrapper'>
-                <GenericSearchBar />
+                <GenericSearchBar currentRefinement={pageState.searchQuery} changeFunc={searchQueryChanged} renderBtn={true} btnClick={searchBtnClicked} />
             </div>
 
             <div className='Book-List-Entry-Layout-Container'>
-                {pageState.books.slice(0, pageState.numItemsToShow).map((book) => (
+                {pageState.booksToRender.slice(0, pageState.numItemsToShow).map((book) => (
                     <BookListEntry isbn={book.isbn} title={book.title} authorName={book.author} row={book.row} column={book.column} genre={book.genre} />
                 ))}
             </div>
