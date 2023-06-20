@@ -7,12 +7,12 @@ import { AuthProvider } from 'react-auth-kit';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode
-    authType={'cookie'}
-    authName={'_userauth'}
-    cookieDomain={'window.location.hostname'}
-    cookieSecure={false}>
-    <AuthProvider>
+  <React.StrictMode>
+    <AuthProvider
+      authType={'cookie'}
+      authName={'_userauth'}
+      cookieDomain={'window.location.hostname'}
+      cookieSecure={false}>
       <App />
     </AuthProvider>
   </React.StrictMode>
