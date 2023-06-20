@@ -2,10 +2,34 @@ import 'assets/BookList.css';
 import backend from 'services/backend';
 import { useEffect, useState } from 'react';
 import BookListEntry from "./BookListEntry";
+import CustomButton from 'components/CustomButton';
 import GenericSearchBar from "components/GenericSearchBar";
 
+const maxItemsPerLoad = 10;
+
 const BookList = ({ popupFunction }) => {
-    const [books, setBooks] = useState([]);
+    const [pageState, setPageState] = useState({
+        books: [],
+        numItemsToShow: maxItemsPerLoad,
+        showMoreButton: <></>,
+    });
+
+    const showMoreClick = () => {
+        setPageState((state) => {
+            const toShow = state.numItemsToShow + maxItemsPerLoad;
+
+            let button = <></>;
+            if (state.books.length > toShow) {
+                button = state.showMoreButton;
+            }
+
+            return {
+                books: state.books,
+                showMoreButton: button,
+                numItemsToShow: toShow,
+            };
+        });
+    };
 
     useEffect(() => {
         const getBooks = async () => {
@@ -25,8 +49,19 @@ const BookList = ({ popupFunction }) => {
                     column: location.column,
                 });
             }
+            
+            let button = <></>;
+            if (res.length > maxItemsPerLoad) {
+                button = <CustomButton msg='Show me more!' onClick={showMoreClick} width={130} />;
+            }
 
-            setBooks(res);
+            setPageState((state) => {
+                return {
+                    books: res,
+                    numItemsToShow: state.numItemsToShow,
+                    showMoreButton: button,
+                }
+            });
         }
 
         getBooks();
@@ -39,10 +74,12 @@ const BookList = ({ popupFunction }) => {
             </div>
 
             <div className='Book-List-Entry-Layout-Container'>
-                {books.map((book) => (
+                {pageState.books.slice(0, pageState.numItemsToShow).map((book) => (
                     <BookListEntry isbn={book.isbn} title={book.title} authorName={book.author} row={book.row} column={book.column} genre={book.genre} />
                 ))}
             </div>
+
+            {pageState.showMoreButton}
         </div>
     )
 }

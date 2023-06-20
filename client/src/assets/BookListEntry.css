@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: space-evenly;
     gap: 20px;
+    flex-wrap: wrap;
 
     width: 85vw;
 
@@ -29,4 +30,8 @@
 
 .Field-Group-Wrapper {
     text-align: center;
+}
+
+.Entry-Text {
+    width: 12vw;
 }
