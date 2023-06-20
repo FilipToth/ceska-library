@@ -1,0 +1,19 @@
+.Book-List-Entry-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: 85vw;
+
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 10px rgba(92, 138, 116, 0.25);
+    border-radius: 20px;
+}

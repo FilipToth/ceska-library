@@ -1,7 +1,6 @@
 import 'assets/AdminPage.css';
 import CustomButton from "components/CustomButton";
 import NavBar from "components/NavBar";
-import NavBarLink from "components/NavBarLink";
 import Popup from 'components/Popup';
 import { useSignOut } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
@@ -51,10 +50,14 @@ const AdminPage = () => {
     return (
         <div className="Admin-Panel-App-Container">
             {popup}
-            <NavBar leftChildren={appState.navBarChildren} rightChildren={[
-                <CustomButton msg={'Sign Out'} onClick={signOutClick} paddingHeight={7} paddingWidth={30} /> 
-            ]} />
-            {appState.subWidget}
+            <div className='Nav-Bar-Wrapper'>
+                <NavBar leftChildren={appState.navBarChildren} useRelativePosition={true} rightChildren={[
+                    <CustomButton msg={'Sign Out'} onClick={signOutClick} paddingHeight={7} paddingWidth={30} /> 
+                ]} />
+            </div>
+            <div className='Admin-Widget-Wrapper'>
+                {appState.subWidget}
+            </div>
         </div>
     )
 }

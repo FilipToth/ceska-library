@@ -17,10 +17,6 @@
     border-radius: 20px;
 
     /* The position type is set by the style prop in the component */
-    
-    /* Alignment */
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .Left-Wrapper {

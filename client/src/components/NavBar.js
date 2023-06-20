@@ -9,7 +9,9 @@ class NavBar extends React.Component {
         this.style = {
             position: props.useRelativePosition ? 'relative' : 'absolute',
             top: props.useRelativePosition ? 'auto' : '2vh',
-            width: props.fitContent ? 'fit-content' : '93%'
+            width: props.fitContent ? 'fit-content' : '93%',
+            left: props.useCenterAlign ? '50%' : 'auto',
+            transform: props.useCenterAlign ? 'translate(-50%)' : 'none',
         }
     }
 

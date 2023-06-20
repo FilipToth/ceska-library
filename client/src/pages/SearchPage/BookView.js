@@ -91,7 +91,7 @@ const BookView = () => {
 
     return (
         <div className='Book-List-Div'>
-            <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} fitContent={true} />
+            <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} fitContent={true} useCenterAlign={true} />
             <div className='Book-View-Wrapper'>
                 <div className='Book-View-Result-Wrapper'>
                     {bookResult.bookEntries.slice(0, bookResult.numItemsToShow).map((book) => (
