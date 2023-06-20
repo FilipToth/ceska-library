@@ -37,7 +37,8 @@
     align-items: center;
 
     width: 100%;
-    min-height: 100%;
+
+    flex: 1;
 }
 
 .Add-Book-Wrapper {
