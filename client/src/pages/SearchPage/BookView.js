@@ -6,6 +6,15 @@ import CustomButton from "components/CustomButton";
 import LocalSearchResultEntry from "pages/SearchResultsPage/LocalSearchResultEntry";
 
 const BookView = () => {
+    // calculate max items
+    const windowWidth = window.innerWidth;
+    const itemWidth = 526;
+    const gap = 32;
+
+    const numItemsPerRow = Math.floor((windowWidth - gap) / (itemWidth + gap));
+    const maxHeight = 3;
+    const maxItems = numItemsPerRow * maxHeight;
+
     const tabs = {
         'All Books': '*',
         'Fiction': 'Fiction',
@@ -28,9 +37,28 @@ const BookView = () => {
     });
     
     const [bookResult, setBookResult] = useState({
-        bookWidget: <></>,
-        showMoreButton: <></>
+        bookEntries: [],
+        showMoreButton: <></>,
+        numItemsToShow: maxItems,
     });
+
+    const showMoreClick = () => {
+        setBookResult((state) => {
+            const toShow = state.numItemsToShow + maxItems;
+
+            let button = <></>;
+            if (state.bookEntries.length > toShow) {
+                button = state.showMoreButton;
+            }
+
+            return {
+                bookEntries: state.bookEntries,
+                showMoreButton: button,
+                numItemsToShow: toShow,
+            };
+        });
+    };
+
     useEffect(() => {
         const addResultingBooks = async () => {
             const res = [];
@@ -46,30 +74,15 @@ const BookView = () => {
                 })
             }
 
-            const bookResult = <div className='Book-View-Result-Wrapper'>
-                    {res.map((book) => (
-                        <LocalSearchResultEntry bookName={book.title} authorName={book.author} locationOpenByDefault={false} id={book.isbn} />
-                    ))}
-                </div>;
-
-            const windowWidth = window.innerWidth;
-            const itemWidth = 526;
-            const gap = 32;
-
-            const numItemsPerRow = Math.floor((windowWidth - gap) / (itemWidth + gap));
-            const maxHeight = 3;
-            const maxItems = numItemsPerRow * maxHeight;
-
             let showMoreButton = <></>;
-            console.log(maxItems);
-            console.log(res.length)
             if (res.length > maxItems) {
-                showMoreButton = <CustomButton msg='Show me more!' width={130} />;
+                showMoreButton = <CustomButton msg='Show me more!' onClick={showMoreClick} width={130} />;
             }
 
             setBookResult({
-                bookWidget: bookResult,
-                showMoreButton: showMoreButton
+                bookEntries: res,
+                showMoreButton: showMoreButton,
+                numItemsToShow: maxItems,
             });
         }
 
@@ -80,7 +93,11 @@ const BookView = () => {
         <div className='Book-List-Div'>
             <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} fitContent={true} />
             <div className='Book-View-Wrapper'>
-                { bookResult.bookWidget }
+                <div className='Book-View-Result-Wrapper'>
+                    {bookResult.bookEntries.slice(0, bookResult.numItemsToShow).map((book) => (
+                        <LocalSearchResultEntry bookName={book.title} authorName={book.author} locationOpenByDefault={false} id={book.isbn} />
+                    ))}
+                </div>
                 { bookResult.showMoreButton }
             </div>
         </div> 
