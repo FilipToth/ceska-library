@@ -86,6 +86,24 @@ class DatabaseHandler
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     }
 
+    changeBook = async (isbn, value) => {
+        const bookData = {
+            data: { }
+        };
+
+        bookData.data[isbn] = value;
+        await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
+    };
+
+    changeLocation = async (isbn, value) => {
+        const locationData = {
+            data: { }
+        };
+
+        locationData.data[isbn] = value;
+        await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
+    };
+
     removeBook = async (isbn) => {
         // remove from algolia
         let success = true;

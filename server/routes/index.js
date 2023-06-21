@@ -50,7 +50,7 @@ router.get('/loc', async (req, res, next) => {
     res.send(locations);
 });
 
-router.get('/auth', async(req, res, next) => {
+router.get('/auth', async (req, res, next) => {
     const sendFailed = () => {
         res.send({ success: false });
     };
@@ -77,7 +77,7 @@ router.get('/auth', async(req, res, next) => {
     sendFailed();
 });
 
-router.get('/add-book', async(req, res, next) => {
+router.get('/add-book', async (req, res, next) => {
     const token = req.query.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
         if (err) {
@@ -105,7 +105,7 @@ router.get('/add-book', async(req, res, next) => {
     });
 });
 
-router.get('/remove-book', async(req, res, next) => {
+router.get('/remove-book', async (req, res, next) => {
     const token = req.query.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
         if (err) {
@@ -123,6 +123,50 @@ router.get('/remove-book', async(req, res, next) => {
         // remove book from database
         const id = req.query.id;
         await handler.removeBook(id);
+        res.send({ success: true });
+    });
+});
+
+router.post('/change-book', async (req, res, next) => {
+    const token = req.body.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (err) {
+            console.log(err);
+            res.send({ success: false });
+            return;
+        }
+
+        if (decoded.username == undefined || decoded.username == '') {
+            console.log(decoded.username);
+            res.send({ success: false });
+            return;
+        }
+
+        const key = req.body.key;
+        const value = req.body.value;
+        await handler.changeBook(key, value);
+        res.send({ success: true });
+    });
+});
+
+router.post('/change-location', async (req, res, next) => {
+    const token = req.body.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (err) {
+            console.log(err);
+            res.send({ success: false });
+            return;
+        }
+
+        if (decoded.username == undefined || decoded.username == '') {
+            console.log(decoded.username);
+            res.send({ success: false });
+            return;
+        }
+
+        const key = req.body.key;
+        const value = req.body.value;
+        await handler.changeLocation(key, value);
         res.send({ success: true });
     });
 });

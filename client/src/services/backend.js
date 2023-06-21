@@ -40,6 +40,26 @@ class Backend {
         const resp = await axios.get(`http://127.0.0.1:8080/remove-book?token=${token}&id=${isbn}`);
         return resp.data;
     }
+
+    async changeBook(key, value, token) {
+        const payload = {
+            token: token,
+            key: key,
+            value: value
+        };
+        
+        await axios.post(`http://127.0.0.1:8080/change-book`, payload);
+    }
+
+    async changeLocation(key, value, token) {
+        const payload = {
+            token: token,
+            key: key,
+            value: value
+        };
+
+        await axios.post(`http://127.0.0.1:8080/change-location`, payload);
+    };
 }
 
 const backend = new Backend();
