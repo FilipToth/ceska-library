@@ -1,4 +1,4 @@
-.Book-List-Wrapper {
+.List-View-Wrapper {
     width: 100%;
     padding-bottom: 32px;
 
@@ -11,7 +11,7 @@
     gap: 32px;
 }
 
-.Book-List-Entry-Layout-Container {
+.List-View-Entry-Layout-Container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,6 +19,6 @@
     gap: 20px;
 }
 
-.Search-Wrapper {
+.List-View-Search-Wrapper {
     padding-top: 30px;
 }

@@ -5,6 +5,21 @@ const jwt = require('jsonwebtoken');
 var express = require('express');
 var router = express.Router();
 
+const checkAuth = (err, decoded, res) => {
+    if (err) {
+        console.log(err);
+        res.send({ success: false });
+        return false;
+    }
+
+    if (decoded.username == undefined || decoded.username == '') {
+        res.send({ success: false });
+        return false;
+    }
+
+    return true;
+}
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
     res.render('index', { title: 'Ceska 10 Library' });
@@ -80,17 +95,8 @@ router.get('/auth', async (req, res, next) => {
 router.get('/add-book', async (req, res, next) => {
     const token = req.query.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (err) {
-            console.log(err);
-            res.send({ success: false });
+        if (!checkAuth(err, decoded, res))
             return;
-        }
-
-        if (decoded.username == undefined || decoded.username == '') {
-            console.log(decoded.username);
-            res.send({ success: false });
-            return;
-        }
 
         // add book to database
         const isbn = req.query.isbn;
@@ -108,17 +114,8 @@ router.get('/add-book', async (req, res, next) => {
 router.get('/remove-book', async (req, res, next) => {
     const token = req.query.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (err) {
-            console.log(err);
-            res.send({ success: false });
+        if (!checkAuth(err, decoded, res))
             return;
-        }
-
-        if (decoded.username == undefined || decoded.username == '') {
-            console.log(decoded.username);
-            res.send({ success: false });
-            return;
-        }
 
         // remove book from database
         const id = req.query.id;
@@ -130,17 +127,8 @@ router.get('/remove-book', async (req, res, next) => {
 router.post('/change-book', async (req, res, next) => {
     const token = req.body.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (err) {
-            console.log(err);
-            res.send({ success: false });
+        if (!checkAuth(err, decoded, res))
             return;
-        }
-
-        if (decoded.username == undefined || decoded.username == '') {
-            console.log(decoded.username);
-            res.send({ success: false });
-            return;
-        }
 
         const key = req.body.key;
         const value = req.body.value;
@@ -152,17 +140,8 @@ router.post('/change-book', async (req, res, next) => {
 router.post('/change-location', async (req, res, next) => {
     const token = req.body.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (err) {
-            console.log(err);
-            res.send({ success: false });
+        if (!checkAuth(err, decoded, res))
             return;
-        }
-
-        if (decoded.username == undefined || decoded.username == '') {
-            console.log(decoded.username);
-            res.send({ success: false });
-            return;
-        }
 
         const key = req.body.key;
         const value = req.body.value;

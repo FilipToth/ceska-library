@@ -4,7 +4,7 @@ import backend from 'services/backend';
 import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
 
-const BookListEntry = ({ isbn, title, authorName, row, column, genre}) => {
+const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre}) => {
     const buttonPaddingHeight = 4;
     const buttonPaddingWidth = 10;
 
@@ -72,6 +72,8 @@ const BookListEntry = ({ isbn, title, authorName, row, column, genre}) => {
 
             backend.changeLocation(isbn, value, token);
         }
+
+        popupFunction('Edits saved!', 2000, false);
     };
     
     return (
