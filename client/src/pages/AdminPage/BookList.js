@@ -17,21 +17,9 @@ const BookList = ({ popupFunction }) => {
         searchQuery: ''
     });
 
-    const searchQueryChanged = (event) => {
-        setPageState((state) => {
-            return {
-                books: state.books,
-                booksToRender: state.booksToRender,
-                numItemsToShow: state.numItemsToShow,
-                showMoreButton: state.showMoreButton,
-                searchQuery: event.target.value,
-            };
-        });
-    };
-
-    const searchBtnClicked = async () => {
-        const hits = await algolia.search(pageState.searchQuery);
-        console.log(hits);
+    const searchQueryChanged = async (event) => {
+        const query = event.target.value;
+        const hits = await algolia.search(query);
 
         const bookHits = hits.map((isbn) => {
             for (const book of pageState.books) {
@@ -40,8 +28,6 @@ const BookList = ({ popupFunction }) => {
                 }
             }
         });
-
-        console.log(bookHits);
 
         setPageState((state) => {
             let button = <></>;
@@ -117,7 +103,7 @@ const BookList = ({ popupFunction }) => {
     return (
         <div className='Book-List-Wrapper'>
             <div className='Search-Wrapper'>
-                <GenericSearchBar currentRefinement={pageState.searchQuery} changeFunc={searchQueryChanged} renderBtn={true} btnClick={searchBtnClicked} />
+                <GenericSearchBar currentRefinement={pageState.searchQuery} changeFunc={searchQueryChanged} />
             </div>
 
             <div className='Book-List-Entry-Layout-Container'>
