@@ -24,15 +24,15 @@ const RemoveBook = ({ popupFunction }) => {
     };
 
     return (
-        <div className="Remove-Book-Wrapper">
-            <div className='Add-Book-Header-Wrapper'>
-                <p1 className='Add-Book-Header'>Remove a Book</p1>
+        <div className="Form-Wrapper">
+            <div className='Form-Header-Wrapper'>
+                <p1 className='Form-Book-Header'>Remove a Book</p1>
             </div>
-            <div className='Remove-Book-Form-Wrapper'>
-                <div className='Remove-Book-Form-Key-Wrapper'>
-                    <p1 className='Add-Book-Form-Key'>ISBN</p1>
+            <div className='Inner-Form-Wrapper'>
+                <div className='Inner-Form-Key-Wrapper'>
+                    <p1 className='Inner-Form-Key'>ISBN</p1>
                 </div>
-                <div className="Remove-Book-Input-Wrapper">
+                <div className="Inner-Input-Wrapper">
                     <TextBoxField onChange={isbnChange} placeholder={'...'} text={''} />
                 </div>
             </div>

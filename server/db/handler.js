@@ -11,6 +11,8 @@ class DatabaseHandler
         this.locationsColID = process.env.LOCATIONS_COL_ID;
         this.usersColName = process.env.USERS_COL_NAME;
         this.usersColId = process.env.USERS_COL_ID;
+        this.peopleColName = process.env.PEOPLE_COL_NAME;
+        this.peopleColID = process.env.PEOPLE_COL_ID;
 
         this.algoliaClient = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_KEY);
     }
@@ -53,7 +55,7 @@ class DatabaseHandler
         }];
 
         let success = true;
-        const index = this.algoliaClient.initIndex(process.env.ALGOLIA_INDEX_NAME);
+        const index = this.algoliaClient.initIndex(process.env.ALGOLIA_BOOK_INDEX_NAME);
         await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).catch((err) => {
             success = false;
             console.log(err);
@@ -107,7 +109,7 @@ class DatabaseHandler
     removeBook = async (isbn) => {
         // remove from algolia
         let success = true;
-        const index = this.algoliaClient.initIndex(process.env.ALGOLIA_INDEX_NAME);
+        const index = this.algoliaClient.initIndex(process.env.ALGOLIA_BOOK_INDEX_NAME);
         await index.deleteObject(isbn).catch((err) => {
             success = false;
             console.log(err);
@@ -130,6 +132,37 @@ class DatabaseHandler
 
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
+    };
+
+    addPerson = async (name, pClass, mail) => {
+        // add to algolia
+        const algoliaObject = [{
+            name: name,
+            'class': pClass,
+            email: mail
+        }];
+
+        let success = true;
+        const index = this.algoliaClient.initIndex(process.env.ALGOLIA_PEOPLE_INDEX_NAME);
+        await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).catch((err) => {
+            success = false;
+            console.log(err);
+        });
+
+        if (!success)
+            return;
+
+        // add to faunadb
+        const personData = {
+            data: { }
+        };
+
+        personData.data[name] = {
+            'class': pClass,
+            email: mail
+        };
+
+        await this.connector.updateDoc(this.peopleColName, this.peopleColID, personData);
     };
 }
 

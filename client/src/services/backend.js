@@ -60,6 +60,17 @@ class Backend {
 
         await axios.post(`http://127.0.0.1:8080/change-location`, payload);
     };
+
+    async addPerson(person, token) {
+        const payload = {
+            token: token,
+            name: person.name,
+            class: person.class,
+            mail: person.mail
+        };
+
+        await axios.post(`http://127.0.0.1:8080/add-person`, payload);
+    };
 }
 
 const backend = new Backend();

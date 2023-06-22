@@ -8,6 +8,7 @@ import { useState } from "react";
 import AddBook from './AddBook';
 import RemoveBook from './RemoveBook';
 import BookList from './BookList';
+import AddPerson from './AddPerson';
 
 const AdminPage = () => {
     const navigate = useNavigate();
@@ -37,7 +38,8 @@ const AdminPage = () => {
     const tabs = {
         'Add Books': <AddBook popupFunction={showPopup} />,
         'Remove Books': <RemoveBook popupFunction={showPopup} />,
-        'List Books': <BookList popupFunction={showPopup} />
+        'List Books': <BookList popupFunction={showPopup} />,
+        'Add Person': <AddPerson popupFunction={showPopup} test={'s'} />
     };
 
     const [popup, setPopup] = useState(<></>);

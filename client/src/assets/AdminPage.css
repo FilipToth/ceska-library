@@ -40,24 +40,21 @@
     flex: 1;
 }
 
-.Add-Book-Wrapper {
+.Form-Wrapper {
     /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
-    gap: 27px;
-
-    width: 478px;
-    height: 411px;
+    padding: 50px;
+    gap: 50px;
 
     background: #E5EAF1;
     box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
     border-radius: 20px;
 }
 
-.Add-Book-Form-Wrapper {
+.Inner-Form-Wrapper {
     /* Auto layout */
     display: flex;
     flex-direction: row;
@@ -65,16 +62,13 @@
     align-items: center;
     padding: 0px;
 
-    width: 418px;
-    height: 224px;
-
 
     /* Inside auto layout */
     flex: none;
     flex-grow: 0;
 }
 
-.Add-Book-Form-Key-Wrapper {
+.Inner-Form-Key-Wrapper {
     /* Auto layout */
     display: flex;
     flex-direction: column;
@@ -82,17 +76,13 @@
     padding: 0px;
     gap: 10px;
 
-    width: 58px;
-    height: 224px;
-
-
     /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
 }
 
-.Add-Book-Form-Key {
+.Inner-Form-Key {
     width: 58px;
     height: 29px;
 
@@ -115,7 +105,7 @@
     flex-grow: 0;
 }
 
-.Add-Book-Input-Wrapper {
+.Inner-Input-Wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,8 +114,6 @@
     gap: 10px;
 
     width: 360px;
-    height: 224px;
-
 
     /* Inside auto layout */
     flex: none;
@@ -133,7 +121,7 @@
     flex-grow: 0;
 }
 
-.Add-Book-Header-Wrapper {
+.Form-Header-Wrapper {
     /* Auto layout */
     display: flex;
     flex-direction: column;
@@ -148,7 +136,7 @@
     flex-grow: 0;
 }
 
-.Add-Book-Header {
+.Form-Book-Header {
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 700;
@@ -180,76 +168,6 @@
     text-align: center;
 
     color: #5F5F5F;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-.Remove-Book-Wrapper {
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    gap: 57px;
-
-    width: 478px;
-    height: 205px;
-
-    background: #E5EAF1;
-    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
-    border-radius: 20px;
-}
-
-.Remove-Book-Form-Wrapper {
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-
-    width: 418px;
-    height: 29px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    flex-grow: 0;
-}
-
-.Remove-Book-Form-Key-Wrapper {
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 10px;
-
-    width: 58px;
-    height: 29px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.Remove-Book-Input-Wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    gap: 10px;
-
-    width: 360px;
-    height: 29px;
 
 
     /* Inside auto layout */

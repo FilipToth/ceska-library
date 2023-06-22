@@ -150,4 +150,18 @@ router.post('/change-location', async (req, res, next) => {
     });
 });
 
+router.post('/add-person', async (req, res, next) => {
+    const token = req.body.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+
+        const username = req.body.name;
+        const password = req.body.class;
+        const role = req.body.mail;
+        await handler.addPerson(username, password, role);
+        res.send({ success: true });
+    });
+});
+
 module.exports = router;
