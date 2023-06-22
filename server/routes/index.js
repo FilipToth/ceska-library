@@ -164,4 +164,16 @@ router.post('/add-person', async (req, res, next) => {
     });
 });
 
+router.get('/get-people', async (req, res, next) => {
+    // all people apis need to be secured
+    const token = req.query.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+
+        const people = await handler.getPeople();
+        res.send(people);
+    });
+});
+
 module.exports = router;

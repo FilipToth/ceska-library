@@ -17,7 +17,6 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
     const searchQueryChanged = async (event) => {
         const query = event.target.value;
         const searchItems = await searchFunction(query, pageState.items);
-        console.log(searchItems);
 
         setPageState((state) => {
             let button = <></>;

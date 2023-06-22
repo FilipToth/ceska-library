@@ -71,6 +71,11 @@ class Backend {
 
         await axios.post(`http://127.0.0.1:8080/add-person`, payload);
     };
+
+    async getPeople(token) {
+        const resp = await axios.get(`http://127.0.0.1:8080/get-people?token=${token}`);
+        return resp.data;
+    };
 }
 
 const backend = new Backend();

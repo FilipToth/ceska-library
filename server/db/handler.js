@@ -164,6 +164,11 @@ class DatabaseHandler
 
         await this.connector.updateDoc(this.peopleColName, this.peopleColID, personData);
     };
+
+    getPeople = async () => {
+        const doc = await this.connector.getDoc(this.peopleColName, this.peopleColID);
+        return doc.data;
+    };
 }
 
 const handler = new DatabaseHandler();

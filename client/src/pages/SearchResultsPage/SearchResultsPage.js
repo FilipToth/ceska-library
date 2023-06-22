@@ -22,10 +22,10 @@ const SearchResultsPage = () => {
 
         const search = async () => {  
             let entries = [];
-            const res = await algolia.search(searchTerm);
+            const res = await algolia.searchBooks(searchTerm);
 
             for (let i = 0; i < res.length; i++) {
-                const id = res[i];
+                const id = res[i].objectID;
                 const entry = await getEntryById(id, false);
                 entries.push(entry);
             }

@@ -3,7 +3,7 @@ import { useAuthHeader } from "react-auth-kit";
 import TextBoxField from "components/TextBoxField";
 import CustomButton from "components/CustomButton";
 
-const AddPerson = ({ popupFunction, test }) => {
+const AddPerson = ({ popupFunction }) => {
     const authHeader = useAuthHeader();
     const header = authHeader();
     const token = header.split(' ')[1];

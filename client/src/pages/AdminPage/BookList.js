@@ -5,10 +5,10 @@ import SearchableListView from 'components/SearchableListView';
 
 const BookList = ({ popupFunction }) => {
     const handleSearch = async (query, allEntries) => {
-        const hits = await algolia.search(query);
-        const bookHits = hits.map((isbn) => {
+        const hits = await algolia.searchBooks(query);
+        const bookHits = hits.map((hit) => {
             for (const item of allEntries) {
-                if (item.isbn === isbn) {
+                if (item.isbn === hit.objectID) {
                     return item;
                 }
             }
