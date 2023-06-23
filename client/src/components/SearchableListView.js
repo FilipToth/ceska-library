@@ -1,7 +1,7 @@
 import 'assets/SearchableListView.css';
 import { useEffect, useState } from 'react';
 import CustomButton from 'components/CustomButton';
-import GenericSearchBar from "components/GenericSearchBar";
+import TextBoxField from "components/TextBoxField";
 
 const maxItemsPerLoad = 10;
 
@@ -77,7 +77,7 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
     return (
         <div className='List-View-Wrapper'>
             <div className='List-View-Search-Wrapper'>
-                <GenericSearchBar currentRefinement={pageState.searchQuery} changeFunc={searchQueryChanged} />
+                <TextBoxField placeholder='Search' onChange={searchQueryChanged} paddingHeight={0.75} paddingWidth={0.75} />
             </div>
 
             <div className='List-View-Entry-Layout-Container'>

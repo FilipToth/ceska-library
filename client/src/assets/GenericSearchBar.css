@@ -1,119 +1,41 @@
-input[type="text"] {
-    background: transparent;
-    border: none;
-    width: 100%;
-    height: 60%;
-
-    font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-
-    color: #FFFFFF;
-}
-
-.Lower-Search-Container {
-    /* Search-Frame */
+.Search-Container {
+    /* Search-Parent-Frame */
 
     /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px 0px;
-    gap: 13px;
+    padding: 0px;
+    gap: 7px;
 
-    width: 560px;
-    height: 60px;
-
+    padding-top: 0vh;
+    padding-bottom: 4vh;
 
     /* Inside auto layout */
     flex: none;
-    order: 1;
+    order: 0;
     flex-grow: 0;
 }
 
-.Search-Div {
-    /* Search */
+.Suggestions-Div {
+    /* Frame 4 */
 
     /* Auto layout */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    padding: 5px 10px;
-    gap: 10px;
+    padding: 10px;
+    gap: 7px;
 
-    width: 540px;
-    height: 45px;
+    width: 560px;
 
-    /* Primary */
-    background: linear-gradient(0deg, #5C8A74, #5C8A74), #FFFFFF;
-    box-shadow: 1px 1px 20px 15px rgba(0, 242, 126, 0.2);
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 10px rgba(71, 113, 93, 0.25);
     border-radius: 10px;
 
     /* Inside auto layout */
     flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.Search-Books-Text {
-    /* Search Books... */
-
-    width: 475px;
-    height: 17px;
-
-    font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 17px;
-    display: flex;
-    align-items: center;
-
-    color: #FFFFFF;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.Button-Div {
-    /* Search-Btn */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 3px;
-
-    width: 35px;
-    height: 35px;
-
-    background: linear-gradient(138.88deg, #0000 8.38%, #00F27E 93.05%);;
-    background-color: #00F27E;
-    box-shadow: 1px 1px 20px 6px rgba(0, 0, 0, 0.13);
-    border-radius: 6px;
-
-    /* Inside auto layout */
-    flex: none;
     order: 1;
     flex-grow: 0;
-
-    transition: all 200ms ease-in;
-    
-    cursor: pointer;
-}
-
-.Button-Div:hover {
-    border-radius: 40px;
-    background-color: #49FFDE;
-}
-
-.Image {
-    width: 33px;
-    height: 33px;
 }

@@ -1,78 +1,39 @@
-import 'assets/BookSearchBar.css'
-import SearchSuggestion from 'components/SearchSuggestion';
-import { InstantSearch, connectSearchBox, connectHits } from 'react-instantsearch-dom';
 import { useNavigate } from "react-router-dom";
-import CustomButton from 'components/CustomButton'
-import algolia from 'services/algolia';
 import GenericSearchBar from './GenericSearchBar';
+import CustomButton from 'components/CustomButton'
+import SearchSuggestion from 'components/SearchSuggestion';
 
-const BookSearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 0 }) => {
-    const navigate = useNavigate();
+const BookSearchBar = (query, renderSuggestBtn, paddingTop = 4, paddingBottom = 4, suggestionFunction = undefined) => {
+    const navigate = useNavigate()
 
-    let renderHits = false;
-    let addInitialQuery = true;
-    const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
-        if (addInitialQuery && query != undefined)
-            currentRefinement = query;
+    const btnClick = async (currRefinement) => {
+        navigate(`/results?search=${currRefinement}`);
+    }
 
-        let suggestBtn = undefined;
-        if (renderSuggestBtn)
-            suggestBtn = <CustomButton msg={'Suggest me a book!'} />;
-        
-        const change = (e) => {
-            if (addInitialQuery)
-                addInitialQuery = false;
-            
-            refine(e.target.value);
+    const searchHit = (hit) => {
+        return <SearchSuggestion searchHit={hit}/>;
+    };
 
-            if (renderHits == false)
-                renderHits = true;
+    const topButton = () => {
+        return <CustomButton msg={'Suggest me a book!'} />;
+    };
 
-            const trimmed = e.target.value.trim();
-            if (trimmed == "")
-                renderHits = false;
-        };
+    let suggestFunc = searchHit;
+    if (suggestionFunction != undefined)
+        suggestFunc = suggestionFunction;
 
-        const btnClick = async () => {
-            navigate(`/results?search=${currentRefinement}`);
-        }
-
-        const containerStyle = {
-            paddingTop: paddingTop + 'vh',
-            paddingBottom: paddingBottom + 'vh'
-        }
-        
-        return (
-            <div className='Search-Container' style={containerStyle}>
-                {suggestBtn}
-                
-                <GenericSearchBar currentRefinement={currentRefinement} changeFunc={change} renderBtn={true} btnClick={btnClick} />
-
-                {renderHits &&
-                    <MyHits/>
-                }
-            </div>
-        );
-    });
-
-    const MyHits = connectHits(({ hits }) => {
-        if (hits.length == 0)
-            return undefined;
-
-        return (
-            <div className='Suggestions-Div'>
-                {renderHits && hits.map(hit => (
-                    <SearchSuggestion searchHit={hit}/>
-                ))}
-            </div>
-        );
-    });
-    
     return (
-        <InstantSearch searchClient={algolia.client} indexName="books">
-            <MySearchBox />
-        </InstantSearch>
-    )
+        <GenericSearchBar 
+            indexName={'books'}
+            query={query}
+            suggestionFunction={suggestFunc}
+            renderSearchButton={true}
+            searchButtonClick={btnClick}
+            renderTopBtn={renderSuggestBtn}
+            topButtonFunc={topButton}
+            paddingTop={paddingTop}
+            paddingBottom={paddingBottom}/>
+    );
 }
 
 export default BookSearchBar;

@@ -10,6 +10,7 @@ import RemoveBook from './RemoveBook';
 import BookList from './BookList';
 import AddPerson from './AddPerson';
 import PeopleList from './PeopleList';
+import BookCheckout from './BookCheckout';
 
 const AdminPage = () => {
     const navigate = useNavigate();
@@ -41,8 +42,8 @@ const AdminPage = () => {
         'Remove Books': <RemoveBook popupFunction={showPopup} />,
         'List Books': <BookList popupFunction={showPopup} />,
         'Add Person': <AddPerson popupFunction={showPopup} />,
-        'List People': <PeopleList popupFunction={showPopup} />
-
+        'List People': <PeopleList popupFunction={showPopup} />,
+        'Checkout': <BookCheckout popupFunction={showPopup} />
     };
 
     const [popup, setPopup] = useState(<></>);
