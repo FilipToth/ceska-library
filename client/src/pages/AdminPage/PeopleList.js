@@ -25,11 +25,11 @@ const PeopleList = ({ popupFunction }) => {
     const handleGetItems = async () => {
         const people = await backend.getPeople(token);
         
-        console.log(people);
         const items = [];
-        for (const [name, person] of Object.entries(people)) {
+        for (const [id, person] of Object.entries(people)) {
             items.push({
-                name: name,
+                id: id,
+                name: person.name,
                 class: person.class,
                 email: person.email
             });
@@ -40,7 +40,7 @@ const PeopleList = ({ popupFunction }) => {
 
     const handleRenderItemEntry = (item) => {
         return (
-            <PeopleListEntry name={item.name} className={item.class} email={item.email} />
+            <PeopleListEntry name={item.name} className={item.class} email={item.email} id={item.id} />
         );
     };
 

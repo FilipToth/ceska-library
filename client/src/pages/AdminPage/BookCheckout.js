@@ -68,7 +68,15 @@ const BookCheckout = ({ popupFunction }) => {
     };
 
     const checkout = async () => {
-        console.log(pageState)
+        if (pageState.book == undefined || pageState.person == undefined) {
+            popupFunction('Some fields are empty!', 2000, false);
+            return;
+        }
+
+        const isbn = pageState.book.objectID;
+
+        console.log(pageState.book);
+        console.log(pageState.person);
     };
 
     const DateInput = forwardRef(({ value, onClick }, ref) => {

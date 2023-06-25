@@ -17,8 +17,6 @@ const CustomButton = (props) => {
         style['width'] = width;
     }
 
-    console.log(props)
-
     return (
         <div className='Custom-Button' style={style} onClick={props.onClick} ref={props.ref}>
             <p1>{props.msg}</p1>
