@@ -3,8 +3,9 @@ import GenericSearchBar from './GenericSearchBar';
 import CustomButton from 'components/CustomButton'
 import SearchSuggestion from 'components/SearchSuggestion';
 
-const BookSearchBar = (query, renderSuggestBtn, paddingTop = 4, paddingBottom = 4, suggestionFunction = undefined) => {
+const BookSearchBar = ({ query, renderSuggestBtn, paddingTop = 4, paddingBottom = 4, suggestionFunction = undefined }) => {
     const navigate = useNavigate()
+    console.log(query)
 
     const btnClick = async (currRefinement) => {
         navigate(`/results?search=${currRefinement}`);

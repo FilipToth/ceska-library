@@ -5,7 +5,7 @@ import TextBoxField from "components/TextBoxField";
 
 const maxItemsPerLoad = 10;
 
-const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
+const SearchableListView = ({ searchFunction, getItems, renderItemEntry, renderSearch = true }) => {
     const [pageState, setPageState] = useState({
         items: [],
         itemsToRender: [],
@@ -74,9 +74,11 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
 
     return (
         <div className='List-View-Wrapper'>
-            <div className='List-View-Search-Wrapper'>
-                <TextBoxField placeholder='Search' onChange={searchQueryChanged} paddingHeight={0.75} paddingWidth={0.75} />
-            </div>
+            {renderSearch &&
+                <div className='List-View-Search-Wrapper'>
+                    <TextBoxField placeholder='Search' onChange={searchQueryChanged} paddingHeight={0.75} paddingWidth={0.75} />
+                </div>
+            }
 
             <div className='List-View-Entry-Layout-Container'>
                 {pageState.itemsToRender.slice(0, pageState.numItemsToShow).map((item) => (

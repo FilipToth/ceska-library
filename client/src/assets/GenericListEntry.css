@@ -1,4 +1,4 @@
-.Person-List-Entry-Wrapper {
+.List-Entry-Wrapper {
     /* Auto layout */
     display: flex;
     flex-direction: row;

@@ -77,11 +77,13 @@ class Backend {
         return resp.data;
     };
 
-    async checkout(token, bookID, personID, date) {
+    async checkout(token, bookID, personID, personName, bookName, date) {
         const payload = {
             token: token,
             bookID: bookID,
             personID: personID,
+            personName: personName,
+            bookName: bookName,
             date: date
         };
 
@@ -91,6 +93,16 @@ class Backend {
         });
 
         return response;
+    };
+
+    async getCheckouts(token) {
+        const resp = await axios.get(`http://127.0.0.1:8080/checkouts?token=${token}`);
+        return resp.data;
+    };
+
+    async getPersonById(token, personID) {
+        const resp = await axios.get(`http://127.0.0.1:8080/checkouts?token=${token}&id=${personID}`);
+        return resp.data;
     };
 }
 

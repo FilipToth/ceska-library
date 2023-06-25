@@ -1,9 +1,9 @@
-import 'assets/PeopleListEntry.css'
+import 'assets/GenericListEntry.css'
 import CustomButton from 'components/CustomButton';
 
 const PeopleListEntry = ({ name, className, email, id }) => {
     return (
-        <div className="Person-List-Entry-Wrapper">
+        <div className="List-Entry-Wrapper">
             <p1 className="Entry-Text">{name}</p1>
             <p1 className="Entry-Text">{className}</p1>
             <p1 className="Entry-Text">{email}</p1>

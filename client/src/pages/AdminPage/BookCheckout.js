@@ -7,12 +7,7 @@ import CustomButton from "components/CustomButton";
 import GenericSearchBar from "components/GenericSearchBar";
 import { useState, forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
-
-const getDateMonthFromNow = () => {
-    const date = new Date();
-    date.setMonth(date.getMonth() + 1);
-    return date;
-};
+import { getDateMonthFromNow, sterilizeDate } from 'utils/dates';
 
 const BookCheckout = ({ popupFunction }) => {
     const authHeader = useAuthHeader();
@@ -76,9 +71,12 @@ const BookCheckout = ({ popupFunction }) => {
 
         const isbn = pageState.book.objectID;
         const personID = pageState.person.objectID;
+        const personName = pageState.person.name;
+        const bookName = pageState.book.name;
         const date = pageState.date;
+        const sterilizedDate = sterilizeDate(date);
 
-        const resp = await backend.checkout(token, isbn, personID, date);
+        const resp = await backend.checkout(token, isbn, personID, personName, bookName, sterilizedDate);
         if (resp.success == false) {
             popupFunction(resp.err, 2000, false);
         } else {
