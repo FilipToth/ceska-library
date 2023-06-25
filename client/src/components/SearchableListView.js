@@ -1,11 +1,12 @@
 import 'assets/SearchableListView.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer, forwardRef, useImperativeHandle } from 'react';
 import CustomButton from 'components/CustomButton';
 import TextBoxField from "components/TextBoxField";
 
 const maxItemsPerLoad = 10;
 
-const SearchableListView = ({ searchFunction, getItems, renderItemEntry, renderSearch = true }) => {
+const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEntry, renderSearch = true }, ref) => {
+    const [updateState, forceUpdate] = useReducer(x => x + 1, 0);
     const [pageState, setPageState] = useState({
         items: [],
         itemsToRender: [],
@@ -13,6 +14,12 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry, renderS
         showMoreButton: <></>,
         searchQuery: ''
     });
+
+    useImperativeHandle(ref, () => ({
+        update() {
+            forceUpdate();
+        }
+    }));
 
     const searchQueryChanged = async (event) => {
         const query = event.target.value;
@@ -70,7 +77,7 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry, renderS
         }
 
         initLoadItems();
-    }, []);
+    }, [updateState]);
 
     return (
         <div className='List-View-Wrapper'>
@@ -89,6 +96,6 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry, renderS
             {pageState.showMoreButton}
         </div>
     )
-}
+});
 
 export default SearchableListView;

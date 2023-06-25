@@ -104,6 +104,16 @@ class Backend {
         const resp = await axios.get(`http://127.0.0.1:8080/checkouts?token=${token}&id=${personID}`);
         return resp.data;
     };
+
+    async returnBook(token, bookID) {
+        const payload = {
+            token: token,
+            id: bookID
+        };
+
+        const resp = await axios.post(`http://127.0.0.1:8080/return-book`, payload);
+        return resp.data;
+    }
 }
 
 const backend = new Backend();

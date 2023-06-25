@@ -1,5 +1,5 @@
+import { useRef } from "react";
 import backend from "services/backend";
-import algolia from "services/algolia";
 import { useAuthHeader } from "react-auth-kit";
 import SearchableListView from "components/SearchableListView";
 import CheckoutEntry from "./CheckoutEntry";
@@ -8,6 +8,8 @@ const CheckoutsList = ({ popupFunction }) => {
     const authHeader = useAuthHeader();
     const header = authHeader();
     const token = header.split(' ')[1];
+
+    const listRef = useRef(null);
 
     const handleGetItems = async () => {
         const checkouts = await backend.getCheckouts(token);
@@ -27,14 +29,28 @@ const CheckoutsList = ({ popupFunction }) => {
         return items;
     };
 
+    const update = () => {
+        console.log("update")
+        listRef.current.update();
+    }
+
     const handleRenderItemEntry = (item) => {
         return (
-            <CheckoutEntry name={item.bookName} dueDateStr={item.dueDate} checkoutDateStr={item.checkoutDate} personName={item.personName} personID={item.personID} />
+            <CheckoutEntry
+                name={item.bookName}
+                dueDateStr={item.dueDate}
+                checkoutDateStr={item.checkoutDate}
+                personName={item.personName}
+                bookID={item.bookID}
+                token={token}
+                popupFunction={popupFunction}
+                updateFunction={update}
+            />
         );
     };
 
     return (
-        <SearchableListView getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} renderSearch={false} />
+        <SearchableListView ref={listRef} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} renderSearch={false} />
     )
 };
 
