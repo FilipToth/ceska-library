@@ -1,6 +1,6 @@
 import 'assets/TextBoxField.css'
 
-const TextBoxField = ({ onChange, placeholder, text, id='', isPassword = false, addSearchButton = false, searchButtonOnClick = undefined, paddingHeight = 0.25, paddingWidth = 0.25, width = 340, height = 29 }) => {
+const TextBoxField = ({ onChange, placeholder, text, id='', currentRefinementAsValue = undefined, isPassword = false, addSearchButton = false, searchButtonOnClick = undefined, paddingHeight = 0.25, paddingWidth = 0.25, width = 340, height = 29 }) => {
     let searchButton = <></>;
     if (addSearchButton) {
         searchButton = (
@@ -24,7 +24,7 @@ const TextBoxField = ({ onChange, placeholder, text, id='', isPassword = false, 
         <div className='Field-Wrapper'>
             <p1 className='Field-Text'>{text}</p1>
             <div className='Text-Box-Wrapper' style={wrapperStyle}>
-                <input className='Text-Box-Input' id={id} placeholder={placeholder} onChange={onChange} type={type} />
+                <input className='Text-Box-Input' value={currentRefinementAsValue} id={id} placeholder={placeholder} onChange={onChange} type={type} />
                 {searchButton}
             </div>
         </div>

@@ -1,13 +1,10 @@
 import 'assets/GenericSearchBar.css'
-import SearchSuggestion from 'components/SearchSuggestion';
-import { InstantSearch, connectSearchBox, connectHits } from 'react-instantsearch-dom';
-import { useNavigate } from "react-router-dom";
 import algolia from 'services/algolia';
 import TextBoxField from './TextBoxField';
+import SearchSuggestion from 'components/SearchSuggestion';
+import { InstantSearch, connectSearchBox, connectHits } from 'react-instantsearch-dom';
 
-const GenericSearchBar = ({ indexName, suggestionFunction, query, renderSearchButton = false, searchButtonClick = undefined, renderTopBtn = false, topButtonFunc = undefined, paddingTop = 4, paddingBottom = 0 }) => {
-    const navigate = useNavigate();
-
+const GenericSearchBar = ({ indexName, suggestionFunction, query, renderSearchButton = false, searchButtonClick = undefined, renderTopBtn = false, topButtonFunc = undefined, paddingTop = 4, paddingBottom = 0, width = 540, placeholder = 'Search Books!' }) => {
     let renderHits = false;
     let addInitialQuery = true;
     const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
@@ -42,9 +39,17 @@ const GenericSearchBar = ({ indexName, suggestionFunction, query, renderSearchBu
                 {suggestBtn}
                 
                 <div style={ {'paddingTop': '3vh'} }>
-                    <TextBoxField placeholder='Search books!' onChange={change} paddingHeight={0.2} paddingWidth={0.3} width={540} height={45} addSearchButton={renderSearchButton} searchButtonOnClick={() => {
-                        searchButtonClick(currentRefinement);
-                    }} />
+                    <TextBoxField 
+                        placeholder={placeholder}
+                        onChange={change}
+                        paddingHeight={0.2}
+                        paddingWidth={0.3}
+                        width={width}
+                        height={45}
+                        addSearchButton={renderSearchButton}
+                        currentRefinementAsValue={currentRefinement}
+                        searchButtonOnClick={() => { searchButtonClick(currentRefinement) }} 
+                    />
                 </div>
 
                 {renderHits &&

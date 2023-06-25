@@ -32,7 +32,8 @@ const BookSearchBar = (query, renderSuggestBtn, paddingTop = 4, paddingBottom = 
             renderTopBtn={renderSuggestBtn}
             topButtonFunc={topButton}
             paddingTop={paddingTop}
-            paddingBottom={paddingBottom}/>
+            paddingBottom={paddingBottom}
+        />
     );
 }
 
