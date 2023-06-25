@@ -1,22 +1,28 @@
 import 'assets/CustomButton.css'
 
-const CustomButton = ({ msg, onClick, paddingHeight = 11, paddingWidth = 30, width = undefined }) => {
+const CustomButton = (props) => {
+
+    let padHeight = props.paddingHeight == undefined ? 11 : props.paddingHeight;
+    let padWidth = props.paddingWidth == undefined ? 30 : props.paddingWidth;
 
     let style = {
-        paddingTop: `${paddingHeight}px`,
-        paddingBottom: `${paddingHeight}px`,
-        paddingLeft: `${paddingWidth}px`,
-        paddingRight: `${paddingWidth}px`,
+        paddingTop: `${padHeight}px`,
+        paddingBottom: `${padHeight}px`,
+        paddingLeft: `${padWidth}px`,
+        paddingRight: `${padWidth}px`,
     };
 
-    if (width != undefined) {
-        width = `${width}px`;
+    if (props.width != undefined) {
+        let width = `${props.width}px`;
         style['width'] = width;
     }
 
+    console.log(props)
+
     return (
-        <div className='Custom-Button' style={style} onClick={onClick}>
-            <p1 className='Custom-Button-Text'>{msg}</p1>
+        <div className='Custom-Button' style={style} onClick={props.onClick} ref={props.ref}>
+            <p1>{props.msg}</p1>
+            {props.children}
         </div>
     )
 }

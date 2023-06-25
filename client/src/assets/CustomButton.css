@@ -22,15 +22,15 @@
     background-color: #45CDD6;
 }
 
-.Custom-Button:hover > .Custom-Button-Text {
+.Custom-Button:hover > * {
     color: black;
 }
 
-.Custom-Button-Text {    
+.Custom-Button > * {
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
 
-    color: #FFFFFF;
+    color: white;
 }

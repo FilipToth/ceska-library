@@ -4,7 +4,7 @@ import TextBoxField from './TextBoxField';
 import SearchSuggestion from 'components/SearchSuggestion';
 import { InstantSearch, connectSearchBox, connectHits } from 'react-instantsearch-dom';
 
-const GenericSearchBar = ({ indexName, suggestionFunction, query, renderSearchButton = false, searchButtonClick = undefined, renderTopBtn = false, topButtonFunc = undefined, paddingTop = 4, paddingBottom = 0, width = 540, placeholder = 'Search Books!' }) => {
+const GenericSearchBar = ({ indexName, suggestionFunction, query, renderSearchButton = false, searchButtonClick = undefined, renderTopBtn = false, topButtonFunc = undefined, paddingTop = 4, paddingBottom = 0, lowerBoxTopPadidng = 3, width = 540, placeholder = 'Search Books!' }) => {
     let renderHits = false;
     let addInitialQuery = true;
     const MySearchBox = connectSearchBox(({currentRefinement, refine}) => {
@@ -38,7 +38,7 @@ const GenericSearchBar = ({ indexName, suggestionFunction, query, renderSearchBu
             <div className='Search-Container' style={containerStyle}>
                 {suggestBtn}
                 
-                <div style={ {'paddingTop': '3vh'} }>
+                <div style={ {'paddingTop': `${lowerBoxTopPadidng}vh`} }>
                     <TextBoxField 
                         placeholder={placeholder}
                         onChange={change}

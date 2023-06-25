@@ -1,10 +1,19 @@
+import 'assets/BookCheckout.css'
 import 'assets/SearchSuggestion.css'
+import 'react-datepicker/dist/react-datepicker.css';
 import { useAuthHeader } from "react-auth-kit";
 import CustomButton from "components/CustomButton";
 import GenericSearchBar from "components/GenericSearchBar";
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
+import DatePicker, { CalendarContainer } from 'react-datepicker';
 
-const BookCheckout = () => {
+const getDateMonthFromNow = () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() + 1);
+    return date;
+};
+
+const BookCheckout = ({ popupFunction }) => {
     const authHeader = useAuthHeader();
     const header = authHeader();
     const token = header.split(' ')[1];
@@ -12,6 +21,7 @@ const BookCheckout = () => {
     const [pageState, setPageState] = useState({
         book: undefined,
         person: undefined,
+        date: getDateMonthFromNow()
     });
 
     const getSuggestionWidget = (hit, click) => {
@@ -26,8 +36,8 @@ const BookCheckout = () => {
         const click = () => {
             setPageState((state) => {
                 return {
+                    ...state,
                     book: hit,
-                    person: state.person,
                 }
             });
         };
@@ -39,13 +49,43 @@ const BookCheckout = () => {
         const click = () => {
             setPageState((state) => {
                 return {
-                    book: state.book,
+                    ...state,
                     person: hit,
                 }
             });
         };
 
         return getSuggestionWidget(hit, click);
+    };
+
+    const dateChanged = (date) => {
+        setPageState((state) => {
+            return {
+                ...state,
+                date: date
+            }
+        });
+    };
+
+    const checkout = async () => {
+        console.log(pageState)
+    };
+
+    const DateInput = forwardRef(({ value, onClick }, ref) => {
+        return (
+            <div className='Date-Picker-Wrapper'>
+                <CustomButton onClick={onClick} ref={ref} paddingHeight={10} paddingWidth={138}>
+                    {value}
+                </CustomButton>
+            </div>
+        );
+    });
+
+    const formKeyStyle = {
+        innerHeight: 'auto',
+        display: 'unset',
+        height: 'auto',
+        textAlign: 'center'
     };
 
     return (
@@ -62,6 +102,7 @@ const BookCheckout = () => {
                 suggestionFunction={bookSuggestFunc}
                 paddingTop={0}
                 paddingBottom={0}
+                lowerBoxTopPadidng={0}
                 width={400}
             />
 
@@ -73,10 +114,27 @@ const BookCheckout = () => {
                 suggestionFunction={personSuggestFunc}
                 paddingTop={0}
                 paddingBottom={0}
+                lowerBoxTopPadidng={0}
                 width={400}
             />
 
-            <CustomButton msg='Checkout' />
+            <div className='Inner-Form-Wrapper'>
+                <div className='Inner-Form-Key-Wrapper'>
+                    <p1 className='Inner-Form-Key' style={formKeyStyle}>Due:</p1>
+                </div>
+                <div className="Inner-Input-Wrapper">
+                    <DatePicker
+                        selected={pageState.date}
+                        onChange={dateChanged}
+                        customInput={<DateInput />}
+                    />
+                </div>
+            </div>
+
+            <CustomButton
+                msg='Checkout'
+                onClick={checkout}
+            />
         </div>
     );
 };

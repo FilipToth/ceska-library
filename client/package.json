@@ -13,6 +13,7 @@
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.2",
     "react-contenteditable": "^3.3.6",
+    "react-datepicker": "^4.14.1",
     "react-dom": "^18.2.0",
     "react-instantsearch-dom": "^6.39.0",
     "react-instantsearch-hooks-web": "^6.38.3",

@@ -25,11 +25,10 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
             }
 
             return {
-                items: state.items,
+                ...state,
                 itemsToRender: searchItems,
                 numItemsToShow: maxItemsPerLoad,
                 showMoreButton: button,
-                searchQuery: state.searchQuery,
             };
         });
     };
@@ -44,8 +43,7 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
             }
 
             return {
-                items: state.items,
-                itemsToRender: state.itemsToRender,
+                ...state,
                 showMoreButton: button,
                 numItemsToShow: toShow,
             };
@@ -63,9 +61,9 @@ const SearchableListView = ({ searchFunction, getItems, renderItemEntry }) => {
 
             setPageState((state) => {
                 return {
+                    ...state,
                     items: items,
                     itemsToRender: items,
-                    numItemsToShow: state.numItemsToShow,
                     showMoreButton: button,
                 }
             });

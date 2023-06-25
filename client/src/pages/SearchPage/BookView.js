@@ -52,7 +52,7 @@ const BookView = () => {
             }
 
             return {
-                bookEntries: state.bookEntries,
+                ...state,
                 showMoreButton: button,
                 numItemsToShow: toShow,
             };

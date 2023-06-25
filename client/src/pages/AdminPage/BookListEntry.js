@@ -21,9 +21,8 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
     const changeRow = (event) => {
         setState((state) => {
             return {
+                ...state,
                 row: event.target.value,
-                column: state.column,
-                genre: state.genre,
             };
         });
     };
@@ -31,9 +30,8 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
     const changeColumn = (event) => {
         setState((state) => {
             return {
-                row: state.row,
+                ...state,
                 column: event.target.value,
-                genre: state.genre,
             };
         });
     };
@@ -41,8 +39,7 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
     const changeGenre = (event) => {
         setState((state) => {
             return {
-                row: state.row,
-                column: state.column,
+                ...state,
                 genre: event.target.value,
             };
         });

@@ -1,0 +1,11 @@
+.Date-Picker-Wrapper {
+    transition: all 300ms ease-in;
+}
+
+.Date-Picker-Wrapper > * {
+    color: white;
+}
+
+.Date-Picker-Wrapper:hover > * {
+    color: black;
+}

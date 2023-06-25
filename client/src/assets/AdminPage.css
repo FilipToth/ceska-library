@@ -96,13 +96,6 @@
     text-align: right;
 
     color: #5F5F5F;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .Inner-Input-Wrapper {
