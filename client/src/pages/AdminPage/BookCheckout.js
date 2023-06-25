@@ -1,11 +1,12 @@
 import 'assets/BookCheckout.css'
 import 'assets/SearchSuggestion.css'
 import 'react-datepicker/dist/react-datepicker.css';
+import backend from 'services/backend';
 import { useAuthHeader } from "react-auth-kit";
 import CustomButton from "components/CustomButton";
 import GenericSearchBar from "components/GenericSearchBar";
 import { useState, forwardRef } from 'react';
-import DatePicker, { CalendarContainer } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 
 const getDateMonthFromNow = () => {
     const date = new Date();
@@ -74,9 +75,15 @@ const BookCheckout = ({ popupFunction }) => {
         }
 
         const isbn = pageState.book.objectID;
+        const personID = pageState.person.objectID;
+        const date = pageState.date;
 
-        console.log(pageState.book);
-        console.log(pageState.person);
+        const resp = await backend.checkout(token, isbn, personID, date);
+        if (resp.success == false) {
+            popupFunction(resp.err, 2000, false);
+        } else {
+            popupFunction('Book checked out!', 2000, true);
+        }
     };
 
     const DateInput = forwardRef(({ value, onClick }, ref) => {
