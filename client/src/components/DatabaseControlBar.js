@@ -13,7 +13,7 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
     const fileInputRef = useRef();
 
     const exportDB = async () => {
-        const resp = await backend.exportDB(token, 'Books');
+        const resp = await backend.exportDB(token, databaseName);
         console.log(resp);
 
         if (!resp.success) {

@@ -50,7 +50,7 @@ const CheckoutsList = ({ popupFunction }) => {
     };
 
     return (
-        <SearchableListView ref={listRef} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} renderSearch={false} />
+        <SearchableListView ref={listRef} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'Checkouts'} renderSearch={false} />
     )
 };
 

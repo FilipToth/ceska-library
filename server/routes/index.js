@@ -241,44 +241,71 @@ router.post('/return-book', async (req, res, next) => {
 });
 
 router.get('/export-db', async (req, res, next) => {
-    const writeDBExport = async (filename, data) => {
+    const writeDBExport = async (filename, data, header, lineCallback) => {
         const handle = await fs.open(filename, 'w+');
         
         // write header
-        await handle.write('isbn,title,author,genre\n');
+        await handle.write(header);
 
-        for (var [key, book] of Object.entries(data)) {
-            const line = `${key},${book.name},${book.author},${book.genre}\n`;
+        for (var [key, data] of Object.entries(data)) {
+            const line = lineCallback(key, data);
             await handle.write(line);
         }
         
-        // flushes the write buffer
+        // flushes the write buffer and close
         await handle.sync();
+        await handle.close();
     };
 
     const token = req.query.token;
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
         if (!checkAuth(err, decoded, res))
             return;
-        
+
         const dbName = req.query.databaseName;
+        let data;
+        let filename;
+        let header;
+        let lineCallback;
+
         switch (dbName) {
             case 'Books':
-                const filename = 'books.csv'
-                const path = `public/${filename}`;
+                data = await handler.getBooks();
+                filename = 'books.csv';
+                header = 'isbn,title,author,genre\n';
+                lineCallback = (key, book) => {
+                    return `${key},${book.name},${book.author},${book.genre}\n`;
+                };
 
-                const books = await handler.getBooks();
-                await writeDBExport(path, books);
-
-                const outsidePath = `http://127.0.0.1:8080/${filename}`;
-                res.send({ success: true, path: outsidePath });
+                break;
             case 'People':
+                data = await handler.getPeople();
+                filename = 'people.csv';
+                header = 'name,class,email\n';
+                lineCallback = (key, person) => {
+                    return `${key},${person.class},${person.email}`;
+                };
+
                 break;
             case 'Checkouts':
+                data = await handler.getCheckouts();
+                filename = 'checkouts.csv';
+                header = 'isbn,personID,dueDate,personName,bookName,checkoutDate\n';
+                lineCallback = (key, checkout) => {
+                    return `${key},${checkout.personID},${checkout.dueDate},${checkout.personName},${checkout.bookName},${checkout.checkoutDate}`;
+                };
+
                 break;
             default:
                 res.send({ success: false, err: 'Database does\'t exist' });
+                return;
         }
+
+        const path = `public/${filename}`;
+        await writeDBExport(path, data, header, lineCallback);
+
+        const outsidePath = `http://127.0.0.1:8080/${filename}`;
+        res.send({ success: true, path: outsidePath });
     });
 });
 
