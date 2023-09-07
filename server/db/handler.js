@@ -115,6 +115,24 @@ class DatabaseHandler
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     };
 
+    changePeople = async (people) => {
+        const peopleData = {
+            data: people
+        };
+
+        this.connector.updateDoc(this.peopleColName, this.peopleColID, peopleData)
+    };
+
+
+    changeCheckouts = async (checkouts) => {
+        const checkoutsData = {
+            data: checkouts
+        };
+
+        this.connector.updateDoc(this.checkoutsColName, this.checkoutsColID, checkoutsData)
+    };
+
+
     removeBook = async (isbn) => {
         // remove from algolia
         let success = true;

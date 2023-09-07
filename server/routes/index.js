@@ -309,7 +309,9 @@ router.get('/export-db', async (req, res, next) => {
     });
 });
 
-router.post('/import-db', upload.single('dbImport'), (req, res, next) => {
+// TODO: Cleanup import functions
+
+router.post('/import-db-books', upload.single('dbImport'), (req, res, next) => {
     // TODO: JWT and security
 
     const file = String(req.file.buffer);
@@ -342,5 +344,75 @@ router.post('/import-db', upload.single('dbImport'), (req, res, next) => {
     handler.changeBooks(dbEntry);
     res.send({ success: true });
 });
+
+router.post('/import-db-people', upload.single('dbImport'), (req, res, next) => {
+    // TODO: JWT and security
+
+    const file = String(req.file.buffer);
+    const parsed = papa.parse(file, { header: false });
+
+    // check for parsing errors
+    if (parsed.errors != undefined && parsed.errors.length > 0) {
+        res.send({ success: false, msg: 'Invalid CSV file' });
+        return;
+    }
+    
+    // also have to remove headers
+    const data = parsed.data;
+    data.splice(0, 1);
+
+    const dbEntry = {};
+    for (const person of data) {
+        if (person.length != 3 || person[0] == '') {
+            continue;
+        }
+
+        const key = person[0];
+        dbEntry[key] = {
+            class: person[1],
+            email: person[2],
+        };
+    }
+
+    handler.changePeople(dbEntry);
+    res.send({ success: true });
+});
+
+router.post('/import-db-checkouts', upload.single('dbImport'), (req, res, next) => {
+    // TODO: JWT and security
+
+    const file = String(req.file.buffer);
+    const parsed = papa.parse(file, { header: false });
+
+    // check for parsing errors
+    if (parsed.errors != undefined && parsed.errors.length > 0) {
+        res.send({ success: false, msg: 'Invalid CSV file' });
+        return;
+    }
+    
+    // also have to remove headers
+    const data = parsed.data;
+    data.splice(0, 1);
+
+    const dbEntry = {};
+    for (const checkout of data) {
+        if (checkout.length != 6 || checkout[0] == '') {
+            continue;
+        }
+
+        const key = checkout[0];
+        dbEntry[key] = {
+            personID: checkout[1],
+            dueDate: checkout[2],
+            personName: checkout[3],
+            bookName: checkout[4],
+            checkoutDate: checkout[5],
+        };
+    }
+
+    handler.changeCheckouts(dbEntry);
+    res.send({ success: true });
+});
+
 
 module.exports = router;

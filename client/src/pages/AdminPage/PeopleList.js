@@ -45,7 +45,7 @@ const PeopleList = ({ popupFunction }) => {
     };
 
     return (
-        <SearchableListView searchFunction={handleSearch} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'People'} />
+        <SearchableListView searchFunction={handleSearch} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'People'} popupFunction={popupFunction} />
     );
 };
 

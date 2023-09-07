@@ -37,7 +37,14 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
         }
         
         // TODO: JWT and security
-        backend.uploadDBFile(token, file);
+        const resp = await backend.uploadDBFile(token, file, databaseName);
+        if (!resp.success) {
+            const errMsg = resp.msg;
+            popupFunction(errMsg, 2000, true);
+            return;
+        }
+
+        popupFunction('Done!', 2000, false);
     };
 
     return (

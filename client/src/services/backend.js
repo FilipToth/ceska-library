@@ -120,7 +120,7 @@ class Backend {
         return resp.data;
     }
 
-    async uploadDBFile(token, file) {
+    async uploadDBFile(token, file, dbName) {
         const formData = new FormData();
         formData.append('dbImport', file);
 
@@ -128,7 +128,8 @@ class Backend {
             token: token
         };
         
-        const resp = await axios.post(`http://127.0.0.1:8080/import-db`, formData, payload);
+        const resp = await axios.post(`http://127.0.0.1:8080/import-db-${dbName.toLowerCase()}`, formData, payload);
+        return resp.data;
     }
 }
 
