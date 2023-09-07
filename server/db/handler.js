@@ -13,6 +13,8 @@ class DatabaseHandler
         this.usersColId = process.env.USERS_COL_ID;
         this.peopleColName = process.env.PEOPLE_COL_NAME;
         this.peopleColID = process.env.PEOPLE_COL_ID;
+        this.checkoutsColName = process.env.CHECKOUTS_COL_NAME;
+        this.checkoutsColID = process.env.CHECKOUTS_COL_ID;
 
         this.algoliaClient = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_KEY);
     }
@@ -40,7 +42,6 @@ class DatabaseHandler
     }
 
     getLocation = async (id) => {
-        console.log(id)
         const locations = await this.getLocations();
         const location = locations[id];
         return location;
@@ -142,9 +143,12 @@ class DatabaseHandler
             email: mail
         }];
 
+        let objectID = '';
         let success = true;
         const index = this.algoliaClient.initIndex(process.env.ALGOLIA_PEOPLE_INDEX_NAME);
-        await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).catch((err) => {
+        await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).then(({ objectIDs }) => {
+            objectID = objectIDs[0];
+        }).catch((err) => {
             success = false;
             console.log(err);
         });
@@ -157,7 +161,8 @@ class DatabaseHandler
             data: { }
         };
 
-        personData.data[name] = {
+        personData.data[objectID] = {
+            name: name,
             'class': pClass,
             email: mail
         };
@@ -168,6 +173,63 @@ class DatabaseHandler
     getPeople = async () => {
         const doc = await this.connector.getDoc(this.peopleColName, this.peopleColID);
         return doc.data;
+    };
+
+    getPersonById = async (id) => {
+        const people = await this.getPeople();
+        const person = people[id];
+        return person;
+    };
+
+    checkout = async (bookID, personID, personName, bookName, date) => {
+        const { data } = await this.connector.getDoc(this.checkoutsColName, this.checkoutsColID);
+        
+        const checkForBookAlreadyCheckedOut = () => {
+            if (data == undefined)
+                return false;
+
+            const checkouts = data.checkouts;
+            for (const [key, value] of Object.entries(data)) {
+                if (value.bookID === bookID)
+                    return true;
+            };
+
+            return false;
+        };
+
+        if (checkForBookAlreadyCheckedOut()) {
+            return { failed: true, resp: 'Already checked out' };
+        }
+        
+        // add the book to checkouts
+        const checkoutData = {
+            data: { }
+        };
+
+        checkoutData.data[bookID] = {
+            personID: personID,
+            dueDate: date,
+            personName: personName,
+            bookName: bookName,
+            checkoutDate: new Date().toISOString()
+        };
+
+        await this.connector.updateDoc(this.checkoutsColName, this.checkoutsColID, checkoutData);
+        return { failed: false, resp: 'success' };
+    };
+
+    getCheckouts = async () => {
+        const doc = await this.connector.getDoc(this.checkoutsColName, this.checkoutsColID);
+        return doc.data;
+    };
+
+    returnBook = async (bookID) => {
+        const checkoutData = {
+            data: { }
+        };
+
+        checkoutData.data[bookID] = null;
+        await this.connector.updateDoc(this.checkoutsColName, this.checkoutsColID, checkoutData);
     };
 }
 

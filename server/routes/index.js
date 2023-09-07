@@ -1,6 +1,7 @@
 var handler = require('../db/handler');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const fs = require('fs/promises');
 
 var express = require('express');
 var router = express.Router();
@@ -173,6 +174,107 @@ router.get('/get-people', async (req, res, next) => {
 
         const people = await handler.getPeople();
         res.send(people);
+    });
+});
+
+router.get('/get-person', async (req, res, next) => {
+    const token = req.query.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+        
+        const id = req.query.id;
+        const person = await handler.getPersonById(id);
+        res.send(person);
+    });
+});
+
+router.post('/checkout', async (req, res, next) => {
+    const token = req.body.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+
+        console.log(req.body)
+
+        const bookId = req.body.bookID;
+        const personId = req.body.personID;
+        const personName= req.body.personName;
+        const bookName = req.body.bookName;
+        const date = req.body.date;
+
+        const { failed, resp } = await handler.checkout(bookId, personId, personName, bookName, date);
+        if (failed) {
+            res.send({ success: false, err: resp });
+            return;
+        }
+
+        res.send({ success: true });
+    });
+});
+
+router.get('/checkouts', async (req, res, next) => {
+    const token = req.query.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+        
+        const checkouts = await handler.getCheckouts();
+        res.send(checkouts);
+    });
+});
+
+router.post('/return-book', async (req, res, next) => {
+    const token = req.body.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+        
+        const id = req.body.id;
+        await handler.returnBook(id);
+        res.send({ success: true });
+    });
+});
+
+router.get('/export-db', async (req, res, next) => {
+    const writeDBExport = async (filename, data) => {
+        const handle = await fs.open(filename, 'w+');
+        
+        // write header
+        await handle.write('isbn,title,author,genre\n');
+
+        for (var [key, book] of Object.entries(data)) {
+            const line = `${key},${book.name},${book.author},${book.genre}\n`;
+            await handle.write(line);
+        }
+        
+        // flushes the write buffer
+        await handle.sync();
+    };
+
+    const token = req.query.token;
+    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        if (!checkAuth(err, decoded, res))
+            return;
+        
+        const dbName = req.query.databaseName;
+        switch (dbName) {
+            case 'Books':
+                const filename = 'books.csv'
+                const path = `public/${filename}`;
+
+                const books = await handler.getBooks();
+                await writeDBExport(path, books);
+
+                const outsidePath = `http://127.0.0.1:8080/${filename}`
+                res.send({ success: true, path: outsidePath });
+            case 'People':
+                break;
+            case 'Checkouts':
+                break;
+            default:
+                res.send({ success: false, err: 'Database does\'t exist' });
+        }
     });
 });
 

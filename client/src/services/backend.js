@@ -114,6 +114,11 @@ class Backend {
         const resp = await axios.post(`http://127.0.0.1:8080/return-book`, payload);
         return resp.data;
     }
+
+    async exportDB(token, db) {
+        const resp = await axios.get(`http://127.0.0.1:8080/export-db?token=${token}&databaseName=${db}`);
+        return resp.data;
+    }
 }
 
 const backend = new Backend();
