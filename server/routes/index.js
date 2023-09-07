@@ -2,6 +2,10 @@ var handler = require('../db/handler');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs/promises');
+const papa = require('papaparse');
+
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 var express = require('express');
 var router = express.Router();
@@ -266,7 +270,7 @@ router.get('/export-db', async (req, res, next) => {
                 const books = await handler.getBooks();
                 await writeDBExport(path, books);
 
-                const outsidePath = `http://127.0.0.1:8080/${filename}`
+                const outsidePath = `http://127.0.0.1:8080/${filename}`;
                 res.send({ success: true, path: outsidePath });
             case 'People':
                 break;
@@ -276,6 +280,40 @@ router.get('/export-db', async (req, res, next) => {
                 res.send({ success: false, err: 'Database does\'t exist' });
         }
     });
+});
+
+router.post('/import-db', upload.single('dbImport'), (req, res, next) => {
+    // TODO: JWT and security
+
+    const file = String(req.file.buffer);
+    const parsed = papa.parse(file, { header: false });
+
+    // check for parsing errors
+    if (parsed.errors != undefined && parsed.errors.length > 0) {
+        res.send({ success: false, msg: 'Invalid CSV file' });
+        return;
+    }
+    
+    // also have to remove headers
+    const data = parsed.data;
+    data.splice(0, 1);
+
+    const dbEntry = {};
+    for (const book of data) {
+        if (book.length != 4 || book[0] == '') {
+            continue;
+        }
+
+        const key = book[0];
+        dbEntry[key] = {
+            name: book[1],
+            author: book[2],
+            genre: book[3]
+        };
+    }
+
+    handler.changeBooks(dbEntry);
+    res.send({ success: true });
 });
 
 module.exports = router;

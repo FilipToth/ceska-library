@@ -119,6 +119,17 @@ class Backend {
         const resp = await axios.get(`http://127.0.0.1:8080/export-db?token=${token}&databaseName=${db}`);
         return resp.data;
     }
+
+    async uploadDBFile(token, file) {
+        const formData = new FormData();
+        formData.append('dbImport', file);
+
+        const payload = {
+            token: token
+        };
+        
+        const resp = await axios.post(`http://127.0.0.1:8080/import-db`, formData, payload);
+    }
 }
 
 const backend = new Backend();

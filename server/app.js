@@ -21,6 +21,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// JWT validation for public folder
+var validationMiddleware = (req, res, next) => {
+    // TODO: Somehow valid JWT
+    // also need to get JWT have no idea how
+    next();
+};
+
+app.use(validationMiddleware, express.static(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

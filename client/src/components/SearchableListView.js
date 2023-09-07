@@ -6,7 +6,7 @@ import DatabaseControlBar from './DatabaseControlBar';
 
 const maxItemsPerLoad = 10;
 
-const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEntry, renderSearch = true, renderDatabaseControls = true }, ref) => {
+const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEntry, renderSearch = true, renderDatabaseControls = true, popupFunction = undefined }, ref) => {
     const [updateState, forceUpdate] = useReducer(x => x + 1, 0);
     const [pageState, setPageState] = useState({
         items: [],
@@ -83,7 +83,7 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
     return (
         <div className='List-View-Wrapper'>
             {renderDatabaseControls &&
-                <DatabaseControlBar />
+                <DatabaseControlBar popupFunction={popupFunction} />
             }
 
             {renderSearch &&

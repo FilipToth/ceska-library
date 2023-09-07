@@ -98,6 +98,14 @@ class DatabaseHandler
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
     };
 
+    changeBooks = async (books) => {
+        const bookData = {
+            data: books
+        };
+
+        this.connector.updateDoc(this.bookColName, this.bookColID, bookData)
+    };
+
     changeLocation = async (isbn, value) => {
         const locationData = {
             data: { }
