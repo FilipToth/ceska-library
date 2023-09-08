@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs/promises');
 const papa = require('papaparse');
+const axios = require('axios');
 
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
@@ -414,5 +415,47 @@ router.post('/import-db-checkouts', upload.single('dbImport'), (req, res, next) 
     res.send({ success: true });
 });
 
+router.get('/book-by-isbn', async (req, res, next) => {
+    const isbn = req.query.isbn;
+    
+    const resp = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${process.env.GOOGLE_BOOKS_API_KEY}`);
+    const data = resp.data;
+
+    if (data == undefined) {
+        res.send({ success: false })
+        return;
+    }
+
+    if (data.totalItems == 0) {
+        res.send({ success: false })
+        return;
+    }
+
+    const item = data.items[0];
+    const volumeInfo = item.volumeInfo;
+
+    if (isbn == '1580491650') {
+        console.log(volumeInfo)
+    }
+
+    const title = volumeInfo.title;
+    const author = volumeInfo.authors[0];
+    const image = volumeInfo.imageLinks.thumbnail;
+    const descripton = volumeInfo.description;
+    const publishingYear = volumeInfo.publishedDate;
+    const pages = volumeInfo.pageCount;
+
+    const book = {
+        name: title,
+        author: author,
+        image: image,
+        description:  descripton,
+        publishingYear: publishingYear,
+        pages: pages
+    };
+
+    res.send({ success: true, book: book })
+    return;
+});
 
 module.exports = router;

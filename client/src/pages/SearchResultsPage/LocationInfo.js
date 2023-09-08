@@ -3,6 +3,9 @@ import getOrginal from 'utils/ordinal';
 import { useEffect, useState } from 'react';
 import backend from 'services/backend';
 
+// TODO: Change css file to proper name
+// TODO: Change animation class to proper name
+
 const LocationInfo = ({id, playClosingAnim}) => {
     let locationInfoClassName = 'Location-Info';
     if (playClosingAnim) {
@@ -23,7 +26,7 @@ const LocationInfo = ({id, playClosingAnim}) => {
     const rowOrdinal = getOrginal(location.row);
     const columnOrdinal = getOrginal(location.column);
 
-    return (
+    /* return (
         <div className={locationInfoClassName}>
             <div className='Header-Wrapper'>
                 <p1 className='Head-To-Text'>Head down to</p1>
@@ -52,7 +55,15 @@ const LocationInfo = ({id, playClosingAnim}) => {
                 </div>
             </div>
         </div>
-    )
+    ) */
+
+    return (
+        <div className={locationInfoClassName}>
+            <div className='Header-Wrapper'>
+                
+            </div>
+        </div>
+    );
 }
 
 export default LocationInfo;

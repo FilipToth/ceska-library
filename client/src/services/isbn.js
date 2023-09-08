@@ -1,31 +1,14 @@
 import axios from "axios";
+import backend from "./backend";
+
+// TODO: Do this on the backend due to
+// security reasons
+
+// TODO: Remove this and use backend abstraction
 
 class ISBNProvider {
     async getBook(isbn) {
-        const resp = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
-        const data = resp.data;
-
-        if (data == undefined) {
-            return undefined;
-        }
-
-        if (data.totalItems == 0) {
-            return undefined;
-        }
-
-        const item = data.items[0];
-        const volumeInfo = item.volumeInfo;
-
-        const title = volumeInfo.title;
-        const author = volumeInfo.authors[0];
-        const image = volumeInfo.imageLinks.thumbnail;
-
-        const book = {
-            name: title,
-            author: author,
-            image: image,
-        };
-
+        const book = await backend.getBookByISBN(isbn);
         return book;
     }
 }

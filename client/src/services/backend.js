@@ -131,6 +131,11 @@ class Backend {
         const resp = await axios.post(`http://127.0.0.1:8080/import-db-${dbName.toLowerCase()}`, formData, payload);
         return resp.data;
     }
+
+    async getBookByISBN(isbn) {
+        const resp = await axios.get(`http://127.0.0.1:8080/book-by-isbn?isbn=${isbn}`);
+        return resp.data.book;
+    };
 }
 
 const backend = new Backend();
