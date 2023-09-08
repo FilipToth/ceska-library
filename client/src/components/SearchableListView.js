@@ -82,15 +82,16 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
 
     return (
         <div className='List-View-Wrapper'>
-            {renderDatabaseControls &&
-                <DatabaseControlBar popupFunction={popupFunction} databaseName={databaseName} />
-            }
-
-            {renderSearch &&
-                <div className='List-View-Search-Wrapper'>
-                    <TextBoxField placeholder='Search' onChange={searchQueryChanged} paddingHeight={0.75} paddingWidth={0.75} />
-                </div>
-            }
+            <div className='List-View-Header'>
+                {renderSearch &&
+                    <div className='List-View-Search-Wrapper'>
+                        <TextBoxField placeholder='Search' onChange={searchQueryChanged} paddingHeight={0.75} paddingWidth={0.75} />
+                    </div>
+                }
+                {renderDatabaseControls &&
+                    <DatabaseControlBar popupFunction={popupFunction} databaseName={databaseName} />
+                }
+            </div>
 
             <div className='List-View-Entry-Layout-Container'>
                 {pageState.itemsToRender.slice(0, pageState.numItemsToShow).map((item) => (

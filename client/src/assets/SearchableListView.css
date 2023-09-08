@@ -11,14 +11,19 @@
     gap: 32px;
 }
 
+.List-View-Header {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    padding-top: 30px;
+}
+
 .List-View-Entry-Layout-Container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
-}
-
-.List-View-Search-Wrapper {
-    padding-top: 30px;
 }

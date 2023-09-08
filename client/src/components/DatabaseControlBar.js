@@ -50,11 +50,11 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
     return (
         <div class='Database-Control-Wrapper'>
             <iframe style={{ display: 'none' }} ref={downloadFrameRef}></iframe>
-            <CustomButton msg={'Export CSV'} onClick={exportDB} />
-            <CustomButton msg={'Import CSV'} onClick={importButtonClick} />
-            <input type='file' onChange={importDBHandleFile} style={{ display: 'none' }} ref={fileInputRef} />
+            <CustomButton msg={'Export CSV'} onClick={exportDB} paddingHeight={7} paddingWidth={10}/>
+            <CustomButton msg={'Import CSV'} onClick={importButtonClick} paddingHeight={7} paddingWidth={10} />
+            <input type='file' onChange={importDBHandleFile} style={{ display: 'none' }} ref={fileInputRef}  />
         </div>
     )
-};
+}
 
 export default DatabaseControlBar;

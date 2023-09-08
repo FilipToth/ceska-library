@@ -1,4 +1,3 @@
-import axios from "axios";
 import backend from "./backend";
 
 // TODO: Do this on the backend due to
