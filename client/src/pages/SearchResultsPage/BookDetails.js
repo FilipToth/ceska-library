@@ -1,6 +1,9 @@
 import 'assets/BookDetails.css';
-import { useEffect, useState } from 'react';
 import backend from 'services/backend';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { getMonthName } from 'utils/dates';
+import { getNumberOrdinal } from 'utils/ordinal';
 
 const BookDetails = ({id, playClosingAnim}) => {
     let detailsWrapperClassname = 'Book-Details-Wrapper';
@@ -15,6 +18,17 @@ const BookDetails = ({id, playClosingAnim}) => {
             const res = await backend.getBookByISBN(id);
             if (res.pages == 0)
                 res.pages = 'unknown';
+
+            const date = res.publishingYear;
+            if (date.split('-').length != 1)
+            {
+                const dateObj = moment(date);
+                const month = getMonthName(dateObj.month());
+                const day = dateObj.day();
+
+                const formatted = `${month} ${day}${getNumberOrdinal(day)} ${dateObj.year()}`;
+                res.publishingYear = formatted;
+            }
             
             setBook(res);
         };
