@@ -1,0 +1,102 @@
+@keyframes details-wrapper-opening-animation {
+    0% {
+        top: -240px;
+    }
+    100% {
+        top: 0px;
+    }
+}
+
+@keyframes details-wrapper-closing-animation {
+    0% {
+        top: 0px;
+    }
+    100% {
+        top: -240px;
+    }
+}
+
+.Book-Details-Wrapper {
+    position: relative;
+
+    animation: 0.5s ease-out 0s 1 details-wrapper-opening-animation;
+    animation-fill-mode: backwards;
+    z-index: 1;
+
+    /* Auto layout */
+    display: inline-flex;
+    padding: 15px 11px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
+    border-radius: 20px;
+}
+
+.Book-Details-Wrapper-Closing {
+    position: relative;
+
+    animation: 0.5s ease-out 0s 1 details-wrapper-closing-animation;
+    animation-fill-mode: forwards;
+    z-index: -1;
+
+    /* Auto layout */
+    display: inline-flex;
+    padding: 15px 11px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    background: #E5EAF1;
+    box-shadow: 1px 1px 20px 15px rgba(92, 138, 116, 0.26);
+    border-radius: 20px;
+}
+
+.Header-Wrapper {
+    display: flex;
+    padding: 1px 24px;
+    align-items: center;
+    gap: 26px;
+}
+
+.Book-Description {
+    /* 526px - 15px (padding) so that it matches
+    the size of the book entry */
+    max-width: 511px;
+
+    color: #5F5F5F;
+    text-align: center;
+    font-family: Ubuntu;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.Header-Key-Value-Wrapper {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.Header-Key {
+    color: #858585;
+    text-align: center;
+    font-family: Ubuntu;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.Header-Value {
+    color: #5C8A74;
+    text-align: center;
+    font-family: Ubuntu;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

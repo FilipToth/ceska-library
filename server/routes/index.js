@@ -434,7 +434,7 @@ router.get('/book-by-isbn', async (req, res, next) => {
     const item = data.items[0];
     const volumeInfo = item.volumeInfo;
 
-    if (isbn == '1580491650') {
+    if (isbn == '978-1-60309-084-1') {
         console.log(volumeInfo)
     }
 
