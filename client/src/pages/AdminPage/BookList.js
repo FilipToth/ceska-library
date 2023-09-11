@@ -30,8 +30,9 @@ const BookList = ({ popupFunction }) => {
                 title: book.name,
                 author: book.author,
                 genre: book.genre,
+                note: book.note,
                 row: location.row,
-                column: location.column,
+                column: location.column
             });
         }
 
@@ -40,7 +41,7 @@ const BookList = ({ popupFunction }) => {
 
     const handleRenderItemEntry = (item) => {
         return (
-            <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} />
+            <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} note={item.note} />
         );
     };
 

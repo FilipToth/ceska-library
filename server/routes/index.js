@@ -112,8 +112,9 @@ router.get('/add-book', async (req, res, next) => {
         const row = req.query.row;
         const column = req.query.column;
         const genre = req.query.genre;
+        const note = req.query.note;
         
-        await handler.addBook(isbn, title, author, library, row, column, genre);
+        await handler.addBook(isbn, title, author, library, row, column, genre, note);
         res.send({ success: true });
     });
 });

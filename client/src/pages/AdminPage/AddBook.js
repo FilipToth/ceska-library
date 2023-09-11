@@ -16,6 +16,7 @@ const AddBook = ({ popupFunction }) => {
     let row = '';
     let column = '';
     let genre = '';
+    let note = '';
 
     const isbnChange = (e) => {
         isbn = e.target.value;
@@ -45,6 +46,10 @@ const AddBook = ({ popupFunction }) => {
         genre = e.target.value;
     };
 
+    const noteChange = (e) => {
+        note = e.target.value;
+    };
+
     const addBook = () => {
         if (isbn.trim() == '' || title.trim() == '' || author.trim() == '' || library.trim() == '' || row.trim() == '' || column.trim() == '' || genre.trim() == '') {
             popupFunction('Some fields are empty!', 2000, false);
@@ -58,7 +63,8 @@ const AddBook = ({ popupFunction }) => {
             library: library,
             row: row,
             column: column,
-            genre: genre
+            genre: genre,
+            note: note
         };
 
         backend.addBook(book, token);
@@ -93,6 +99,7 @@ const AddBook = ({ popupFunction }) => {
                     <p1 className='Inner-Form-Key'>Row</p1>
                     <p1 className='Inner-Form-Key'>Column</p1>
                     <p1 className='Inner-Form-Key'>Genre</p1>
+                    <p1 className='Inner-Form-Key'>Note</p1>
                 </div>
                 <div className="Inner-Input-Wrapper">
                     <TextBoxField onChange={isbnChange} placeholder={'...'} text={''} addSearchButton={true} searchButtonOnClick={searchIsbn} />
@@ -102,6 +109,7 @@ const AddBook = ({ popupFunction }) => {
                     <TextBoxField onChange={rowChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={columnChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={genreChange} placeholder={'...'} text={''} />
+                    <TextBoxField onChange={noteChange} placeholder={'...'} text={''} />
                 </div>
             </div>
             <CustomButton msg={'Add'} paddingWidth={60} onClick={addBook} />

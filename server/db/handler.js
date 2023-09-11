@@ -47,7 +47,7 @@ class DatabaseHandler
         return location;
     }
 
-    addBook = async (isbn, title, author, library, row, column, genre) => {
+    addBook = async (isbn, title, author, library, row, column, genre, note) => {
         // add to algolia
         const algoliaObject = [{
             name: title,
@@ -77,7 +77,8 @@ class DatabaseHandler
         bookData.data[isbn] = {
             name: title,
             author: author,
-            genre: genre
+            genre: genre,
+            note: note
         };
 
         locationData.data[isbn] = {

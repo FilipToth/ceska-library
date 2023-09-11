@@ -4,7 +4,7 @@ import backend from 'services/backend';
 import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
 
-const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre}) => {
+const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note }) => {
     const buttonPaddingHeight = 4;
     const buttonPaddingWidth = 10;
 
@@ -77,6 +77,7 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
         <div className='Book-List-Entry-Wrapper'>
             <p1 className='Entry-Text'>{title}</p1>
             <p1 className='Entry-Text'>{authorName}</p1>
+            <p1 className='Entry-Text'>{note}</p1>
             <div className='Field-Group-Wrapper'>
                 <p1 className='Field-Text'>row:</p1>
                 <input value={state.row} size={2} onChange={changeRow} />
