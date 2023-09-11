@@ -81,6 +81,9 @@ const AddBook = ({ popupFunction }) => {
 
             const authorField = document.getElementById('author');
             authorField.value = book.author;
+
+            const genreField = document.getElementById('genre');
+            genreField.value = book.genre;
         });
     };
 
@@ -108,7 +111,7 @@ const AddBook = ({ popupFunction }) => {
                     <TextBoxField onChange={libraryChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={rowChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={columnChange} placeholder={'...'} text={''} />
-                    <TextBoxField onChange={genreChange} placeholder={'...'} text={''} />
+                    <TextBoxField onChange={genreChange} placeholder={'...'} text={''} id='genre' />
                     <TextBoxField onChange={noteChange} placeholder={'...'} text={''} />
                 </div>
             </div>

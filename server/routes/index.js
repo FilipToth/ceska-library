@@ -436,12 +436,15 @@ router.get('/book-by-isbn', async (req, res, next) => {
     const item = data.items[0];
     const volumeInfo = item.volumeInfo;
 
+    console.log(volumeInfo);
+
     const title = volumeInfo.title;
     const author = volumeInfo.authors[0];
     const image = volumeInfo.imageLinks.thumbnail;
     const descripton = volumeInfo.description;
     const publishingYear = volumeInfo.publishedDate;
     const pages = volumeInfo.pageCount;
+    const genre = volumeInfo.categories[0];
 
     const book = {
         name: title,
@@ -449,7 +452,8 @@ router.get('/book-by-isbn', async (req, res, next) => {
         image: image,
         description:  descripton,
         publishingYear: publishingYear,
-        pages: pages
+        pages: pages,
+        genre: genre
     };
 
     res.send({ success: true, book: book })
