@@ -15,6 +15,7 @@ const AddBook = ({ popupFunction }) => {
     let library = '';
     let row = '';
     let column = '';
+    let genre = '';
 
     const isbnChange = (e) => {
         isbn = e.target.value;
@@ -40,9 +41,12 @@ const AddBook = ({ popupFunction }) => {
         column = e.target.value;
     };
 
+    const genreChange = (e) => {
+        genre = e.target.value;
+    };
 
     const addBook = () => {
-        if (isbn.trim() == '' || title.trim() == '' || author.trim() == '' || library.trim() == '' || row.trim() == '' || column.trim() == '') {
+        if (isbn.trim() == '' || title.trim() == '' || author.trim() == '' || library.trim() == '' || row.trim() == '' || column.trim() == '' || genre.trim() == '') {
             popupFunction('Some fields are empty!', 2000, false);
             return;
         }
@@ -53,7 +57,8 @@ const AddBook = ({ popupFunction }) => {
             author: author,
             library: library,
             row: row,
-            column: column
+            column: column,
+            genre: genre
         };
 
         backend.addBook(book, token);
@@ -87,6 +92,7 @@ const AddBook = ({ popupFunction }) => {
                     <p1 className='Inner-Form-Key'>Library</p1>
                     <p1 className='Inner-Form-Key'>Row</p1>
                     <p1 className='Inner-Form-Key'>Column</p1>
+                    <p1 className='Inner-Form-Key'>Genre</p1>
                 </div>
                 <div className="Inner-Input-Wrapper">
                     <TextBoxField onChange={isbnChange} placeholder={'...'} text={''} addSearchButton={true} searchButtonOnClick={searchIsbn} />
@@ -95,6 +101,7 @@ const AddBook = ({ popupFunction }) => {
                     <TextBoxField onChange={libraryChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={rowChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={columnChange} placeholder={'...'} text={''} />
+                    <TextBoxField onChange={genreChange} placeholder={'...'} text={''} />
                 </div>
             </div>
             <CustomButton msg={'Add'} paddingWidth={60} onClick={addBook} />

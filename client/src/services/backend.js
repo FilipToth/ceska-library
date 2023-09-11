@@ -32,7 +32,7 @@ class Backend {
     }
 
     async addBook(book, token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/add-book?token=${token}&isbn=${book.isbn}&title=${book.title}&author=${book.author}&library=${book.library}&row=${book.row}&column=${book.column}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/add-book?token=${token}&isbn=${book.isbn}&title=${book.title}&author=${book.author}&library=${book.library}&row=${book.row}&column=${book.column}&genre=${book.genre}`);
         return resp.data;
     }
 
