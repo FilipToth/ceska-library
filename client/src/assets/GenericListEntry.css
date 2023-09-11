@@ -20,5 +20,6 @@
 }
 
 .Entry-Text {
-    width: 12vw;
+    text-align: center;
+    flex: 1 0 0; 
 }

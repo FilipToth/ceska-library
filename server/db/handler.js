@@ -174,9 +174,9 @@ class DatabaseHandler
         const index = this.algoliaClient.initIndex(process.env.ALGOLIA_PEOPLE_INDEX_NAME);
         await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).then(({ objectIDs }) => {
             objectID = objectIDs[0];
+            console.log(objectIDs);
         }).catch((err) => {
             success = false;
-            console.log(err);
         });
 
         if (!success)
