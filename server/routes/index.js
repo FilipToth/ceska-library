@@ -436,8 +436,6 @@ router.get('/book-by-isbn', async (req, res, next) => {
     const item = data.items[0];
     const volumeInfo = item.volumeInfo;
 
-    console.log(volumeInfo);
-
     const title = volumeInfo.title;
     const author = volumeInfo.authors[0];
     const image = volumeInfo.imageLinks.thumbnail;
