@@ -39,6 +39,27 @@ const BookList = ({ popupFunction }) => {
         return items;
     };
 
+    const sortOptions = [
+        {
+            msg: 'title',
+            getSortableElement: (dbItem) => {
+                return dbItem.title;
+            }
+        },
+        {
+            msg: 'author',
+            getSortableElement: (dbItem) => {
+                return dbItem.author;
+            }
+        },
+        {
+            msg: 'genre',
+            getSortableElement: (dbItem) => {
+                return dbItem.genre;
+            }
+        }
+    ];
+
     const handleRenderItemEntry = (item) => {
         return (
             <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} note={item.note} />
@@ -46,7 +67,7 @@ const BookList = ({ popupFunction }) => {
     };
 
     return (
-        <SearchableListView searchFunction={handleSearch} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'Books'} popupFunction={popupFunction} />
+        <SearchableListView searchFunction={handleSearch} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'Books'} popupFunction={popupFunction} sortOptions={sortOptions} />
     )
 }
 

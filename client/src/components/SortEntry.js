@@ -40,7 +40,7 @@ const SortEntry = ({ entries }) => {
         newState[entry.msg] = toAssign;
 
         setSortStates(newState);
-        entry.callback(toAssign);
+        entry.callback(toAssign, entry);
     };
 
     return (

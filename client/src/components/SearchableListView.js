@@ -8,7 +8,7 @@ import { SortState } from 'utils/sort';
 
 const maxItemsPerLoad = 10;
 
-const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEntry, databaseName, renderSearch = true, renderDatabaseControls = true, popupFunction = undefined }, ref) => {
+const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEntry, databaseName, sortOptions = [], renderSearch = true, renderDatabaseControls = true, popupFunction = undefined }, ref) => {
     const [pageState, setPageState] = useState({
         items: [],
         itemsToRender: [],
@@ -18,7 +18,8 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
     });
 
     const [sortStates, setSortStates] = useState({
-        sortState: SortState.Uninitialized
+        sortState: SortState.Uninitialized,
+        sortLabel: undefined
     });
 
     const searchQueryChanged = async (event) => {
@@ -58,7 +59,33 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
     };
 
     const getComparativeItemFromEntry = (item) => {
-        return item.title;
+        const label = sortStates.sortLabel;
+        const sortOption = sortOptions.find((e) => e.msg == label);
+        return sortOption.getSortableElement(item);
+    };
+
+    const sort = (items) => {
+        if (sortStates.sortState == SortState.Uninitialized)
+            return;
+        
+        items.sort((a, b) => {
+            const aVal = getComparativeItemFromEntry(a);
+            const bVal = getComparativeItemFromEntry(b);
+
+            if (aVal > bVal) {
+                if (sortStates.sortState == SortState.Ascending)
+                    return 1;
+                else
+                    return -1;
+            } else if (aVal < bVal) {
+                if (sortStates.sortState == SortState.Ascending)
+                    return -1;
+                else
+                    return 1;
+            }
+
+            return 0;
+        });
     };
 
     useEffect(() => {
@@ -70,26 +97,7 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
                 button = <CustomButton msg='Show me more!' onClick={showMoreClick} width={130} />;
             }
 
-            console.log(items);
-            items.sort((a, b) => {
-                const aVal = getComparativeItemFromEntry(a);
-                const bVal = getComparativeItemFromEntry(b);
-
-                if (aVal > bVal) {
-                    if (sortStates.sortState == SortState.Ascending)
-                        return 1;
-                    else
-                        return -1;
-                } else if (aVal < bVal) {
-                    if (sortStates.sortState == SortState.Ascending)
-                        return -1;
-                    else
-                        return 1;
-                }
-
-                return 0;
-            });
-
+            sort(items);
             setPageState((state) => {
                 return {
                     ...state,
@@ -103,27 +111,16 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
         initLoadItems();
     }, [sortStates]);
 
-    const sortEntries = [
-        {
-            msg: 'title',
-            callback: (sortState) => {
-                setSortStates((state) => {
-                    return {
-                        ...state,
-                        sortState: sortState
-                    };
-                });
-            }
-        },
-        {
-            msg: 'author',
-            callback: undefined
-        },
-        {
-            msg: 'genre',
-            callback: undefined
-        },
-    ];
+    const sortCallback = (state, entry) => {
+        setSortStates({
+            sortState: state,
+            sortLabel: entry.msg
+        });
+    };
+
+    for (const option of sortOptions) {
+        option.callback = sortCallback;
+    }
 
     return (
         <div className='List-View-Wrapper'>
@@ -139,7 +136,7 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
             </div>
 
             <div className='List-View-Entry-Layout-Container'>
-                <SortEntry entries={sortEntries} />
+                <SortEntry entries={sortOptions} />
                 {pageState.itemsToRender.slice(0, pageState.numItemsToShow).map((item) => (
                     renderItemEntry(item)
                 ))}
