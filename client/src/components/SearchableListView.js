@@ -3,6 +3,7 @@ import { useEffect, useState, useReducer, forwardRef, useImperativeHandle } from
 import CustomButton from 'components/CustomButton';
 import TextBoxField from "components/TextBoxField";
 import DatabaseControlBar from './DatabaseControlBar';
+import SortEntry from './SortEntry';
 
 const maxItemsPerLoad = 10;
 
@@ -94,6 +95,7 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
             </div>
 
             <div className='List-View-Entry-Layout-Container'>
+                <SortEntry />
                 {pageState.itemsToRender.slice(0, pageState.numItemsToShow).map((item) => (
                     renderItemEntry(item)
                 ))}
