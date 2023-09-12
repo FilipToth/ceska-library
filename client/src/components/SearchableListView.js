@@ -81,6 +81,21 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
         initLoadItems();
     }, [updateState]);
 
+    const sortEntries = [
+        {
+            msg: 'title',
+            callback: undefined
+        },
+        {
+            msg: 'author',
+            callback: undefined
+        },
+        {
+            msg: 'genre',
+            callback: undefined
+        },
+    ];
+
     return (
         <div className='List-View-Wrapper'>
             <div className='List-View-Header'>
@@ -95,7 +110,7 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
             </div>
 
             <div className='List-View-Entry-Layout-Container'>
-                <SortEntry />
+                <SortEntry entries={sortEntries} />
                 {pageState.itemsToRender.slice(0, pageState.numItemsToShow).map((item) => (
                     renderItemEntry(item)
                 ))}
