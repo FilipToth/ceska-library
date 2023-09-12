@@ -1,5 +1,6 @@
 import 'assets/GenericListEntry.css';
 import { useState } from 'react';
+import { SortState } from 'utils/sort';
 import CustomButton from './CustomButton';
 
 const SortEntry = ({ entries }) => {
@@ -9,18 +10,12 @@ const SortEntry = ({ entries }) => {
     // styles based on that?
     // TODO: Implement
 
-    const ButtonState = {
-        Uninitialized: '',
-        Ascending: 'ascending',
-        Descending: 'descending'
-    };
-
     const initialButtonMessages = {};
     for (const entry of entries) {
-        initialButtonMessages[entry.msg] = ButtonState.Uninitialized;
+        initialButtonMessages[entry.msg] = SortState.Uninitialized;
     }
 
-    const [buttonStates, setButtonStates] = useState(initialButtonMessages);
+    const [buttonStates, setSortStates] = useState(initialButtonMessages);
 
     const getButtonText = (entry) => {
         const state = buttonStates[entry.msg];
@@ -30,19 +25,22 @@ const SortEntry = ({ entries }) => {
 
     const buttonClick = (entry) => {
         const newState = {};
-        for (const key of Object.keys(buttonStates)) {
-            newState[key] = ButtonState.Uninitialized;
+        for (const key in buttonStates) {
+            newState[key] = SortState.Uninitialized;
         }
 
+        let toAssign = undefined;
         const oldVal = buttonStates[entry.msg];
-        if (oldVal == ButtonState.Ascending) {
-            newState[entry.msg] = ButtonState.Descending;
+        if (oldVal == SortState.Ascending) {
+            toAssign = SortState.Descending;
         } else {
-            newState[entry.msg] = ButtonState.Ascending;
+            toAssign = SortState.Ascending;
         }
 
-        setButtonStates(newState);
-        entry.callback();
+        newState[entry.msg] = toAssign;
+
+        setSortStates(newState);
+        entry.callback(toAssign);
     };
 
     return (

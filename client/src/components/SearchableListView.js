@@ -1,14 +1,14 @@
 import 'assets/SearchableListView.css';
-import { useEffect, useState, useReducer, forwardRef, useImperativeHandle } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
 import CustomButton from 'components/CustomButton';
 import TextBoxField from "components/TextBoxField";
 import DatabaseControlBar from './DatabaseControlBar';
 import SortEntry from './SortEntry';
+import { SortState } from 'utils/sort';
 
 const maxItemsPerLoad = 10;
 
 const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEntry, databaseName, renderSearch = true, renderDatabaseControls = true, popupFunction = undefined }, ref) => {
-    const [updateState, forceUpdate] = useReducer(x => x + 1, 0);
     const [pageState, setPageState] = useState({
         items: [],
         itemsToRender: [],
@@ -17,11 +17,9 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
         searchQuery: ''
     });
 
-    useImperativeHandle(ref, () => ({
-        update() {
-            forceUpdate();
-        }
-    }));
+    const [sortStates, setSortStates] = useState({
+        sortState: SortState.Uninitialized
+    });
 
     const searchQueryChanged = async (event) => {
         const query = event.target.value;
@@ -59,6 +57,10 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
         });
     };
 
+    const getComparativeItemFromEntry = (item) => {
+        return item.title;
+    };
+
     useEffect(() => {
         const initLoadItems = async () => {
             const items = await getItems();
@@ -68,23 +70,50 @@ const SearchableListView = forwardRef(({ searchFunction, getItems, renderItemEnt
                 button = <CustomButton msg='Show me more!' onClick={showMoreClick} width={130} />;
             }
 
+            console.log(items);
+            items.sort((a, b) => {
+                const aVal = getComparativeItemFromEntry(a);
+                const bVal = getComparativeItemFromEntry(b);
+
+                if (aVal > bVal) {
+                    if (sortStates.sortState == SortState.Ascending)
+                        return 1;
+                    else
+                        return -1;
+                } else if (aVal < bVal) {
+                    if (sortStates.sortState == SortState.Ascending)
+                        return -1;
+                    else
+                        return 1;
+                }
+
+                return 0;
+            });
+
             setPageState((state) => {
                 return {
                     ...state,
                     items: items,
                     itemsToRender: items,
                     showMoreButton: button,
-                }
+                };
             });
         }
 
         initLoadItems();
-    }, [updateState]);
+    }, [sortStates]);
 
     const sortEntries = [
         {
             msg: 'title',
-            callback: undefined
+            callback: (sortState) => {
+                setSortStates((state) => {
+                    return {
+                        ...state,
+                        sortState: sortState
+                    };
+                });
+            }
         },
         {
             msg: 'author',
