@@ -4,27 +4,6 @@ import backend from 'services/backend';
 import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
 
-class BookListEntryC extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.popupFunction = props.popupFunction;
-        this.isbn = props.isbn;
-        this.title = props.title;
-        this.authorName = props.authorName;
-        this.row = props.row;
-        this.column = props.column;
-        this.genre = props.genre;
-        this.note = props.note;
-
-        this.state = {}
-    }
-
-    render() {
-        return <></>;
-    }
-}
-
 const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note }) => {
     const buttonPaddingHeight = 4;
     const buttonPaddingWidth = 10;

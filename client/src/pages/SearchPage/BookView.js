@@ -1,9 +1,9 @@
 import 'assets/BookView.css'
-import NavBar from 'components/NavBar';
 import backend from 'services/backend';
 import { useEffect, useState } from 'react';
 import CustomButton from "components/CustomButton";
 import LocalSearchResultEntry from "pages/SearchResultsPage/LocalSearchResultEntry";
+import GenreBar from './GenreBar';
 
 const BookView = () => {
     // calculate max items
@@ -15,25 +15,8 @@ const BookView = () => {
     const maxHeight = 3;
     const maxItems = numItemsPerRow * maxHeight;
 
-    const tabs = {
-        'All Books': '*',
-        'Fiction': 'Fiction',
-        'Science Fiction': 'Science Fiction',
-        'Non-Fiction': 'Non-Fiction',
-        'Thriller': 'Thriller'
-    };
-
-    const select = (index) => {
-        let genre = Object.values(tabs)[index];
-        setPageState({
-            navBarChildren: NavBar.getTabChildren(tabs, select, index),
-            genre: genre,
-        });
-    };
-
-    const [pageState, setPageState] = useState({
-        navBarChildren: NavBar.getTabChildren(tabs, select, 0),
-        genre: Object.values(tabs)[0],
+    const [selectedGenre, setSelectedGenre] = useState({
+        genre: undefined,
     });
     
     const [bookResult, setBookResult] = useState({
@@ -61,8 +44,11 @@ const BookView = () => {
 
     useEffect(() => {
         const addResultingBooks = async () => {
+            if (selectedGenre.genre == undefined)
+                return;
+            
             const res = [];
-            const books = await backend.getBooksByGenre(pageState.genre);
+            const books = await backend.getBooksByGenre(selectedGenre.genre);
             for (const [key, book] of Object.entries(books)) {
                 const title = book.name;
                 const author = book.author;
@@ -87,11 +73,17 @@ const BookView = () => {
         }
 
         addResultingBooks();
-    }, [pageState]);
+    }, [selectedGenre]);
+
+    const genreChanged = (selection) => {
+        setSelectedGenre({
+            genre: selection
+        });
+    };
 
     return (
         <div className='Book-List-Div'>
-            <NavBar useRelativePosition={true} leftChildren={pageState.navBarChildren} rightChildren={[]} fitContent={true} useCenterAlign={true} />
+            <GenreBar onChange={genreChanged} />
             <div className='Book-View-Wrapper'>
                 <div className='Book-View-Result-Wrapper'>
                     {bookResult.bookEntries.slice(0, bookResult.numItemsToShow).map((book) => (
