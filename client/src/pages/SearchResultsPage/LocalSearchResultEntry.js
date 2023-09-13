@@ -7,7 +7,7 @@ import isbnProvider from 'services/isbn';
 const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefault }) => {
     const [locationOpen, setLocationOpen] = useState(locationOpenByDefault);
     const [closedDetailsWidget, setClosedDetailsWidget] = useState(false);
-    const [image, setImage] = useState('images/break_over.jpg');
+    const [image, setImage] = useState('');
     const showDetailsClick = () => {
         if (locationOpen == true) {
             setClosedDetailsWidget(true);

@@ -136,6 +136,11 @@ class Backend {
         const resp = await axios.get(`http://127.0.0.1:8080/book-by-isbn?isbn=${isbn}`);
         return resp.data.book;
     };
+
+    async getBookImage(isbn) {
+        const resp = await axios.get(`http://127.0.0.1:8080/book-image?isbn=${isbn}`);
+        return resp.data.image;
+    }
 }
 
 const backend = new Backend();

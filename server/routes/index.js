@@ -458,4 +458,23 @@ router.get('/book-by-isbn', async (req, res, next) => {
     return;
 });
 
+router.get('/book-image', async (req, res, next) => {
+    const isbn = req.query.isbn;
+    const path = `public/images/${isbn}`;
+    
+    let exists = false;
+    await fs.access(path, fs.constants.F_OK, (err) => {
+        if (err) {
+            return;
+        }
+
+        exists = true;
+    });
+
+    if (exists) {
+        const outsidePath = `http://127.0.0.1:8080/images/${filename}`;
+        res.send({ success: true, image: `` });
+    }
+});
+
 module.exports = router;
