@@ -1,8 +1,29 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'assets/BookListEntry.css';
 import backend from 'services/backend';
 import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
+
+class BookListEntryC extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.popupFunction = props.popupFunction;
+        this.isbn = props.isbn;
+        this.title = props.title;
+        this.authorName = props.authorName;
+        this.row = props.row;
+        this.column = props.column;
+        this.genre = props.genre;
+        this.note = props.note;
+
+        this.state = {}
+    }
+
+    render() {
+        return <></>;
+    }
+}
 
 const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note }) => {
     const buttonPaddingHeight = 4;
@@ -17,6 +38,18 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
         column: column,
         genre: genre,
     });
+
+    // this fixes an issue where the state.genre
+    // would not match the genre prop because react
+    // is trying to reuse the component
+    
+    useEffect(() => {
+        setState({
+            row: row,
+            column: column,
+            genre: genre
+        });
+    }, [row, column, genre]);
 
     const changeRow = (event) => {
         setState((state) => {
