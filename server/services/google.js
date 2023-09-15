@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const getBookByISBN = async (isbn) => {
     const resp = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${process.env.GOOGLE_BOOKS_API_KEY}`);
+    console.log(resp.data);
     const data = resp.data;
 
     if (data == undefined) {

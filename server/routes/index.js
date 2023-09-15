@@ -421,7 +421,8 @@ router.post('/import-db-checkouts', upload.single('dbImport'), (req, res, next) 
 
 router.get('/book-by-isbn', async (req, res, next) => {
     const isbn = req.query.isbn;
-    const book = getBookByISBN(isbn);
+    const book = await getBookByISBN(isbn);
+    console.log(book);
 
     res.send({ success: true, book: book })
     return;

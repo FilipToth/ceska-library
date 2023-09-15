@@ -2,7 +2,6 @@ import CustomButton from "components/CustomButton";
 import TextBoxField from "components/TextBoxField";
 import backend from "services/backend";
 import { useAuthHeader } from "react-auth-kit";
-import isbnProvider from "services/isbn";
 
 const AddBook = ({ popupFunction }) => {
     const authHeader = useAuthHeader();
@@ -71,20 +70,24 @@ const AddBook = ({ popupFunction }) => {
         popupFunction('Book added!', 2000, false);
     };
 
-    const searchIsbn = () => {
-        isbnProvider.getBook(isbn).then((book) => {
-            title = book.name;
-            author = book.author;
+    const searchIsbn = async () => {
+        const book = await backend.getBookByISBN(isbn);
+        if (book == undefined) {
+            popupFunction("Can't get book information");
+            return;
+        }
+        
+        title = book.name;
+        author = book.author;
 
-            const titleField = document.getElementById('title');
-            titleField.value = book.name;
+        const titleField = document.getElementById('title');
+        titleField.value = book.name;
 
-            const authorField = document.getElementById('author');
-            authorField.value = book.author;
+        const authorField = document.getElementById('author');
+        authorField.value = book.author;
 
-            const genreField = document.getElementById('genre');
-            genreField.value = book.genre;
-        });
+        const genreField = document.getElementById('genre');
+        genreField.value = book.genre;
     };
 
     return (
