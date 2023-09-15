@@ -47,47 +47,50 @@ class DatabaseHandler
         return location;
     }
 
-    addBook = async (isbn, title, author, library, row, column, genre, note) => {
-        // add to algolia
-        const algoliaObject = [{
-            name: title,
-            author: author,
-            objectID: isbn,
-        }];
+    addBooks = async (books, addLocation) => {
+        const algoliaObjects = []
+        for (const book of books) {
+            algoliaObjects.push({
+                name: book.title,
+                author: book.author,
+                objectID: book.isbn
+            });
+        }
 
         let success = true;
         const index = this.algoliaClient.initIndex(process.env.ALGOLIA_BOOK_INDEX_NAME);
-        await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).catch((err) => {
+        await index.saveObjects(algoliaObjects, { autoGenerateObjectIDIfNotExist: true }).catch((err) => {
             success = false;
             console.log(err);
         });
 
         if (!success)
             return;
-        
-        // add to faunadb
-        const bookData = {
-            data: { }
-        };
 
-        const locationData = {
-            data: { }
-        };
+        const bookData = { data: { } };
+        const locationData = { data: { } };
 
-        bookData.data[isbn] = {
-            name: title,
-            author: author,
-            genre: genre,
-            note: note
-        };
+        for (const book of books) {
+            bookData.data[book.isbn] = {
+                name: book.title,
+                author: book.author,
+                genre: book.genre,
+            };
 
-        locationData.data[isbn] = {
-            library: library,
-            row: row,
-            column: column
-        };
+            if (book.note != undefined)
+                bookData.data[book.isbn].note = book.note;
+
+            locationData.data[book.isbn] = {
+                library: book.library,
+                row: book.row,
+                column: book.column
+            };
+        }
 
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
+        if (!addLocation)
+            return;
+        
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     }
 
@@ -100,14 +103,6 @@ class DatabaseHandler
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
     };
 
-    changeBooks = async (books) => {
-        const bookData = {
-            data: books
-        };
-
-        this.connector.updateDoc(this.bookColName, this.bookColID, bookData)
-    };
-
     changeLocation = async (isbn, value) => {
         const locationData = {
             data: { }
@@ -116,15 +111,6 @@ class DatabaseHandler
         locationData.data[isbn] = value;
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     };
-
-    changePeople = async (people) => {
-        const peopleData = {
-            data: people
-        };
-
-        this.connector.updateDoc(this.peopleColName, this.peopleColID, peopleData)
-    };
-
 
     changeCheckouts = async (checkouts) => {
         const checkoutsData = {
@@ -163,37 +149,48 @@ class DatabaseHandler
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     };
 
-    addPerson = async (name, pClass, mail) => {
-        // add to algolia
-        const algoliaObject = [{
-            name: name,
-            'class': pClass,
-            email: mail
-        }];
+    addPeople = async (people) => {
+        const algoliaObjects = [];
+        for (const person of people) {
+            const object = {
+                name: person.title,
+                pClass: person.pClass,
+                email: person.mail
+            };
 
-        let objectID = '';
+            if (person.id != null)
+                object.objectID = person.id;
+            
+            algoliaObjects.push(object);
+        }
+
         let success = true;
+        let objectIDs = {};
         const index = this.algoliaClient.initIndex(process.env.ALGOLIA_PEOPLE_INDEX_NAME);
-        await index.saveObjects(algoliaObject, { autoGenerateObjectIDIfNotExist: true }).then(({ objectIDs }) => {
-            objectID = objectIDs[0];
-            console.log(objectIDs);
+        await index.saveObjects(algoliaObjects, { autoGenerateObjectIDIfNotExist: true }).then((resp) => {
+            const oids = resp.objectIDs;
+            for (let i = 0; i < oids.length; i++) {
+                const id = oids[i];
+                const person = people[i];
+                objectIDs[person.name] = id;
+            }
         }).catch((err) => {
             success = false;
+            console.log(err);
         });
 
         if (!success)
             return;
 
-        // add to faunadb
-        const personData = {
-            data: { }
-        };
-
-        personData.data[objectID] = {
-            name: name,
-            'class': pClass,
-            email: mail
-        };
+        const personData = { data: { } };
+        for (const person of people) {
+            const id = objectIDs[person.name];
+            personData.data[id] = {
+                name: person.name,
+                pClass: person.pClass,
+                email: person.mail,
+            };
+        }
 
         await this.connector.updateDoc(this.peopleColName, this.peopleColID, personData);
     };

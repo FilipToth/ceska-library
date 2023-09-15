@@ -32,7 +32,7 @@ const AddPerson = ({ popupFunction }) => {
 
         const person = {
             name: name,
-            class: pClass,
+            pClass: pClass,
             mail: mail
         };
 

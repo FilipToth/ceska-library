@@ -115,8 +115,19 @@ router.get('/add-book', async (req, res, next) => {
         const column = req.query.column;
         const genre = req.query.genre;
         const note = req.query.note;
+
+        const book = {
+            isbn: isbn,
+            title: title,
+            author: author,
+            library: library,
+            row: row,
+            column: column,
+            genre: genre,
+            note: note
+        };
         
-        await handler.addBook(isbn, title, author, library, row, column, genre, note);
+        await handler.addBooks([ book ], true);
         res.send({ success: true });
     });
 });
@@ -167,9 +178,14 @@ router.post('/add-person', async (req, res, next) => {
             return;
 
         const username = req.body.name;
-        const password = req.body.class;
-        const role = req.body.mail;
-        await handler.addPerson(username, password, role);
+        const pClass = req.body.pClass;
+        const email = req.body.mail;
+        const person = {
+            name: username,
+            pClass: pClass,
+            mail: email
+        };
+        await handler.addPeople([ person ]);
         res.send({ success: true });
     });
 });
@@ -203,8 +219,6 @@ router.post('/checkout', async (req, res, next) => {
     await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
         if (!checkAuth(err, decoded, res))
             return;
-
-        console.log(req.body)
 
         const bookId = req.body.bookID;
         const personId = req.body.personID;
@@ -286,9 +300,9 @@ router.get('/export-db', async (req, res, next) => {
             case 'People':
                 data = await handler.getPeople();
                 filename = 'people.csv';
-                header = 'name,class,email\n';
+                header = 'id,name,class,email\n';
                 lineCallback = (key, person) => {
-                    return `${key},${person.class},${person.email}`;
+                    return `${key},${person.name},${person.pClass},${person.email}\n`;
                 };
 
                 break;
@@ -332,21 +346,21 @@ router.post('/import-db-books', upload.single('dbImport'), (req, res, next) => {
     const data = parsed.data;
     data.splice(0, 1);
 
-    const dbEntry = {};
+    const dbEntries = [];
     for (const book of data) {
         if (book.length != 4 || book[0] == '') {
             continue;
         }
 
-        const key = book[0];
-        dbEntry[key] = {
-            name: book[1],
+        dbEntries.push({
+            isbn: book[0],
+            title: book[1],
             author: book[2],
             genre: book[3]
-        };
+        });
     }
 
-    handler.changeBooks(dbEntry);
+    handler.addBooks(dbEntries);
     res.send({ success: true });
 });
 
@@ -366,20 +380,21 @@ router.post('/import-db-people', upload.single('dbImport'), (req, res, next) => 
     const data = parsed.data;
     data.splice(0, 1);
 
-    const dbEntry = {};
+    const dbEntries = [];
     for (const person of data) {
-        if (person.length != 3 || person[0] == '') {
+        if (person.length != 4 || person[0] == '') {
             continue;
         }
 
-        const key = person[0];
-        dbEntry[key] = {
-            class: person[1],
-            email: person[2],
-        };
+        dbEntries.push({
+            id: person[0],
+            name: person[1],
+            pClass: person[2],
+            mail: person[3]
+        });
     }
 
-    handler.changePeople(dbEntry);
+    handler.addPeople(dbEntries);
     res.send({ success: true });
 });
 
@@ -422,7 +437,6 @@ router.post('/import-db-checkouts', upload.single('dbImport'), (req, res, next) 
 router.get('/book-by-isbn', async (req, res, next) => {
     const isbn = req.query.isbn;
     const book = await getBookByISBN(isbn);
-    console.log(book);
 
     res.send({ success: true, book: book })
     return;

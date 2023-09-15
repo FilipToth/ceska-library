@@ -65,7 +65,7 @@ class Backend {
         const payload = {
             token: token,
             name: person.name,
-            class: person.class,
+            pClass: person.pClass,
             mail: person.mail
         };
 

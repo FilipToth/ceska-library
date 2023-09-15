@@ -30,7 +30,7 @@ const PeopleList = ({ popupFunction }) => {
             items.push({
                 id: id,
                 name: person.name,
-                class: person.class,
+                pClass: person.pClass,
                 email: person.email
             });
         };
@@ -40,7 +40,7 @@ const PeopleList = ({ popupFunction }) => {
 
     const handleRenderItemEntry = (item) => {
         return (
-            <PeopleListEntry name={item.name} className={item.class} email={item.email} id={item.id} />
+            <PeopleListEntry name={item.name} className={item.pClass} email={item.email} id={item.id} />
         );
     };
 

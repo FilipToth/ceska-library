@@ -72,7 +72,7 @@ const AddBook = ({ popupFunction }) => {
 
     const searchIsbn = async () => {
         const book = await backend.getBookByISBN(isbn);
-        if (book == undefined) {
+        if (book === undefined) {
             popupFunction("Can't get book information");
             return;
         }
