@@ -2,13 +2,15 @@ var handler = require('../db/handler');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs/promises');
+const fsSync = require('fs');
 const papa = require('papaparse');
-const axios = require('axios');
+const { getBookByISBN } = require('../services/google');
 
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 var express = require('express');
+const { default: axios } = require('axios');
 var router = express.Router();
 
 const checkAuth = (err, decoded, res) => {
@@ -419,40 +421,7 @@ router.post('/import-db-checkouts', upload.single('dbImport'), (req, res, next) 
 
 router.get('/book-by-isbn', async (req, res, next) => {
     const isbn = req.query.isbn;
-    
-    const resp = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${process.env.GOOGLE_BOOKS_API_KEY}`);
-    const data = resp.data;
-
-    if (data == undefined) {
-        res.send({ success: false })
-        return;
-    }
-
-    if (data.totalItems == 0) {
-        res.send({ success: false })
-        return;
-    }
-
-    const item = data.items[0];
-    const volumeInfo = item.volumeInfo;
-
-    const title = volumeInfo.title;
-    const author = volumeInfo.authors[0];
-    const image = volumeInfo.imageLinks.thumbnail;
-    const descripton = volumeInfo.description;
-    const publishingYear = volumeInfo.publishedDate;
-    const pages = volumeInfo.pageCount;
-    const genre = volumeInfo.categories[0];
-
-    const book = {
-        name: title,
-        author: author,
-        image: image,
-        description:  descripton,
-        publishingYear: publishingYear,
-        pages: pages,
-        genre: genre
-    };
+    const book = getBookByISBN(isbn);
 
     res.send({ success: true, book: book })
     return;
@@ -460,21 +429,39 @@ router.get('/book-by-isbn', async (req, res, next) => {
 
 router.get('/book-image', async (req, res, next) => {
     const isbn = req.query.isbn;
-    const path = `public/images/${isbn}`;
-    
-    let exists = false;
-    await fs.access(path, fs.constants.F_OK, (err) => {
+    const path = `public/images/${isbn}.png`;
+    const outsidePath = `http://127.0.0.1:8080/images/${isbn}.png`;
+
+    let exists = fsSync.existsSync(path);
+    if (exists) {
+        res.send({ success: true, image: outsidePath });
+        return;
+    }
+
+    // downlaod image
+    const book = await getBookByISBN(isbn);
+    const image = book.image;
+
+    if (!image) {
+        res.send({ success: false });
+        return;
+    }
+
+    let downloadSuccess = false;
+    const resp = await axios.get(image, { responseType: 'stream' });
+    await fs.writeFile(path, resp.data, (err) => {
         if (err) {
+            res.send({ success: false });
             return;
         }
 
-        exists = true;
+        downloadSuccess = true;
     });
 
-    if (exists) {
-        const outsidePath = `http://127.0.0.1:8080/images/${filename}`;
-        res.send({ success: true, image: `` });
-    }
+    if (!downloadSuccess)
+        return;
+
+    res.send({ success: true, image: outsidePath});
 });
 
 module.exports = router;

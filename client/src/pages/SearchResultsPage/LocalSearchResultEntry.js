@@ -2,7 +2,7 @@ import 'assets/SearchResultEntry.css';
 import BookDetails from './BookDetails';
 import { useEffect, useState } from 'react';
 import CustomButton from 'components/CustomButton';
-import isbnProvider from 'services/isbn';
+import backend from 'services/backend';
 
 const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefault }) => {
     const [locationOpen, setLocationOpen] = useState(locationOpenByDefault);
@@ -32,8 +32,8 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
 
     useEffect(() => {
         const getImage = async () => {
-            const book = await isbnProvider.getBook(id);
-            setImage(book.image);
+            const image = await backend.getBookImage(id);
+            setImage(image);
         }
 
         getImage();
