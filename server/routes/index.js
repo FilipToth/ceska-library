@@ -451,21 +451,17 @@ router.get('/book-image', async (req, res, next) => {
         return;
     }
 
-    let downloadSuccess = false;
+    let downloadSuccess = true;
     const resp = await axios.get(image, { responseType: 'stream' });
     await fs.writeFile(path, resp.data, (err) => {
         if (err) {
+            downloadSuccess = false;
             res.send({ success: false });
-            return;
         }
-
-        downloadSuccess = true;
     });
 
-    if (!downloadSuccess) {
-        res.send({ success: false });
+    if (!downloadSuccess)
         return;
-    }
 
     res.send({ success: true, image: outsidePath });
 });
