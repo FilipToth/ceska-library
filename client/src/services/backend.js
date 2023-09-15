@@ -139,6 +139,9 @@ class Backend {
 
     async getBookImage(isbn) {
         const resp = await axios.get(`http://127.0.0.1:8080/book-image?isbn=${isbn}`);
+        if (!resp.data.success)
+            return undefined;
+        
         return resp.data.image;
     }
 }

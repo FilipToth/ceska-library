@@ -440,8 +440,12 @@ router.get('/book-image', async (req, res, next) => {
 
     // downlaod image
     const book = await getBookByISBN(isbn);
-    const image = book.image;
+    if (book == undefined) {
+        res.send({ success: false });
+        return;
+    }
 
+    const image = book.image;
     if (!image) {
         res.send({ success: false });
         return;
@@ -458,10 +462,12 @@ router.get('/book-image', async (req, res, next) => {
         downloadSuccess = true;
     });
 
-    if (!downloadSuccess)
+    if (!downloadSuccess) {
+        res.send({ success: false });
         return;
+    }
 
-    res.send({ success: true, image: outsidePath});
+    res.send({ success: true, image: outsidePath });
 });
 
 module.exports = router;

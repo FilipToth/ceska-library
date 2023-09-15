@@ -5,13 +5,11 @@ const getBookByISBN = async (isbn) => {
     const data = resp.data;
 
     if (data == undefined) {
-        res.send({ success: false })
-        return;
+        return undefined;
     }
 
     if (data.totalItems == 0) {
-        res.send({ success: false })
-        return;
+        return undefined;
     }
 
     const item = data.items[0];
