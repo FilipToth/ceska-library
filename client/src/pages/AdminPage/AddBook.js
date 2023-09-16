@@ -82,12 +82,15 @@ const AddBook = ({ popupFunction }) => {
 
         const titleField = document.getElementById('title');
         titleField.value = book.name;
+        title = book.name;
 
         const authorField = document.getElementById('author');
         authorField.value = book.author;
+        author = book.author;
 
         const genreField = document.getElementById('genre');
         genreField.value = book.genre;
+        genre = book.genre;
     };
 
     return (

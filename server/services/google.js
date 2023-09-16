@@ -18,7 +18,7 @@ const getBookByISBN = async (isbn) => {
 
     const title = volumeInfo.title;
     const author = volumeInfo.authors[0];
-    const image = volumeInfo.imageLinks.thumbnail;
+    const image = volumeInfo.imageLinks == undefined ? undefined : volumeInfo.imageLinks.thumbnail;
     const descripton = volumeInfo.description;
     const publishingYear = volumeInfo.publishedDate;
     const pages = volumeInfo.pageCount;
