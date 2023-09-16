@@ -76,7 +76,7 @@ class DatabaseHandler
                 author: book.author,
                 genre: book.genre,
             };
-
+            
             if (book.note != undefined)
                 bookData.data[book.isbn].note = book.note;
 

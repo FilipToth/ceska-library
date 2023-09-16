@@ -26,7 +26,7 @@ const checkAuth = (err, decoded, res) => {
     }
 
     return true;
-}
+};
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -291,9 +291,9 @@ router.get('/export-db', async (req, res, next) => {
             case 'Books':
                 data = await handler.getBooks();
                 filename = 'books.csv';
-                header = 'isbn,title,author,genre\n';
+                header = 'isbn,title,author,genre,note\n';
                 lineCallback = (key, book) => {
-                    return `${key},${book.name},${book.author},${book.genre}\n`;
+                    return `${key},${book.name},${book.author},${book.genre},${book.note}\n`;
                 };
 
                 break;
@@ -348,16 +348,21 @@ router.post('/import-db-books', upload.single('dbImport'), (req, res, next) => {
 
     const dbEntries = [];
     for (const book of data) {
-        if (book.length != 4 || book[0] == '') {
+        if ((book.length != 4 && book.length != 5) || book[0] == '') {
             continue;
         }
 
-        dbEntries.push({
+        const entry = {
             isbn: book[0],
             title: book[1],
             author: book[2],
-            genre: book[3]
-        });
+            genre: book[3],
+        };
+
+        if (book.length == 5)
+            entry.note = book[4];
+
+        dbEntries.push(entry);
     }
 
     handler.addBooks(dbEntries);
