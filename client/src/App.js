@@ -8,7 +8,7 @@ import { RequireAuth } from 'react-auth-kit';
 
 const App = () => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={window.location.pathname || ''}>
             <Routes>
                 <Route exact path='/' element={
                     <SearchPage />
