@@ -27,17 +27,34 @@ class Backend {
     }
 
     async getAuthentication(username, password ) {
-        const auth = await axios.get(`http://127.0.0.1:8080/authenticate-user?username=${username}&password=${password}`);
+        const payload = {
+            username: username,
+            password: password
+        };
+
+        const auth = await axios.post(`http://127.0.0.1:8080/authenticate-user`, payload);
         return auth.data;
     }
 
     async addBook(book, token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/auth/add-book?token=${token}&isbn=${book.isbn}&title=${book.title}&author=${book.author}&library=${book.library}&row=${book.row}&column=${book.column}&genre=${book.genre}&note=${book.note}`);
+        const payload = {
+            token: token,
+            isbn: book.isbn,
+            title: book.title,
+            author: book.author,
+            library: book.library,
+            row: book.row,
+            column: book.column,
+            genre: book.genre,
+            note: book.note
+        };
+
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/add-book`, payload);
         return resp.data;
     }
 
     async removeBook(isbn, token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/auth/remove-book?token=${token}&id=${isbn}`);
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/remove-book`, { token: token });
         return resp.data;
     }
 
@@ -73,7 +90,8 @@ class Backend {
     };
 
     async getPeople(token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/auth/get-people?token=${token}`);
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/get-people`, { token: token });
+        console.log(resp);
         return resp.data;
     };
 
@@ -96,12 +114,17 @@ class Backend {
     };
 
     async getCheckouts(token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/auth/checkouts?token=${token}`);
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/checkouts`, { token: token });
         return resp.data;
     };
 
     async getPersonById(token, personID) {
-        const resp = await axios.get(`http://127.0.0.1:8080/auth/checkouts?token=${token}&id=${personID}`);
+        const payload = {
+            token: token,
+            id: personID    
+        };
+
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/checkouts`, payload);
         return resp.data;
     };
 
@@ -116,7 +139,12 @@ class Backend {
     }
 
     async exportDB(token, db) {
-        const resp = await axios.get(`http://127.0.0.1:8080/auth/export-db?token=${token}&databaseName=${db}`);
+        const payload = {
+            token: token,
+            databaseName: db
+        };
+
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/export-db`, payload);
         return resp.data;
     }
 

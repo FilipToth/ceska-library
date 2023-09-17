@@ -58,13 +58,13 @@ router.get('/loc', async (req, res, next) => {
     res.send(locations);
 });
 
-router.get('/authenticate-user', async (req, res, next) => {
+router.post('/authenticate-user', async (req, res, next) => {
     const sendFailed = () => {
         res.send({ success: false });
     };
 
-    const username = req.query.username;
-    const enteredPasswordPlain = req.query.password;
+    const username = req.body.username;
+    const enteredPasswordPlain = req.body.password;
 
     const users = await handler.getUsers();
     const user = users[username];
@@ -85,16 +85,16 @@ router.get('/authenticate-user', async (req, res, next) => {
     sendFailed();
 });
 
-router.get('/auth/add-book', async (req, res, next) => {
+router.post('/auth/add-book', async (req, res, next) => {
     // add book to database
-    const isbn = req.query.isbn;
-    const title = req.query.title;
-    const author = req.query.author;
-    const library = req.query.library;
-    const row = req.query.row;
-    const column = req.query.column;
-    const genre = req.query.genre;
-    const note = req.query.note;
+    const isbn = req.body.isbn;
+    const title = req.body.title;
+    const author = req.body.author;
+    const library = req.body.library;
+    const row = req.body.row;
+    const column = req.body.column;
+    const genre = req.body.genre;
+    const note = req.body.note;
 
     const book = {
         isbn: isbn,
@@ -111,9 +111,9 @@ router.get('/auth/add-book', async (req, res, next) => {
     res.send({ success: true });
 });
 
-router.get('/auth/remove-book', async (req, res, next) => {
+router.post('/auth/remove-book', async (req, res, next) => {
     // remove book from database
-    const id = req.query.id;
+    const id = req.body.id;
     await handler.removeBook(id);
     res.send({ success: true });
 });
@@ -145,13 +145,13 @@ router.post('/auth/add-person', async (req, res, next) => {
     res.send({ success: true });
 });
 
-router.get('/auth/get-people', async (req, res, next) => {
+router.post('/auth/get-people', async (req, res, next) => {
     const people = await handler.getPeople();
     res.send(people);
 });
 
-router.get('/auth/get-person', async (req, res, next) => {
-    const id = req.query.id;
+router.post('/auth/get-person', async (req, res, next) => {
+    const id = req.body.id;
     const person = await handler.getPersonById(id);
     res.send(person);
 });
@@ -172,7 +172,7 @@ router.post('/auth/checkout', async (req, res, next) => {
     res.send({ success: true });
 });
 
-router.get('/auth/checkouts', async (req, res, next) => {
+router.post('/auth/checkouts', async (req, res, next) => {
     const checkouts = await handler.getCheckouts();
     res.send(checkouts);
 });
@@ -183,7 +183,7 @@ router.post('/auth/return-book', async (req, res, next) => {
     res.send({ success: true });
 });
 
-router.get('/auth/export-db', async (req, res, next) => {
+router.post('/auth/export-db', async (req, res, next) => {
     const writeDBExport = async (filename, data, header, lineCallback) => {
         const handle = await fs.open(filename, 'w+');
         
@@ -200,7 +200,7 @@ router.get('/auth/export-db', async (req, res, next) => {
         await handle.close();
     };
 
-    const dbName = req.query.databaseName;
+    const dbName = req.body.databaseName;
     let data;
     let filename;
     let header;

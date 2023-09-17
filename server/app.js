@@ -25,12 +25,7 @@ app.use(cookieParser());
 
 // JWT validation
 const validationMiddleware = async (req, res, next) => {
-    let token = undefined;
-    if (req.query != null)
-        token = req.query.token;
-    else
-        token = req.body.token;
-
+    let token = req.body.token;
     if (!token) {
         res.send({ success: false });
         return;
