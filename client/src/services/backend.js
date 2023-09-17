@@ -27,17 +27,17 @@ class Backend {
     }
 
     async getAuthentication(username, password ) {
-        const auth = await axios.get(`http://127.0.0.1:8080/auth?username=${username}&password=${password}`);
+        const auth = await axios.get(`http://127.0.0.1:8080/authenticate-user?username=${username}&password=${password}`);
         return auth.data;
     }
 
     async addBook(book, token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/add-book?token=${token}&isbn=${book.isbn}&title=${book.title}&author=${book.author}&library=${book.library}&row=${book.row}&column=${book.column}&genre=${book.genre}&note=${book.note}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/auth/add-book?token=${token}&isbn=${book.isbn}&title=${book.title}&author=${book.author}&library=${book.library}&row=${book.row}&column=${book.column}&genre=${book.genre}&note=${book.note}`);
         return resp.data;
     }
 
     async removeBook(isbn, token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/remove-book?token=${token}&id=${isbn}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/auth/remove-book?token=${token}&id=${isbn}`);
         return resp.data;
     }
 
@@ -48,7 +48,7 @@ class Backend {
             value: value
         };
         
-        await axios.post(`http://127.0.0.1:8080/change-book`, payload);
+        await axios.post(`http://127.0.0.1:8080/auth/change-book`, payload);
     }
 
     async changeLocation(key, value, token) {
@@ -58,7 +58,7 @@ class Backend {
             value: value
         };
 
-        await axios.post(`http://127.0.0.1:8080/change-location`, payload);
+        await axios.post(`http://127.0.0.1:8080/auth/change-location`, payload);
     };
 
     async addPerson(person, token) {
@@ -69,11 +69,11 @@ class Backend {
             mail: person.mail
         };
 
-        await axios.post(`http://127.0.0.1:8080/add-person`, payload);
+        await axios.post(`http://127.0.0.1:8080/auth/add-person`, payload);
     };
 
     async getPeople(token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/get-people?token=${token}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/auth/get-people?token=${token}`);
         return resp.data;
     };
 
@@ -88,7 +88,7 @@ class Backend {
         };
 
         let response = {};
-        await axios.post(`http://127.0.0.1:8080/checkout`, payload).then((resp) => {
+        await axios.post(`http://127.0.0.1:8080/auth/checkout`, payload).then((resp) => {
             response = resp.data;
         });
 
@@ -96,12 +96,12 @@ class Backend {
     };
 
     async getCheckouts(token) {
-        const resp = await axios.get(`http://127.0.0.1:8080/checkouts?token=${token}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/auth/checkouts?token=${token}`);
         return resp.data;
     };
 
     async getPersonById(token, personID) {
-        const resp = await axios.get(`http://127.0.0.1:8080/checkouts?token=${token}&id=${personID}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/auth/checkouts?token=${token}&id=${personID}`);
         return resp.data;
     };
 
@@ -111,12 +111,12 @@ class Backend {
             id: bookID
         };
 
-        const resp = await axios.post(`http://127.0.0.1:8080/return-book`, payload);
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/return-book`, payload);
         return resp.data;
     }
 
     async exportDB(token, db) {
-        const resp = await axios.get(`http://127.0.0.1:8080/export-db?token=${token}&databaseName=${db}`);
+        const resp = await axios.get(`http://127.0.0.1:8080/auth/export-db?token=${token}&databaseName=${db}`);
         return resp.data;
     }
 
@@ -128,7 +128,7 @@ class Backend {
             token: token
         };
         
-        const resp = await axios.post(`http://127.0.0.1:8080/import-db-${dbName.toLowerCase()}`, formData, payload);
+        const resp = await axios.post(`http://127.0.0.1:8080/auth/import-db-${dbName.toLowerCase()}`, formData, payload);
         return resp.data;
     }
 

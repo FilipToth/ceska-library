@@ -13,21 +13,6 @@ var express = require('express');
 const { default: axios } = require('axios');
 var router = express.Router();
 
-const checkAuth = (err, decoded, res) => {
-    if (err) {
-        console.log(err);
-        res.send({ success: false });
-        return false;
-    }
-
-    if (decoded.username == undefined || decoded.username == '') {
-        res.send({ success: false });
-        return false;
-    }
-
-    return true;
-};
-
 /* GET home page. */
 router.get('/', (req, res, next) => {
     res.render('index', { title: 'Ceska 10 Library' });
@@ -73,7 +58,7 @@ router.get('/loc', async (req, res, next) => {
     res.send(locations);
 });
 
-router.get('/auth', async (req, res, next) => {
+router.get('/authenticate-user', async (req, res, next) => {
     const sendFailed = () => {
         res.send({ success: false });
     };
@@ -100,166 +85,105 @@ router.get('/auth', async (req, res, next) => {
     sendFailed();
 });
 
-router.get('/add-book', async (req, res, next) => {
-    const token = req.query.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
+router.get('/auth/add-book', async (req, res, next) => {
+    // add book to database
+    const isbn = req.query.isbn;
+    const title = req.query.title;
+    const author = req.query.author;
+    const library = req.query.library;
+    const row = req.query.row;
+    const column = req.query.column;
+    const genre = req.query.genre;
+    const note = req.query.note;
 
-        // add book to database
-        const isbn = req.query.isbn;
-        const title = req.query.title;
-        const author = req.query.author;
-        const library = req.query.library;
-        const row = req.query.row;
-        const column = req.query.column;
-        const genre = req.query.genre;
-        const note = req.query.note;
-
-        const book = {
-            isbn: isbn,
-            title: title,
-            author: author,
-            library: library,
-            row: row,
-            column: column,
-            genre: genre,
-            note: note
-        };
-        
-        await handler.addBooks([ book ], true);
-        res.send({ success: true });
-    });
+    const book = {
+        isbn: isbn,
+        title: title,
+        author: author,
+        library: library,
+        row: row,
+        column: column,
+        genre: genre,
+        note: note
+    };
+    
+    await handler.addBooks([ book ], true);
+    res.send({ success: true });
 });
 
-router.get('/remove-book', async (req, res, next) => {
-    const token = req.query.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-
-        // remove book from database
-        const id = req.query.id;
-        await handler.removeBook(id);
-        res.send({ success: true });
-    });
+router.get('/auth/remove-book', async (req, res, next) => {
+    // remove book from database
+    const id = req.query.id;
+    await handler.removeBook(id);
+    res.send({ success: true });
 });
 
-router.post('/change-book', async (req, res, next) => {
-    const token = req.body.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-
-        const key = req.body.key;
-        const value = req.body.value;
-        await handler.changeBook(key, value);
-        res.send({ success: true });
-    });
+router.post('/auth/change-book', async (req, res, next) => {
+    const key = req.body.key;
+    const value = req.body.value;
+    await handler.changeBook(key, value);
+    res.send({ success: true });
 });
 
-router.post('/change-location', async (req, res, next) => {
-    const token = req.body.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-
-        const key = req.body.key;
-        const value = req.body.value;
-        await handler.changeLocation(key, value);
-        res.send({ success: true });
-    });
+router.post('/auth/change-location', async (req, res, next) => {
+    const key = req.body.key;
+    const value = req.body.value;
+    await handler.changeLocation(key, value);
+    res.send({ success: true });
 });
 
-router.post('/add-person', async (req, res, next) => {
-    const token = req.body.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-
-        const username = req.body.name;
-        const pClass = req.body.pClass;
-        const email = req.body.mail;
-        const person = {
-            name: username,
-            pClass: pClass,
-            mail: email
-        };
-        await handler.addPeople([ person ]);
-        res.send({ success: true });
-    });
+router.post('/auth/add-person', async (req, res, next) => {
+    const username = req.body.name;
+    const pClass = req.body.pClass;
+    const email = req.body.mail;
+    const person = {
+        name: username,
+        pClass: pClass,
+        mail: email
+    };
+    await handler.addPeople([ person ]);
+    res.send({ success: true });
 });
 
-router.get('/get-people', async (req, res, next) => {
-    // all people apis need to be secured
-    const token = req.query.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-
-        const people = await handler.getPeople();
-        res.send(people);
-    });
+router.get('/auth/get-people', async (req, res, next) => {
+    const people = await handler.getPeople();
+    res.send(people);
 });
 
-router.get('/get-person', async (req, res, next) => {
-    const token = req.query.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-        
-        const id = req.query.id;
-        const person = await handler.getPersonById(id);
-        res.send(person);
-    });
+router.get('/auth/get-person', async (req, res, next) => {
+    const id = req.query.id;
+    const person = await handler.getPersonById(id);
+    res.send(person);
 });
 
-router.post('/checkout', async (req, res, next) => {
-    const token = req.body.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
+router.post('/auth/checkout', async (req, res, next) => {
+    const bookId = req.body.bookID;
+    const personId = req.body.personID;
+    const personName= req.body.personName;
+    const bookName = req.body.bookName;
+    const date = req.body.date;
 
-        const bookId = req.body.bookID;
-        const personId = req.body.personID;
-        const personName= req.body.personName;
-        const bookName = req.body.bookName;
-        const date = req.body.date;
+    const { failed, resp } = await handler.checkout(bookId, personId, personName, bookName, date);
+    if (failed) {
+        res.send({ success: false, err: resp });
+        return;
+    }
 
-        const { failed, resp } = await handler.checkout(bookId, personId, personName, bookName, date);
-        if (failed) {
-            res.send({ success: false, err: resp });
-            return;
-        }
-
-        res.send({ success: true });
-    });
+    res.send({ success: true });
 });
 
-router.get('/checkouts', async (req, res, next) => {
-    const token = req.query.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-        
-        const checkouts = await handler.getCheckouts();
-        res.send(checkouts);
-    });
+router.get('/auth/checkouts', async (req, res, next) => {
+    const checkouts = await handler.getCheckouts();
+    res.send(checkouts);
 });
 
-router.post('/return-book', async (req, res, next) => {
-    const token = req.body.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
-            return;
-        
-        const id = req.body.id;
-        await handler.returnBook(id);
-        res.send({ success: true });
-    });
+router.post('/auth/return-book', async (req, res, next) => {
+    const id = req.body.id;
+    await handler.returnBook(id);
+    res.send({ success: true });
 });
 
-router.get('/export-db', async (req, res, next) => {
+router.get('/auth/export-db', async (req, res, next) => {
     const writeDBExport = async (filename, data, header, lineCallback) => {
         const handle = await fs.open(filename, 'w+');
         
@@ -276,63 +200,55 @@ router.get('/export-db', async (req, res, next) => {
         await handle.close();
     };
 
-    const token = req.query.token;
-    await jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        if (!checkAuth(err, decoded, res))
+    const dbName = req.query.databaseName;
+    let data;
+    let filename;
+    let header;
+    let lineCallback;
+
+    switch (dbName) {
+        case 'Books':
+            data = await handler.getBooks();
+            filename = 'books.csv';
+            header = 'isbn,title,author,genre,note\n';
+            lineCallback = (key, book) => {
+                return `${key},${book.name},${book.author},${book.genre},${book.note}\n`;
+            };
+
+            break;
+        case 'People':
+            data = await handler.getPeople();
+            filename = 'people.csv';
+            header = 'id,name,class,email\n';
+            lineCallback = (key, person) => {
+                return `${key},${person.name},${person.pClass},${person.email}\n`;
+            };
+
+            break;
+        case 'Checkouts':
+            data = await handler.getCheckouts();
+            filename = 'checkouts.csv';
+            header = 'isbn,personID,dueDate,personName,bookName,checkoutDate\n';
+            lineCallback = (key, checkout) => {
+                return `${key},${checkout.personID},${checkout.dueDate},${checkout.personName},${checkout.bookName},${checkout.checkoutDate}`;
+            };
+
+            break;
+        default:
+            res.send({ success: false, err: 'Database does\'t exist' });
             return;
+    }
 
-        const dbName = req.query.databaseName;
-        let data;
-        let filename;
-        let header;
-        let lineCallback;
+    const path = `public/${filename}`;
+    await writeDBExport(path, data, header, lineCallback);
 
-        switch (dbName) {
-            case 'Books':
-                data = await handler.getBooks();
-                filename = 'books.csv';
-                header = 'isbn,title,author,genre,note\n';
-                lineCallback = (key, book) => {
-                    return `${key},${book.name},${book.author},${book.genre},${book.note}\n`;
-                };
-
-                break;
-            case 'People':
-                data = await handler.getPeople();
-                filename = 'people.csv';
-                header = 'id,name,class,email\n';
-                lineCallback = (key, person) => {
-                    return `${key},${person.name},${person.pClass},${person.email}\n`;
-                };
-
-                break;
-            case 'Checkouts':
-                data = await handler.getCheckouts();
-                filename = 'checkouts.csv';
-                header = 'isbn,personID,dueDate,personName,bookName,checkoutDate\n';
-                lineCallback = (key, checkout) => {
-                    return `${key},${checkout.personID},${checkout.dueDate},${checkout.personName},${checkout.bookName},${checkout.checkoutDate}`;
-                };
-
-                break;
-            default:
-                res.send({ success: false, err: 'Database does\'t exist' });
-                return;
-        }
-
-        const path = `public/${filename}`;
-        await writeDBExport(path, data, header, lineCallback);
-
-        const outsidePath = `http://127.0.0.1:8080/${filename}`;
-        res.send({ success: true, path: outsidePath });
-    });
+    const outsidePath = `http://127.0.0.1:8080/${filename}`;
+    res.send({ success: true, path: outsidePath });
 });
 
 // TODO: Cleanup import functions
 
-router.post('/import-db-books', upload.single('dbImport'), (req, res, next) => {
-    // TODO: JWT and security
-
+router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -369,9 +285,7 @@ router.post('/import-db-books', upload.single('dbImport'), (req, res, next) => {
     res.send({ success: true });
 });
 
-router.post('/import-db-people', upload.single('dbImport'), (req, res, next) => {
-    // TODO: JWT and security
-
+router.post('/auth/import-db-people', upload.single('dbImport'), (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -403,9 +317,7 @@ router.post('/import-db-people', upload.single('dbImport'), (req, res, next) => 
     res.send({ success: true });
 });
 
-router.post('/import-db-checkouts', upload.single('dbImport'), (req, res, next) => {
-    // TODO: JWT and security
-
+router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 

@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const jwt = require('jsonwebtoken');
 
 const indexRouter = require('./routes/index');
 const app = express();
@@ -22,14 +23,39 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// JWT validation for public folder
-var validationMiddleware = (req, res, next) => {
-    // TODO: Somehow valid JWT
-    // also need to get JWT have no idea how
-    next();
+// JWT validation
+const validationMiddleware = async (req, res, next) => {
+    let token = undefined;
+    if (req.query != null)
+        token = req.query.token;
+    else
+        token = req.body.token;
+
+    if (!token) {
+        res.send({ success: false });
+        return;
+    }
+
+    let success = false;
+    await jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+    
+        if (decoded.username == undefined || decoded.username == '')
+            return;
+    
+        success = true;
+    });
+    
+    if (!success)
+        res.send({ success: false });
+    else
+        next();
 };
 
-app.use(validationMiddleware, express.static(__dirname + '/public'));
+app.use('/auth', validationMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
