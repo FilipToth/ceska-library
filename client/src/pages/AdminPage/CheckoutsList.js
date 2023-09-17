@@ -30,7 +30,6 @@ const CheckoutsList = ({ popupFunction }) => {
     };
 
     const update = () => {
-        console.log("update")
         listRef.current.update();
     }
 
@@ -49,8 +48,35 @@ const CheckoutsList = ({ popupFunction }) => {
         );
     };
 
+    const sortOptions = [
+        {
+            msg: 'book name',
+            getSortableElement: (dbItem) => {
+                return dbItem.bookName;
+            }
+        },
+        {
+            msg: 'person',
+            getSortableElement: (dbItem) => {
+                return dbItem.personName;
+            }
+        },
+        {
+            msg: 'due',
+            getSortableElement: (dbItem) => {
+                return dbItem.dueDate;
+            }
+        },
+        {
+            msg: 'checkout date',
+            getSortableElement: (dbItem) => {
+                return dbItem.checkoutDate;
+            }
+        }
+    ];
+
     return (
-        <SearchableListView ref={listRef} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'Checkouts'} renderSearch={false} popupFunction={popupFunction} />
+        <SearchableListView ref={listRef} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'Checkouts'} renderSearch={false} popupFunction={popupFunction} sortOptions={sortOptions} />
     )
 };
 

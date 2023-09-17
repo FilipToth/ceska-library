@@ -44,8 +44,35 @@ const PeopleList = ({ popupFunction }) => {
         );
     };
 
+    const sortOptions = [
+        {
+            msg: 'name',
+            getSortableElement: (dbItem) => {
+                return dbItem.name;
+            }
+        },
+        {
+            msg: 'class',
+            getSortableElement: (dbItem) => {
+                return dbItem.pClass;
+            }
+        },
+        {
+            msg: 'mail',
+            getSortableElement: (dbItem) => {
+                return dbItem.email;
+            }
+        },
+        {
+            msg: 'user id',
+            getSortableElement: (dbItem) => {
+                return dbItem.id;
+            }
+        }
+    ];
+
     return (
-        <SearchableListView searchFunction={handleSearch} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'People'} popupFunction={popupFunction} />
+        <SearchableListView searchFunction={handleSearch} getItems={handleGetItems} renderItemEntry={handleRenderItemEntry} databaseName={'People'} popupFunction={popupFunction} sortOptions={sortOptions} />
     );
 };
 

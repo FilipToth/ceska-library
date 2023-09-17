@@ -153,7 +153,7 @@ class DatabaseHandler
         const algoliaObjects = [];
         for (const person of people) {
             const object = {
-                name: person.title,
+                name: person.name,
                 pClass: person.pClass,
                 email: person.mail
             };
