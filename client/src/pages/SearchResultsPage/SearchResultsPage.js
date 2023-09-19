@@ -60,7 +60,7 @@ const SearchResultsPage = () => {
             <BookSearchBar query={searchTerm} />
             {entryDiv}
             <div className='Footer-Wrapper'>
-                <img className='Footer-Image' src='images/icons8-wtf-100.png'></img>
+                <img className='Footer-Image' src={`${process.env.PUBLIC_URL}/images/icons8-wtf-100.png`}></img>
                 <p1 className='Footer-Text'>That would be it for the search results, I guess...</p1>
             </div>
         </div>

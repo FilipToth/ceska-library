@@ -5,7 +5,7 @@ const TextBoxField = ({ onChange, placeholder, text, id='', currentRefinementAsV
     if (addSearchButton) {
         searchButton = (
             <div className='Text-Field-Search-Button-Wrapper' onClick={searchButtonOnClick}>
-                <img className='Text-Field-Search-Button-Image' src='images/Search-Icon.png'></img>
+                <img className='Text-Field-Search-Button-Image' src={`${process.env.PUBLIC_URL}/images/Search-Icon.png`}></img>
             </div>
         )
     }

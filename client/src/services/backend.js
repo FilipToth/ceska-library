@@ -1,28 +1,33 @@
 import axios from "axios";
 
 class Backend {
+    constructor() {
+        this.base = process.env.REACT_APP_BACKEND_BASE_URL;
+        console.log(this.base);
+    }
+
     async getBookInfoByID(id) {
-        const book = await axios.get(`http://127.0.0.1:8080/id?id=${id}`);
+        const book = await axios.get(`${this.base}/id?id=${id}`);
         return book.data;
     }
 
     async getLocation(id) {
-        const location = await axios.get(`http://127.0.0.1:8080/loc?id=${id}`);
+        const location = await axios.get(`${this.base}/loc?id=${id}`);
         return location.data;
     }
 
     async getAllLocations() {
-        const locations = await axios.get(`http://127.0.0.1:8080/loc`);
+        const locations = await axios.get(`${this.base}/loc`);
         return locations.data;
     }
 
     async getAllBooks() {
-        const books = await axios.get(`http://127.0.0.1:8080/books`);
+        const books = await axios.get(`${this.base}/books`);
         return books.data;
     }
 
     async getBooksByGenre(genre) {
-        const books = await axios.get(`http://127.0.0.1:8080/books?genre=${genre}`);
+        const books = await axios.get(`${this.base}/books?genre=${genre}`);
         return books.data;
     }
 
@@ -32,7 +37,7 @@ class Backend {
             password: password
         };
 
-        const auth = await axios.post(`http://127.0.0.1:8080/authenticate-user`, payload);
+        const auth = await axios.post(`${this.base}/authenticate-user`, payload);
         return auth.data;
     }
 
@@ -49,12 +54,12 @@ class Backend {
             note: book.note
         };
 
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/add-book`, payload);
+        const resp = await axios.post(`${this.base}/auth/add-book`, payload);
         return resp.data;
     }
 
     async removeBook(isbn, token) {
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/remove-book`, { token: token });
+        const resp = await axios.post(`${this.base}/auth/remove-book`, { token: token });
         return resp.data;
     }
 
@@ -65,7 +70,7 @@ class Backend {
             value: value
         };
         
-        await axios.post(`http://127.0.0.1:8080/auth/change-book`, payload);
+        await axios.post(`${this.base}/auth/change-book`, payload);
     }
 
     async changeLocation(key, value, token) {
@@ -75,7 +80,7 @@ class Backend {
             value: value
         };
 
-        await axios.post(`http://127.0.0.1:8080/auth/change-location`, payload);
+        await axios.post(`${this.base}/auth/change-location`, payload);
     };
 
     async addPerson(person, token) {
@@ -86,11 +91,11 @@ class Backend {
             mail: person.mail
         };
 
-        await axios.post(`http://127.0.0.1:8080/auth/add-person`, payload);
+        await axios.post(`${this.base}/auth/add-person`, payload);
     };
 
     async getPeople(token) {
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/get-people`, { token: token });
+        const resp = await axios.post(`${this.base}/auth/get-people`, { token: token });
         console.log(resp);
         return resp.data;
     };
@@ -106,7 +111,7 @@ class Backend {
         };
 
         let response = {};
-        await axios.post(`http://127.0.0.1:8080/auth/checkout`, payload).then((resp) => {
+        await axios.post(`${this.base}/auth/checkout`, payload).then((resp) => {
             response = resp.data;
         });
 
@@ -114,7 +119,7 @@ class Backend {
     };
 
     async getCheckouts(token) {
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/checkouts`, { token: token });
+        const resp = await axios.post(`${this.base}/auth/checkouts`, { token: token });
         return resp.data;
     };
 
@@ -124,7 +129,7 @@ class Backend {
             id: personID    
         };
 
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/checkouts`, payload);
+        const resp = await axios.post(`${this.base}/auth/checkouts`, payload);
         return resp.data;
     };
 
@@ -134,7 +139,7 @@ class Backend {
             id: bookID
         };
 
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/return-book`, payload);
+        const resp = await axios.post(`${this.base}/auth/return-book`, payload);
         return resp.data;
     }
 
@@ -144,7 +149,7 @@ class Backend {
             databaseName: db
         };
 
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/export-db`, payload);
+        const resp = await axios.post(`${this.base}/auth/export-db`, payload);
         return resp.data;
     }
 
@@ -156,20 +161,21 @@ class Backend {
             token: token
         };
         
-        const resp = await axios.post(`http://127.0.0.1:8080/auth/import-db-${dbName.toLowerCase()}`, formData, payload);
+        const resp = await axios.post(`${this.base}/auth/import-db-${dbName.toLowerCase()}`, formData, payload);
         return resp.data;
     }
 
     async getBookByISBN(isbn) {
-        const resp = await axios.get(`http://127.0.0.1:8080/book-by-isbn?isbn=${isbn}`);
+        const resp = await axios.get(`${this.base}/book-by-isbn?isbn=${isbn}`);
         return resp.data.book;
     };
 
     async getBookImage(isbn) {
-        const resp = await axios.get(`http://127.0.0.1:8080/book-image?isbn=${isbn}`);
+        const resp = await axios.get(`${this.base}/book-image?isbn=${isbn}`);
         if (!resp.data.success)
             return undefined;
         
+        console.log(resp.data);
         return resp.data.image;
     }
 }
