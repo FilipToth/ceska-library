@@ -7,8 +7,9 @@ import AdminPage from 'pages/AdminPage';
 import { RequireAuth } from 'react-auth-kit';
 
 const App = () => {
+    console.log(process.env.PUBLIC_URL);
     return (
-        <BrowserRouter basename={window.location.pathname || ''}>
+        <BrowserRouter basename={process.env.PUBLIC_URL || ''}>
             <Routes>
                 <Route exact path='/' element={
                     <SearchPage />
