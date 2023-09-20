@@ -242,7 +242,7 @@ router.post('/auth/export-db', async (req, res, next) => {
     const path = `public/${filename}`;
     await writeDBExport(path, data, header, lineCallback);
 
-    const outsidePath = `http://127.0.0.1:8080/${filename}`;
+    const outsidePath = `${process.env.SERVING_URL}/${filename}`;
     res.send({ success: true, path: outsidePath });
 });
 
@@ -362,7 +362,7 @@ router.get('/book-by-isbn', async (req, res, next) => {
 router.get('/book-image', async (req, res, next) => {
     const isbn = req.query.isbn;
     const path = `public/images/${isbn}.png`;
-    const outsidePath = `http://127.0.0.1:8080/images/${isbn}.png`;
+    const outsidePath = `${process.env.SERVING_URL}/images/${isbn}.png`;
 
     let exists = fsSync.existsSync(path);
     if (exists) {
