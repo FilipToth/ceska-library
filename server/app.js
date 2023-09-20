@@ -25,13 +25,21 @@ app.use(cookieParser());
 
 // JWT validation
 const validationMiddleware = async (req, res, next) => {
-    let token = req.body.token;
-    if (!token) {
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+        res.send({ success: false });
+        return;
+    }
+
+    // remove scheme
+    const parts = authorization.split(' ');
+    if (parts != 2) {
         res.send({ success: false });
         return;
     }
 
     let success = false;
+    const token = parts[1];
     await jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             console.log(err);
