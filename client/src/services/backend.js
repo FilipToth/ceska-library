@@ -101,6 +101,7 @@ class Backend {
     };
 
     async getPeople(token) {
+        console.log(getAuthHeaderConfig(token));
         const resp = await axios.post(`${this.base}/auth/get-people`, { }, getAuthHeaderConfig(token));
         console.log(resp);
         return resp.data;

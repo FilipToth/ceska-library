@@ -33,7 +33,7 @@ const validationMiddleware = async (req, res, next) => {
 
     // remove scheme
     const parts = authorization.split(' ');
-    if (parts != 2) {
+    if (parts.length != 2) {
         res.send({ success: false });
         return;
     }
