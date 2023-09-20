@@ -18,7 +18,7 @@ const AdminPage = () => {
     const signOut = useSignOut();
     const signOutClick = () => {
         signOut();
-        navigate('/login');
+        navigate('/');
     };
 
     const select = (index) => {
