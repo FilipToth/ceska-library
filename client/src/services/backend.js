@@ -1,4 +1,3 @@
-import { getAllByTestId } from "@testing-library/react";
 import axios from "axios";
 
 const getAuthHeaderConfig = (token) => {
@@ -152,7 +151,7 @@ class Backend {
             databaseName: db
         };
 
-        const resp = await axios.post(`${this.base}/auth/export-db`, payload, getAllByTestId(token));
+        const resp = await axios.post(`${this.base}/auth/export-db`, payload, getAuthHeaderConfig(token));
         return resp.data;
     }
 
