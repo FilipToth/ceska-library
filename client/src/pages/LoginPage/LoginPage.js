@@ -4,6 +4,7 @@ import TextBoxField from 'components/TextBoxField';
 import { useSignIn } from 'react-auth-kit';
 import backend from 'services/backend';
 import { useNavigate } from 'react-router-dom';
+import RedirectionFooter from 'components/RedirectionFooter';
 
 const LoginPage = () => {
     var username = '';
@@ -48,6 +49,7 @@ const LoginPage = () => {
                 </div>
                 <CustomButton msg={'Login me in!'} onClick={login} />
             </div>
+            <RedirectionFooter message={'Go Back'} uri={'/'} />
         </div>
     );
 }
