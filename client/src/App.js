@@ -2,14 +2,13 @@ import 'assets/App.css'
 import SearchPage from 'pages/SearchPage';
 import SearchResultsPage from 'pages/SearchResultsPage';
 import LoginPage from 'pages/LoginPage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import AdminPage from 'pages/AdminPage';
 import { RequireAuth } from 'react-auth-kit';
 
 const App = () => {
-    console.log(process.env.PUBLIC_URL);
     return (
-        <BrowserRouter basename={process.env.PUBLIC_URL || ''}>
+        <HashRouter>
             <Routes>
                 <Route exact path='/' element={
                     <SearchPage />
@@ -26,7 +25,7 @@ const App = () => {
                     </RequireAuth>
                 }> </Route>
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

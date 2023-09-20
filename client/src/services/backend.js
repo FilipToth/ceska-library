@@ -3,7 +3,6 @@ import axios from "axios";
 class Backend {
     constructor() {
         this.base = process.env.REACT_APP_BACKEND_BASE_URL;
-        console.log(this.base);
     }
 
     async getBookInfoByID(id) {
