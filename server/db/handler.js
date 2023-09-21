@@ -88,8 +88,8 @@ class DatabaseHandler
         }
 
         for (const isbn of toRemove) {
-            bookData.data[isbn] = undefined;
-            locationData.data[isbn] = undefined;
+            bookData.data[isbn] = null;
+            locationData.data[isbn] = null;
         }
 
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);

@@ -265,7 +265,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
     const dbEntries = [];
     const referencesIsbns = [];
     for (const book of data) {
-        if ((book.length != 4 && book.length != 5) || book[0] == '') {
+        if ((book.length != 4 && book.length != 5) || book[0] == '' || book[0] == undefined) {
             continue;
         }
 
@@ -280,7 +280,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         if (book.length == 5)
             entry.note = book[4];
 
-        dbEntries.push(isbn);
+        referencesIsbns.push(isbn);
         dbEntries.push(entry);
     }
 
@@ -295,7 +295,6 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
     }
 
     await handler.addBooks(dbEntries, false, toRemove.length == 0 ? undefined : toRemove);
-    referencesIsbns.push(book[0]);
     res.send({ success: true });
 });
 
