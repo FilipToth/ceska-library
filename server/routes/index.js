@@ -248,7 +248,7 @@ router.post('/auth/export-db', async (req, res, next) => {
 
 // TODO: Cleanup import functions
 
-router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next) => {
+router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -263,11 +263,13 @@ router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next)
     data.splice(0, 1);
 
     const dbEntries = [];
+    const referencesIsbns = [];
     for (const book of data) {
         if ((book.length != 4 && book.length != 5) || book[0] == '') {
             continue;
         }
 
+        const isbn = book[0];
         const entry = {
             isbn: book[0],
             title: book[1],
@@ -278,10 +280,22 @@ router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next)
         if (book.length == 5)
             entry.note = book[4];
 
+        dbEntries.push(isbn);
         dbEntries.push(entry);
     }
 
-    handler.addBooks(dbEntries);
+    // difference and add undefined for missing entries
+    const toRemove = [];
+    const currentData = await handler.getBooks();
+    for (const key of Object.keys(currentData)) {
+        if (referencesIsbns.includes(key))
+            continue;
+        
+        toRemove.push(key);
+    }
+
+    await handler.addBooks(dbEntries, false, toRemove.length == 0 ? undefined : toRemove);
+    referencesIsbns.push(book[0]);
     res.send({ success: true });
 });
 

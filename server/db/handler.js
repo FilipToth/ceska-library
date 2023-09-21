@@ -47,7 +47,7 @@ class DatabaseHandler
         return location;
     }
 
-    addBooks = async (books, addLocation) => {
+    addBooks = async (books, addLocation = false, toRemove = undefined) => {
         const algoliaObjects = []
         for (const book of books) {
             algoliaObjects.push({
@@ -85,6 +85,11 @@ class DatabaseHandler
                 row: book.row,
                 column: book.column
             };
+        }
+
+        for (const isbn of toRemove) {
+            bookData.data[isbn] = undefined;
+            locationData.data[isbn] = undefined;
         }
 
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
