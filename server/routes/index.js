@@ -284,7 +284,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         dbEntries.push(entry);
     }
 
-    // difference and add undefined for missing entries
+    // difference and add null for missing entries
     const toRemove = [];
     const currentData = await handler.getBooks();
     for (const key of Object.keys(currentData)) {
@@ -298,7 +298,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
     res.send({ success: true });
 });
 
-router.post('/auth/import-db-people', upload.single('dbImport'), (req, res, next) => {
+router.post('/auth/import-db-people', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -313,24 +313,38 @@ router.post('/auth/import-db-people', upload.single('dbImport'), (req, res, next
     data.splice(0, 1);
 
     const dbEntries = [];
+    const referencedIDs = [];
     for (const person of data) {
         if (person.length != 4 || person[0] == '') {
             continue;
         }
 
+        const id = person[0];
         dbEntries.push({
-            id: person[0],
+            id: id,
             name: person[1],
             pClass: person[2],
             mail: person[3]
         });
+
+        referencedIDs.push(id);
     }
 
-    handler.addPeople(dbEntries);
+    // difference and add null for missing entries
+    const toRemove = [];
+    const currentData = await handler.getPeople();
+    for (const key of Object.keys(currentData)) {
+        if (referencedIDs.includes(key))
+            continue;
+        
+        toRemove.push(key);
+    }
+
+    await handler.addPeople(dbEntries, toRemove);
     res.send({ success: true });
 });
 
-router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, next) => {
+router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -345,6 +359,7 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, n
     data.splice(0, 1);
 
     const dbEntry = {};
+    const referencedIDs = [];
     for (const checkout of data) {
         if (checkout.length != 6 || checkout[0] == '') {
             continue;
@@ -358,9 +373,20 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, n
             bookName: checkout[4],
             checkoutDate: checkout[5],
         };
+
+        referencedIDs.push(key);
     }
 
-    handler.changeCheckouts(dbEntry);
+    // difference and add null for missing entries
+    const currentData = await handler.getCheckouts();
+    for (const key of Object.keys(currentData)) {
+        if (referencedIDs.includes(key))
+            continue;
+        
+        dbEntry[key] = null;
+    }
+
+    await handler.changeCheckouts(dbEntry);
     res.send({ success: true });
 });
 
