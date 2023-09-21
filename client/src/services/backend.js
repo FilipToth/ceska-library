@@ -100,9 +100,7 @@ class Backend {
     };
 
     async getPeople(token) {
-        console.log(getAuthHeaderConfig(token));
         const resp = await axios.post(`${this.base}/auth/get-people`, { }, getAuthHeaderConfig(token));
-        console.log(resp);
         return resp.data;
     };
 
@@ -160,7 +158,6 @@ class Backend {
         formData.append('dbImport', file);
 
         const resp = await axios.post(`${this.base}/auth/import-db-${dbName.toLowerCase()}`, formData, getAuthHeaderConfig(token));
-        console.log(resp.data);
         return resp.data;
     }
 
@@ -174,7 +171,6 @@ class Backend {
         if (!resp.data.success)
             return undefined;
         
-        console.log(resp.data);
         return resp.data.image;
     }
 }

@@ -14,8 +14,6 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
 
     const exportDB = async () => {
         const resp = await backend.exportDB(token, databaseName);
-        console.log(resp);
-
         if (!resp.success) {
             popupFunction('Failed', 2000, true);
             return;
@@ -37,7 +35,6 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
         }
         
         // TODO: JWT and security
-        console.log(file);
         const resp = await backend.uploadDBFile(token, file, databaseName);
         if (!resp.success) {
             const errMsg = resp.msg;
