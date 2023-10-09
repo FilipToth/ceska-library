@@ -53,6 +53,12 @@ const BookList = ({ popupFunction }) => {
             }
         },
         {
+            msg: 'isbn',
+            getSortableElement: (dbItem) => {
+                return dbItem.isbn;
+            }
+        },
+        {
             msg: 'genre',
             getSortableElement: (dbItem) => {
                 return dbItem.genre;

@@ -5,8 +5,8 @@ import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
 
 const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note }) => {
-    const buttonPaddingHeight = 4;
-    const buttonPaddingWidth = 10;
+    const buttonPaddingHeight = 3;
+    const buttonPaddingWidth = 3;
 
     const authHeader = useAuthHeader();
     const header = authHeader();
@@ -89,6 +89,7 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
         <div className='Book-List-Entry-Wrapper'>
             <p1 className='Entry-Text'>{title}</p1>
             <p1 className='Entry-Text'>{authorName}</p1>
+            <p1 className='Entry-Text'>{isbn}</p1>
             <p1 className='Entry-Text'>{note}</p1>
             <div className='Field-Group-Wrapper'>
                 <p1 className='Field-Text'>row:</p1>
@@ -100,7 +101,7 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
             </div>
             <div className='Field-Group-Wrapper'>
                 <p1 className='Field-Text'>genre:</p1>
-                <input value={state.genre} size={10} onChange={changeGenre} />
+                <input value={state.genre} size={7} onChange={changeGenre} />
             </div>
             <CustomButton msg={'Save Edits'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} onClick={saveEdits} />
             <CustomButton msg={'Check History'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
