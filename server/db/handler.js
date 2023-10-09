@@ -47,7 +47,7 @@ class DatabaseHandler
         return location;
     }
 
-    addBooks = async (books, addLocation) => {
+    addBooks = async (books, addLocation = false, toRemove = []) => {
         const algoliaObjects = []
         for (const book of books) {
             algoliaObjects.push({
@@ -57,14 +57,25 @@ class DatabaseHandler
             });
         }
 
-        let success = true;
         const index = this.algoliaClient.initIndex(process.env.ALGOLIA_BOOK_INDEX_NAME);
+        if (toRemove.length > 0) {
+            let deleteObjectsSuccess = true;
+            await index.deleteObjects(toRemove).catch((err) => {
+                deleteObjectsSuccess = false;
+                console.log(err);
+            });
+
+            if (!deleteObjectsSuccess)
+                return;
+        }
+
+        let saveObjectsSuccess = true;
         await index.saveObjects(algoliaObjects, { autoGenerateObjectIDIfNotExist: true }).catch((err) => {
-            success = false;
+            saveObjectsSuccess = false;
             console.log(err);
         });
 
-        if (!success)
+        if (!saveObjectsSuccess)
             return;
 
         const bookData = { data: { } };
@@ -85,6 +96,11 @@ class DatabaseHandler
                 row: book.row,
                 column: book.column
             };
+        }
+
+        for (const isbn of toRemove) {
+            bookData.data[isbn] = null;
+            locationData.data[isbn] = null;
         }
 
         await this.connector.updateDoc(this.bookColName, this.bookColID, bookData);
@@ -149,7 +165,7 @@ class DatabaseHandler
         await this.connector.updateDoc(this.locationsColName, this.locationsColID, locationData);
     };
 
-    addPeople = async (people) => {
+    addPeople = async (people, toRemove = []) => {
         const algoliaObjects = [];
         for (const person of people) {
             const object = {
@@ -164,9 +180,20 @@ class DatabaseHandler
             algoliaObjects.push(object);
         }
 
-        let success = true;
-        let objectIDs = {};
         const index = this.algoliaClient.initIndex(process.env.ALGOLIA_PEOPLE_INDEX_NAME);
+        if (toRemove.length > 0) {
+            let deleteObjectsSuccess = true;
+            await index.deleteObjects(toRemove).catch((err) => {
+                deleteObjectsSuccess = false;
+                console.log(err);
+            });
+
+            if (!deleteObjectsSuccess)
+                return;
+        }
+
+        let objectIDs = {};
+        let saveObjectsSuccess = true;
         await index.saveObjects(algoliaObjects, { autoGenerateObjectIDIfNotExist: true }).then((resp) => {
             const oids = resp.objectIDs;
             for (let i = 0; i < oids.length; i++) {
@@ -175,11 +202,11 @@ class DatabaseHandler
                 objectIDs[person.name] = id;
             }
         }).catch((err) => {
-            success = false;
+            saveObjectsSuccess = false;
             console.log(err);
         });
 
-        if (!success)
+        if (!saveObjectsSuccess)
             return;
 
         const personData = { data: { } };
@@ -190,6 +217,10 @@ class DatabaseHandler
                 pClass: person.pClass,
                 email: person.mail,
             };
+        }
+
+        for (const id of toRemove) {
+            personData.data[id] = null;
         }
 
         await this.connector.updateDoc(this.peopleColName, this.peopleColID, personData);

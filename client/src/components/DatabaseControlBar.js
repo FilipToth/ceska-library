@@ -14,8 +14,6 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
 
     const exportDB = async () => {
         const resp = await backend.exportDB(token, databaseName);
-        console.log(resp);
-
         if (!resp.success) {
             popupFunction('Failed', 2000, true);
             return;

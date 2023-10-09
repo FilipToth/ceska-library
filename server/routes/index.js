@@ -242,13 +242,13 @@ router.post('/auth/export-db', async (req, res, next) => {
     const path = `public/${filename}`;
     await writeDBExport(path, data, header, lineCallback);
 
-    const outsidePath = `http://127.0.0.1:8080/${filename}`;
+    const outsidePath = `${process.env.SERVING_URL}/${filename}`;
     res.send({ success: true, path: outsidePath });
 });
 
 // TODO: Cleanup import functions
 
-router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next) => {
+router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -263,11 +263,13 @@ router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next)
     data.splice(0, 1);
 
     const dbEntries = [];
+    const referencesIsbns = [];
     for (const book of data) {
-        if ((book.length != 4 && book.length != 5) || book[0] == '') {
+        if ((book.length != 4 && book.length != 5) || book[0] == '' || book[0] == undefined) {
             continue;
         }
 
+        const isbn = book[0];
         const entry = {
             isbn: book[0],
             title: book[1],
@@ -278,14 +280,25 @@ router.post('/auth/import-db-books', upload.single('dbImport'), (req, res, next)
         if (book.length == 5)
             entry.note = book[4];
 
+        referencesIsbns.push(isbn);
         dbEntries.push(entry);
     }
 
-    handler.addBooks(dbEntries);
+    // difference and add null for missing entries
+    const toRemove = [];
+    const currentData = await handler.getBooks();
+    for (const key of Object.keys(currentData)) {
+        if (referencesIsbns.includes(key))
+            continue;
+        
+        toRemove.push(key);
+    }
+
+    await handler.addBooks(dbEntries, false, toRemove.length == 0 ? undefined : toRemove);
     res.send({ success: true });
 });
 
-router.post('/auth/import-db-people', upload.single('dbImport'), (req, res, next) => {
+router.post('/auth/import-db-people', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -300,24 +313,38 @@ router.post('/auth/import-db-people', upload.single('dbImport'), (req, res, next
     data.splice(0, 1);
 
     const dbEntries = [];
+    const referencedIDs = [];
     for (const person of data) {
         if (person.length != 4 || person[0] == '') {
             continue;
         }
 
+        const id = person[0];
         dbEntries.push({
-            id: person[0],
+            id: id,
             name: person[1],
             pClass: person[2],
             mail: person[3]
         });
+
+        referencedIDs.push(id);
     }
 
-    handler.addPeople(dbEntries);
+    // difference and add null for missing entries
+    const toRemove = [];
+    const currentData = await handler.getPeople();
+    for (const key of Object.keys(currentData)) {
+        if (referencedIDs.includes(key))
+            continue;
+        
+        toRemove.push(key);
+    }
+
+    await handler.addPeople(dbEntries, toRemove);
     res.send({ success: true });
 });
 
-router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, next) => {
+router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
 
@@ -332,6 +359,7 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, n
     data.splice(0, 1);
 
     const dbEntry = {};
+    const referencedIDs = [];
     for (const checkout of data) {
         if (checkout.length != 6 || checkout[0] == '') {
             continue;
@@ -345,9 +373,20 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), (req, res, n
             bookName: checkout[4],
             checkoutDate: checkout[5],
         };
+
+        referencedIDs.push(key);
     }
 
-    handler.changeCheckouts(dbEntry);
+    // difference and add null for missing entries
+    const currentData = await handler.getCheckouts();
+    for (const key of Object.keys(currentData)) {
+        if (referencedIDs.includes(key))
+            continue;
+        
+        dbEntry[key] = null;
+    }
+
+    await handler.changeCheckouts(dbEntry);
     res.send({ success: true });
 });
 
@@ -362,7 +401,7 @@ router.get('/book-by-isbn', async (req, res, next) => {
 router.get('/book-image', async (req, res, next) => {
     const isbn = req.query.isbn;
     const path = `public/images/${isbn}.png`;
-    const outsidePath = `http://127.0.0.1:8080/images/${isbn}.png`;
+    const outsidePath = `${process.env.SERVING_URL}/images/${isbn}.png`;
 
     let exists = fsSync.existsSync(path);
     if (exists) {
