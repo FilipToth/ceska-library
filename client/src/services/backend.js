@@ -179,11 +179,12 @@ class Backend {
     };
 
     async purgeDB(token, db) {
+        console.log(db);
         const payload = {
             databaseName: db
         };
 
-        const resp = await axios.post(`${this.base}/auth//purge-db`, payload, getAuthHeaderConfig(token));
+        const resp = await axios.post(`${this.base}/auth/purge-db`, payload, getAuthHeaderConfig(token));
         return resp.data;
     }
 }

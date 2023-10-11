@@ -306,6 +306,9 @@ class DatabaseHandler
     differentiate = async (data, existingIDs, dbEntry) => {
         // difference and add null for missing entries
         const toRemove = [];
+        if (!data)
+            return toRemove;
+        
         for (const key of Object.keys(data)) {
             if (existingIDs.includes(key))
                 continue;
