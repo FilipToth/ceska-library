@@ -49,6 +49,10 @@ const BookDetails = ({id, playClosingAnim}) => {
                 </div>
             </div>
             <p1 className='Book-Description'>{book.description}</p1>
+            <div className='Header-Key-Value-Wrapper'>
+                <p1 className='Header-Key'>isbn:</p1>
+                <p1 className='Header-Value'>{id}</p1>
+            </div>
         </div>
     );
 }
