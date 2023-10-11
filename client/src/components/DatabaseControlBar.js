@@ -27,6 +27,10 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
         fileInputRef.current.click();
     };
 
+    const deleteAllButtonClick = async () => {
+        backend.purgeDB(token, databaseName);
+    };
+
     const importDBHandleFile = async (e) => {
         const file = e.target.files[0];
         if (file == undefined) {
@@ -50,6 +54,7 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
             <iframe style={{ display: 'none' }} ref={downloadFrameRef}></iframe>
             <CustomButton msg={'Export CSV'} onClick={exportDB} paddingHeight={7} paddingWidth={10}/>
             <CustomButton msg={'Import CSV'} onClick={importButtonClick} paddingHeight={7} paddingWidth={10} />
+            <CustomButton msg={'Delete All'} onClick={deleteAllButtonClick} paddingHeight={7} paddingWidth={10} />
             <input type='file' onChange={importDBHandleFile} style={{ display: 'none' }} ref={fileInputRef}  />
         </div>
     )

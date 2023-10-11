@@ -287,6 +287,51 @@ class DatabaseHandler
         checkoutData.data[bookID] = null;
         await this.connector.updateDoc(this.checkoutsColName, this.checkoutsColID, checkoutData);
     };
+
+    differentiateBooks = async (existingIDs, dbEntry) => {
+        const data = await handler.getBooks();
+        return this.differentiate(data, existingIDs, dbEntry);
+    };
+
+    differentiatePeople = async (existingIDs, dbEntry) => {
+        const data = await handler.getPeople();
+        return this.differentiate(data, existingIDs, dbEntry);
+    };
+
+    differentiateCheckouts = async (existingIDs, dbEntry) => {
+        const data = await handler.getCheckouts();
+        this.differentiate(data, existingIDs, dbEntry);
+    };
+
+    differentiate = async (data, existingIDs, dbEntry) => {
+        // difference and add null for missing entries
+        const toRemove = [];
+        for (const key of Object.keys(data)) {
+            if (existingIDs.includes(key))
+                continue;
+            
+            toRemove.push(key);
+            dbEntry[key] = null;
+        }
+
+        return toRemove;
+    };
+
+    purgeBooks = async () => {
+        const toRemove = await this.differentiateBooks([], {});
+        await this.addBooks([], false, toRemove.length == 0 ? undefined : toRemove);
+    };
+
+    purgePeople = async () => {
+        const toRemove = await this.differentiatePeople([], {});
+        await this.addPeople([], toRemove);
+    };
+
+    purgeCheckouts = async () => {
+        const entries = {};
+        await this.differentiateCheckouts([], entries);
+        await this.changeCheckouts(entries);
+    };
 }
 
 const handler = new DatabaseHandler();

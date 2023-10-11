@@ -284,16 +284,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         dbEntries.push(entry);
     }
 
-    // difference and add null for missing entries
-    const toRemove = [];
-    const currentData = await handler.getBooks();
-    for (const key of Object.keys(currentData)) {
-        if (referencesIsbns.includes(key))
-            continue;
-        
-        toRemove.push(key);
-    }
-
+    const toRemove = handler.differentiateCheckouts(referencedIDs, dbEntry);
     await handler.addBooks(dbEntries, false, toRemove.length == 0 ? undefined : toRemove);
     res.send({ success: true });
 });
@@ -330,16 +321,7 @@ router.post('/auth/import-db-people', upload.single('dbImport'), async (req, res
         referencedIDs.push(id);
     }
 
-    // difference and add null for missing entries
-    const toRemove = [];
-    const currentData = await handler.getPeople();
-    for (const key of Object.keys(currentData)) {
-        if (referencedIDs.includes(key))
-            continue;
-        
-        toRemove.push(key);
-    }
-
+    const toRemove = handler.differentiateCheckouts(referencedIDs, dbEntries);
     await handler.addPeople(dbEntries, toRemove);
     res.send({ success: true });
 });
@@ -358,7 +340,7 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, 
     const data = parsed.data;
     data.splice(0, 1);
 
-    const dbEntry = {};
+    let dbEntries = {};
     const referencedIDs = [];
     for (const checkout of data) {
         if (checkout.length != 6 || checkout[0] == '') {
@@ -366,7 +348,7 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, 
         }
 
         const key = checkout[0];
-        dbEntry[key] = {
+        dbEntries[key] = {
             personID: checkout[1],
             dueDate: checkout[2],
             personName: checkout[3],
@@ -377,16 +359,25 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, 
         referencedIDs.push(key);
     }
 
-    // difference and add null for missing entries
-    const currentData = await handler.getCheckouts();
-    for (const key of Object.keys(currentData)) {
-        if (referencedIDs.includes(key))
-            continue;
-        
-        dbEntry[key] = null;
+    handler.differentiateCheckouts(referencedIDs, dbEntries);
+    await handler.changeCheckouts(dbEntries);
+    res.send({ success: true });
+});
+
+router.post('/auth/purge-db', async (req, res, next) => {
+    const db = red.body.databaseName;
+    switch (db) {
+        case 'Books':
+            await handler.purgeBooks();
+            break;
+        case 'People':
+            await handler.purgePeople();
+            break;
+        case 'Checkouts':
+            await handler.purgeCheckouts();
+            break;
     }
 
-    await handler.changeCheckouts(dbEntry);
     res.send({ success: true });
 });
 

@@ -13,32 +13,32 @@ const getAuthHeaderConfig = (token) => {
 class Backend {
     constructor() {
         this.base = process.env.REACT_APP_BACKEND_BASE_URL;
-    }
+    };
 
     async getBookInfoByID(id) {
         const book = await axios.get(`${this.base}/id?id=${id}`);
         return book.data;
-    }
+    };
 
     async getLocation(id) {
         const location = await axios.get(`${this.base}/loc?id=${id}`);
         return location.data;
-    }
+    };
 
     async getAllLocations() {
         const locations = await axios.get(`${this.base}/loc`);
         return locations.data;
-    }
+    };
 
     async getAllBooks() {
         const books = await axios.get(`${this.base}/books`);
         return books.data;
-    }
+    };
 
     async getBooksByGenre(genre) {
         const books = await axios.get(`${this.base}/books?genre=${genre}`);
         return books.data;
-    }
+    };
 
     async getAuthentication(username, password ) {
         const payload = {
@@ -48,7 +48,7 @@ class Backend {
 
         const auth = await axios.post(`${this.base}/authenticate-user`, payload);
         return auth.data;
-    }
+    };
 
     async addBook(book, token) {
         const payload = {
@@ -64,7 +64,7 @@ class Backend {
 
         const resp = await axios.post(`${this.base}/auth/add-book`, payload, getAuthHeaderConfig(token));
         return resp.data;
-    }
+    };
 
     async removeBook(isbn, token) {
         const payload = {
@@ -73,7 +73,7 @@ class Backend {
 
         const resp = await axios.post(`${this.base}/auth/remove-book`, payload, getAuthHeaderConfig(token));
         return resp.data;
-    }
+    };
 
     async changeBook(key, value, token) {
         const payload = {
@@ -82,7 +82,7 @@ class Backend {
         };
         
         await axios.post(`${this.base}/auth/change-book`, payload, getAuthHeaderConfig(token));
-    }
+    };
 
     async changeLocation(key, value, token) {
         const payload = {
@@ -146,7 +146,7 @@ class Backend {
 
         const resp = await axios.post(`${this.base}/auth/return-book`, payload, getAuthHeaderConfig(token));
         return resp.data;
-    }
+    };
 
     async exportDB(token, db) {
         const payload = {
@@ -155,7 +155,7 @@ class Backend {
 
         const resp = await axios.post(`${this.base}/auth/export-db`, payload, getAuthHeaderConfig(token));
         return resp.data;
-    }
+    };
 
     async uploadDBFile(token, file, dbName) {
         const formData = new FormData();
@@ -163,7 +163,7 @@ class Backend {
 
         const resp = await axios.post(`${this.base}/auth/import-db-${dbName.toLowerCase()}`, formData, getAuthHeaderConfig(token));
         return resp.data;
-    }
+    };
 
     async getBookByISBN(isbn) {
         const resp = await axios.get(`${this.base}/book-by-isbn?isbn=${isbn}`);
@@ -176,6 +176,15 @@ class Backend {
             return undefined;
         
         return resp.data.image;
+    };
+
+    async purgeDB(token, db) {
+        const payload = {
+            databaseName: db
+        };
+
+        const resp = await axios.post(`${this.base}/auth//purge-db`, payload, getAuthHeaderConfig(token));
+        return resp.data;
     }
 }
 
