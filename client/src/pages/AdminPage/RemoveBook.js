@@ -21,9 +21,9 @@ const RemoveBook = ({ popupFunction }) => {
             popupFunction('ISBN cannot be empty!', 2000, false);
             return;
         }
-
+        
         if (nameQueryBook != undefined)
-            isbn = nameQueryBook.isbn;
+            isbn = nameQueryBook.objectID;
 
         backend.removeBook(isbn, token);
         popupFunction('Book removed!', 2000, false);

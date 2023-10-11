@@ -67,7 +67,11 @@ class Backend {
     }
 
     async removeBook(isbn, token) {
-        const resp = await axios.post(`${this.base}/auth/remove-book`, { }, getAuthHeaderConfig(token));
+        const payload = {
+            id: isbn
+        };
+
+        const resp = await axios.post(`${this.base}/auth/remove-book`, payload, getAuthHeaderConfig(token));
         return resp.data;
     }
 
