@@ -284,7 +284,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         dbEntries.push(entry);
     }
 
-    const toRemove = handler.differentiateCheckouts(referencedIDs, dbEntry);
+    const toRemove = handler.differentiateBooks(referencedIDs, dbEntry);
     await handler.addBooks(dbEntries, false, toRemove.length == 0 ? undefined : toRemove);
     res.send({ success: true });
 });
@@ -321,7 +321,7 @@ router.post('/auth/import-db-people', upload.single('dbImport'), async (req, res
         referencedIDs.push(id);
     }
 
-    const toRemove = handler.differentiateCheckouts(referencedIDs, dbEntries);
+    const toRemove = handler.differentiatePeople(referencedIDs, dbEntries);
     await handler.addPeople(dbEntries, toRemove);
     res.send({ success: true });
 });
