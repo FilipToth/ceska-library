@@ -1,6 +1,6 @@
 import 'assets/BookView.css'
 import backend from 'services/backend';
-import { useEffect, useState } from 'react';
+import { createRef, useEffect, useRef, useState } from 'react';
 import CustomButton from "components/CustomButton";
 import LocalSearchResultEntry from "pages/SearchResultsPage/LocalSearchResultEntry";
 import GenreBar from './GenreBar';
@@ -75,7 +75,16 @@ const BookView = () => {
         addResultingBooks();
     }, [selectedGenre]);
 
+    const resultRefs = useRef([]);
     const genreChanged = (selection) => {
+        resultRefs.current.forEach((ref) => {
+            if (ref == null)
+                return;
+            
+            ref.clearDetails();
+        });
+
+        resultRefs.current = [];
         setSelectedGenre({
             genre: selection
         });
@@ -86,8 +95,14 @@ const BookView = () => {
             <GenreBar onChange={genreChanged} />
             <div className='Book-View-Wrapper'>
                 <div className='Book-View-Result-Wrapper'>
-                    {bookResult.bookEntries.slice(0, bookResult.numItemsToShow).map((book) => (
-                        <LocalSearchResultEntry bookName={book.title} authorName={book.author} locationOpenByDefault={false} id={book.isbn} />
+                    {bookResult.bookEntries.slice(0, bookResult.numItemsToShow).map((book, index) => (
+                        <LocalSearchResultEntry
+                            ref={(e) => { resultRefs.current[index] = e }}
+                            bookName={book.title}
+                            authorName={book.author}
+                            locationOpenByDefault={false}
+                            id={book.isbn}
+                        />
                     ))}
                 </div>
                 { bookResult.showMoreButton }

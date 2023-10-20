@@ -4,7 +4,7 @@ import BookSearchBar from 'components/BookSearchBar'
 import algolia from 'services/algolia';
 import backend from 'services/backend';
 import LocalSearchResultEntry from './LocalSearchResultEntry';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const SearchResultsPage = () => {
     const queries = queryString.parse(window.location.search);

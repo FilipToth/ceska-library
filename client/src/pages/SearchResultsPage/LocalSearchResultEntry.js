@@ -1,13 +1,19 @@
 import 'assets/SearchResultEntry.css';
-import BookDetails from './BookDetails';
-import { useEffect, useState } from 'react';
-import CustomButton from 'components/CustomButton';
 import backend from 'services/backend';
+import BookDetails from './BookDetails';
+import CustomButton from 'components/CustomButton';
+import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 
-const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefault }) => {
+const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationOpenByDefault }, ref) => {
+/*     const book = props.bookName;
+    const authorName = props.authorName;
+    const id = props.id;
+    const locationOpenByDefault = props.locationOpenByDefault; */
+
     const [locationOpen, setLocationOpen] = useState(locationOpenByDefault);
     const [closedDetailsWidget, setClosedDetailsWidget] = useState(false);
     const [image, setImage] = useState('');
+    
     const showDetailsClick = () => {
         if (locationOpen == true) {
             setClosedDetailsWidget(true);
@@ -37,12 +43,20 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
         }
 
         getImage();
-    })
+    });
+
+    useImperativeHandle(ref, () => {
+        return {
+            clearDetails: () => {
+                setLocationOpen(false);
+            }
+        };
+    }, []);
 
     const booknameFontSize = bookName.length > 30 ? '1.1rem' : '1.5rem';
     const booknameStyle = {
         fontSize: booknameFontSize
-    }
+    };
 
     return (
         <div className='Entry-Wrapper'>
@@ -60,6 +74,6 @@ const LocalSearchResultEntry = ({ bookName, authorName, id, locationOpenByDefaul
             { locationWidget }
         </div>
     )
-}
+});
 
 export default LocalSearchResultEntry;
