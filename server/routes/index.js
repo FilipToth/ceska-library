@@ -210,9 +210,11 @@ router.post('/auth/export-db', async (req, res, next) => {
         case 'Books':
             data = await handler.getBooks();
             filename = 'books.csv';
-            header = 'isbn,title,author,genre,note\n';
+            header = 'isbn,title,author,genre,library,row,column,note\n';
+
+            const loc = await handler.getLocations();
             lineCallback = (key, book) => {
-                return `${key},${book.name},${book.author},${book.genre},${book.note}\n`;
+                return `${key},${book.name},${book.author},${book.genre},${loc.library},${loc.row},${loc.column},${book.note}\n`;
             };
 
             break;
@@ -277,15 +279,25 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
             genre: book[3],
         };
 
-        if (book.length == 5)
+        if (book.length == 7) {
+            entry.library = book[4];
+            entry.row = book[5];
+            entry.column = book[6];
+        }
+
+        if (book.length == 8)
             entry.note = book[4];
+
+        if (book.length > 8) {
+            // send error
+        }
 
         referencesIsbns.push(isbn);
         dbEntries.push(entry);
     }
 
-    const toRemove = await handler.differentiateBooks(referencesIsbns, dbEntries);
-    await handler.addBooks(dbEntries, false, toRemove.length == 0 ? undefined : toRemove);
+    const booksToRemove = await handler.differentiateBooks(referencesIsbns, dbEntries);
+    await handler.addBooks(dbEntries, true, booksToRemove.length == 0 ? undefined : booksToRemove);
     res.send({ success: true });
 });
 
