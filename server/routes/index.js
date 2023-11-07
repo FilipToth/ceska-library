@@ -377,7 +377,7 @@ router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, 
 });
 
 router.post('/auth/purge-db', async (req, res, next) => {
-    const db = red.body.databaseName;
+    const db = req.body.databaseName;
     switch (db) {
         case 'Books':
             await handler.purgeBooks();
