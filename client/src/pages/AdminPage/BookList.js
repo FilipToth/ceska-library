@@ -20,7 +20,6 @@ const BookList = ({ popupFunction }) => {
     const handleGetItems = async () => {
         const books = await backend.getAllBooks();
         const locations = await backend.getAllLocations();
-        console.log(locations)
 
         const items = [];
         for (const [isbn, book] of Object.entries(books)) {

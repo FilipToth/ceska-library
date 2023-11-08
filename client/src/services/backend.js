@@ -179,7 +179,6 @@ class Backend {
     };
 
     async purgeDB(token, db) {
-        console.log(db);
         const payload = {
             databaseName: db
         };

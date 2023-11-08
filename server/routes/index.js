@@ -5,6 +5,7 @@ const fs = require('fs/promises');
 const fsSync = require('fs');
 const papa = require('papaparse');
 const { getBookByISBN } = require('../services/google');
+const { applyIsbnPadding } = require('../isbn');
 
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
@@ -250,6 +251,13 @@ router.post('/auth/export-db', async (req, res, next) => {
 
 // TODO: Cleanup import functions
 
+const sanitizeUndefined = (value, isString = false) => {
+    if (value == 'undefined')
+        return isString ? '0' : 0;
+
+    return value;
+};
+
 router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res, next) => {
     const file = String(req.file.buffer);
     const parsed = papa.parse(file, { header: false });
@@ -264,32 +272,35 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
     const data = parsed.data;
     data.splice(0, 1);
 
+    // remove last element
+    // because it's whitespace
+    if (data[data.length - 1] == '')
+        data.pop();
+
     const dbEntries = [];
     const referencesIsbns = [];
     for (const book of data) {
-        if ((book.length != 4 && book.length != 5) || book[0] == '' || book[0] == undefined) {
-            continue;
-        }
+        // we must apply a padding of `0`s
+        // to the ISBN since the CSV software
+        // automatically parses removes 0s in
+        // isbns that start with a 0,
+        // e.g. 0070064164 becomes 70064164
+        const isbn = applyIsbnPadding(book[0]);
 
-        const isbn = book[0];
         const entry = {
-            isbn: book[0],
+            isbn: isbn,
             title: book[1],
             author: book[2],
             genre: book[3],
         };
 
-        if (book.length == 7) {
-            entry.library = book[4];
-            entry.row = book[5];
-            entry.column = book[6];
-        }
+        if (book.length > 4) {
+            entry.library = sanitizeUndefined(book[4], true);
+            entry.row = sanitizeUndefined(book[5]);
+            entry.column = sanitizeUndefined(book[6]);
 
-        if (book.length == 8)
-            entry.note = book[4];
-
-        if (book.length > 8) {
-            // send error
+            if (book.length == 8)
+                entry.note = book[7]
         }
 
         referencesIsbns.push(isbn);

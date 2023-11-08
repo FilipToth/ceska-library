@@ -21,7 +21,10 @@ const getBookByISBN = async (isbn) => {
     const descripton = volumeInfo.description;
     const publishingYear = volumeInfo.publishedDate;
     const pages = volumeInfo.pageCount;
-    const genre = volumeInfo.categories[0];
+
+    let genre = '';
+    if (volumeInfo.categories != undefined)
+        genre = volumeInfo.categories[0];
 
     const book = {
         name: title,

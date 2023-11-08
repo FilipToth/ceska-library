@@ -9,11 +9,6 @@ const jwt = require('jsonwebtoken');
 const indexRouter = require('./routes/index');
 const app = express();
 
-// setup cors
-app.use(cors({
-    origin: '*',
-}));
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -22,6 +17,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// setup cors
+app.use(cors({
+    origin: '*',
+}));
 
 // JWT validation
 const validationMiddleware = async (req, res, next) => {
