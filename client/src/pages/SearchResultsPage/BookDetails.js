@@ -53,7 +53,6 @@ const BookDetails = ({id, playClosingAnim}) => {
             <div className='Header-Key-Value-Wrapper'>
                 <p1 className='Header-Key'>isbn:</p1>
                 <p1 className='Header-Value'>{id}</p1>
-                <IsbnVerificationStatus bogusISBN={true} valid={false} />
             </div>
         </div>
     );

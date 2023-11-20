@@ -5,7 +5,7 @@ import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
 import IsbnVerificationStatus from 'components/IsbnVerificationStatus';
 
-const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note }) => {
+const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note, bogusISBN }) => {
     const buttonPaddingHeight = 3;
     const buttonPaddingWidth = 3;
 
@@ -91,7 +91,7 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
             <p1 className='Entry-Text'>{title}</p1>
             <p1 className='Entry-Text'>{authorName}</p1>
             <p1 className='Entry-Text'>{isbn}</p1>
-            <IsbnVerificationStatus bogusISBN={false} valid={true} />
+            <IsbnVerificationStatus bogusISBN={bogusISBN} valid={true} />
             <p1 className='Entry-Text'>{note}</p1>
             <div className='Field-Group-Wrapper'>
                 <p1 className='Field-Text'>row:</p1>
