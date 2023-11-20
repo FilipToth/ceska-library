@@ -1,5 +1,6 @@
 const Connector = require('./connector');
 const algoliasearch = require('algoliasearch');
+const { verifyIsbn } = require('../isbn');
 
 class DatabaseHandler
 {
@@ -82,11 +83,18 @@ class DatabaseHandler
         const locationData = { data: { } };
 
         for (const book of books) {
+            const bogusID = book.bogusISBN == undefined ? false : book.bogusISBN;
+
+            let valid = false;
+            if (!bogusID)
+                valid = verifyIsbn(book.isbn);
+
             bookData.data[book.isbn] = {
                 name: book.title,
                 author: book.author,
                 genre: book.genre,
-                bogusISBN: book.bogusISBN == undefined ? false : book.bogusISBN
+                bogusISBN: bogusID,
+                validISBN: valid
             };
             
             if (book.note != undefined)
