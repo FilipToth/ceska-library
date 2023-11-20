@@ -59,7 +59,8 @@ class Backend {
             row: book.row,
             column: book.column,
             genre: book.genre,
-            note: book.note
+            note: book.note,
+            bogusISBN: book.bogusISBN
         };
 
         const resp = await axios.post(`${this.base}/auth/add-book`, payload, getAuthHeaderConfig(token));

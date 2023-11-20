@@ -16,6 +16,7 @@ const AddBook = ({ popupFunction }) => {
     let column = '';
     let genre = '';
     let note = '';
+    let bogusISBN = false;
 
     const isbnChange = (e) => {
         isbn = e.target.value;
@@ -49,6 +50,10 @@ const AddBook = ({ popupFunction }) => {
         note = e.target.value;
     };
 
+    const bogusChange = (e) => {
+        bogusISBN = e.target.checked;
+    };
+
     const addBook = () => {
         if (isbn.trim() == '' || title.trim() == '' || author.trim() == '' || library.trim() == '' || row.trim() == '' || column.trim() == '' || genre.trim() == '') {
             popupFunction('Some fields are empty!', 2000, false);
@@ -63,7 +68,8 @@ const AddBook = ({ popupFunction }) => {
             row: row,
             column: column,
             genre: genre,
-            note: note
+            note: note,
+            bogusISBN: bogusISBN
         };
 
         backend.addBook(book, token);
@@ -109,8 +115,9 @@ const AddBook = ({ popupFunction }) => {
                     <p1 className='Inner-Form-Key'>Column</p1>
                     <p1 className='Inner-Form-Key'>Genre</p1>
                     <p1 className='Inner-Form-Key'>Note</p1>
+                    <p1 className='Inner-Form-Key'>Bogus ISBN?</p1>
                 </div>
-                <div className="Inner-Input-Wrapper">
+                <div className='Inner-Input-Wrapper'>
                     <TextBoxField onChange={isbnChange} placeholder={'...'} text={''} addSearchButton={true} searchButtonOnClick={searchIsbn} />
                     <TextBoxField onChange={titleChange} placeholder={'...'} text={''} id='title' />
                     <TextBoxField onChange={authorChange} placeholder={'...'} text={''} id='author' />
@@ -119,6 +126,7 @@ const AddBook = ({ popupFunction }) => {
                     <TextBoxField onChange={columnChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={genreChange} placeholder={'...'} text={''} id='genre' />
                     <TextBoxField onChange={noteChange} placeholder={'...'} text={''} />
+                    <input type='checkbox' onChange={bogusChange}></input>
                 </div>
             </div>
             <CustomButton msg={'Add'} paddingWidth={60} onClick={addBook} />

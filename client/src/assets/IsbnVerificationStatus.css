@@ -1,0 +1,37 @@
+.isbn-verification-status {
+    padding: 2px 5px;
+    border-width: 3px;
+    border-radius: 20px;
+    border-style: solid;
+}
+
+.isbn-verification-status-invalid {
+    background-color: #2C0E13;
+    border-color: #6C393C;
+}
+
+.isbn-verification-status-invalid > p1 {
+    color: #FD9B9D;
+}
+
+.isbn-verification-status-valid {
+    background-color: #293B1D;
+    border-color: #547A2A;
+}
+
+.isbn-verification-status-valid > p1 {
+    color: #A7F934;
+}
+
+.isbn-verification-status-bogus {
+    background-color: #383A49;
+    border-color: #66647E;
+}
+
+.isbn-verification-status-bogus > p1 {
+    color: #BCAFDF;
+}
+
+.reduced-size {
+    font-size: small;
+}

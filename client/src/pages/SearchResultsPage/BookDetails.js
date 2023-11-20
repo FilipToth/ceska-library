@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { getMonthName } from 'utils/dates';
 import { getNumberOrdinal } from 'utils/ordinal';
+import IsbnVerificationStatus from 'components/IsbnVerificationStatus';
 
 const BookDetails = ({id, playClosingAnim}) => {
     let detailsWrapperClassname = 'Book-Details-Wrapper';
@@ -52,6 +53,7 @@ const BookDetails = ({id, playClosingAnim}) => {
             <div className='Header-Key-Value-Wrapper'>
                 <p1 className='Header-Key'>isbn:</p1>
                 <p1 className='Header-Value'>{id}</p1>
+                <IsbnVerificationStatus bogusISBN={true} valid={false} />
             </div>
         </div>
     );

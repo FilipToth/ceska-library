@@ -3,6 +3,7 @@ import 'assets/BookListEntry.css';
 import backend from 'services/backend';
 import { useAuthHeader } from 'react-auth-kit';
 import CustomButton from 'components/CustomButton';
+import IsbnVerificationStatus from 'components/IsbnVerificationStatus';
 
 const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, genre, note }) => {
     const buttonPaddingHeight = 3;
@@ -90,6 +91,7 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
             <p1 className='Entry-Text'>{title}</p1>
             <p1 className='Entry-Text'>{authorName}</p1>
             <p1 className='Entry-Text'>{isbn}</p1>
+            <IsbnVerificationStatus bogusISBN={false} valid={true} />
             <p1 className='Entry-Text'>{note}</p1>
             <div className='Field-Group-Wrapper'>
                 <p1 className='Field-Text'>row:</p1>
@@ -103,8 +105,8 @@ const BookListEntry = ({ popupFunction, isbn, title, authorName, row, column, ge
                 <p1 className='Field-Text'>genre:</p1>
                 <input value={state.genre} size={7} onChange={changeGenre} />
             </div>
-            <CustomButton msg={'Save Edits'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} onClick={saveEdits} />
-            <CustomButton msg={'Check History'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
+            <CustomButton msg={'Save'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} onClick={saveEdits} />
+            <CustomButton msg={'History'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
             <CustomButton msg={'Checkout'} paddingHeight={buttonPaddingHeight} paddingWidth={buttonPaddingWidth} />
         </div>
     );

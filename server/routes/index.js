@@ -96,6 +96,7 @@ router.post('/auth/add-book', async (req, res, next) => {
     const column = req.body.column;
     const genre = req.body.genre;
     const note = req.body.note;
+    const bogusISBN = req.body.bogusISBN;
 
     const book = {
         isbn: isbn,
@@ -105,7 +106,8 @@ router.post('/auth/add-book', async (req, res, next) => {
         row: row,
         column: column,
         genre: genre,
-        note: note
+        note: note,
+        bogusISBN: bogusISBN
     };
     
     await handler.addBooks([ book ], true);

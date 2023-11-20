@@ -86,6 +86,7 @@ class DatabaseHandler
                 name: book.title,
                 author: book.author,
                 genre: book.genre,
+                bogusISBN: book.bogusISBN == undefined ? false : book.bogusISBN
             };
             
             if (book.note != undefined)
