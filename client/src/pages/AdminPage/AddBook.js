@@ -69,7 +69,7 @@ const AddBook = ({ popupFunction }) => {
             column: column,
             genre: genre,
             note: note,
-            bogusISBN: bogusISBN
+            bogusISBN: bogusISBN,
         };
 
         backend.addBook(book, token);

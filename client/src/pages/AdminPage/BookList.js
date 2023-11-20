@@ -33,7 +33,8 @@ const BookList = ({ popupFunction }) => {
                 note: book.note,
                 row: location.row,
                 column: location.column,
-                bogusISBN: book.bogusISBN
+                bogusISBN: book.bogusISBN,
+                validISBN: book.validISBN
             });
         }
 
@@ -69,7 +70,7 @@ const BookList = ({ popupFunction }) => {
 
     const handleRenderItemEntry = (item) => {
         return (
-            <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} note={item.note} bogusISBN={item.bogusISBN} />
+            <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} note={item.note} bogusISBN={item.bogusISBN} validISBN={item.validISBN} />
         );
     };
 

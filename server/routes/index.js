@@ -213,11 +213,11 @@ router.post('/auth/export-db', async (req, res, next) => {
         case 'Books':
             data = await handler.getBooks();
             filename = 'books.csv';
-            header = 'isbn,title,author,genre,library,row,column,note\n';
+            header = 'isbn,title,author,genre,isBogusISBN,library,row,column,note\n';
 
             const loc = await handler.getLocations();
             lineCallback = (key, book) => {
-                return `${key},${book.name},${book.author},${book.genre},${loc.library},${loc.row},${loc.column},${book.note}\n`;
+                return `${key},${book.name},${book.author},${book.genre},${book.bogusISBN},${loc.library},${loc.row},${loc.column},${book.note}\n`;
             };
 
             break;
@@ -253,11 +253,18 @@ router.post('/auth/export-db', async (req, res, next) => {
 
 // TODO: Cleanup import functions
 
-const sanitizeUndefined = (value, isString = false) => {
+const sanitizeUndefined = (value, isString = false, isBool) => {
     if (value == 'undefined')
         return isString ? '0' : 0;
 
     return value;
+};
+
+const parseBool = (value) => {
+    value = value.toLowerCase();
+    value = value.replace(' ', '');
+
+    return value == 'true';
 };
 
 router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res, next) => {
@@ -297,12 +304,13 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         };
 
         if (book.length > 4) {
-            entry.library = sanitizeUndefined(book[4], true);
-            entry.row = sanitizeUndefined(book[5]);
-            entry.column = sanitizeUndefined(book[6]);
+            entry.bogusISBN = parseBool(book[4]);
+            entry.library = sanitizeUndefined(book[5], true);
+            entry.row = sanitizeUndefined(book[6]);
+            entry.column = sanitizeUndefined(book[7]);
 
-            if (book.length == 8)
-                entry.note = book[7]
+            if (book.length == 9)
+                entry.note = book[8]
         }
 
         referencesIsbns.push(isbn);

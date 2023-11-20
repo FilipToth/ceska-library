@@ -57,7 +57,6 @@ const verifyIsbn13Checksum = (isbn) => {
             checksum += num;
     }
 
-    console.log(`${isbn}: ${checksum}`);
     if (checksum % 10 == 0)
         return true;
 
