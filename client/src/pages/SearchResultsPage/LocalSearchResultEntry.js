@@ -4,7 +4,7 @@ import BookDetails from './BookDetails';
 import CustomButton from 'components/CustomButton';
 import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 
-const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationOpenByDefault }, ref) => {
+const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationOpenByDefault, bogusISBN }, ref) => {
 /*     const book = props.bookName;
     const authorName = props.authorName;
     const id = props.id;
@@ -38,7 +38,7 @@ const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationO
 
     useEffect(() => {
         const getImage = async () => {
-            const image = await backend.getBookImage(id);
+            const image = await backend.getBookImage(id, bogusISBN);
             setImage(image);
         }
 
@@ -67,7 +67,9 @@ const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationO
                         <p1 className='Book-Name-Text' style={booknameStyle}>{bookName}</p1>
                         <p1 className='Author-Name-Text'>By {authorName}</p1>
                     </div>
-                    <CustomButton msg='Check Details' onClick={showDetailsClick} paddingWidth={40} paddingHeight={10} width={130} />
+                    { !bogusISBN &&
+                        <CustomButton msg='Check Details' onClick={showDetailsClick} paddingWidth={40} paddingHeight={10} width={130} />
+                    }
                 </div>
             </div>
 

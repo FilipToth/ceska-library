@@ -14,7 +14,7 @@ const SearchResultsPage = () => {
     let [entryDiv, setEntryDiv] = useState(<></>);
     useEffect(() => {
         // use search apis
-        const getEntryById = async (id, openByDefault) => {
+        const getEntryById = async (id, openByDefault, bogusISBN) => {
             let book = await backend.getBookInfoByID(id);
             const entry = <LocalSearchResultEntry bookName={book.name} authorName={book.author} id={id} locationOpenByDefault={openByDefault} />
             return entry;
@@ -22,11 +22,14 @@ const SearchResultsPage = () => {
 
         const search = async () => {  
             let entries = [];
-            const res = await algolia.searchBooks(searchTerm);
+            const results = await algolia.searchBooks(searchTerm);
 
-            for (let i = 0; i < res.length; i++) {
-                const id = res[i].objectID;
-                const entry = await getEntryById(id, false);
+            for (let i = 0; i < results.length; i++) {
+                const searchObj = results[i];
+                const id = searchObj.objectID;
+                const bogusISBN = searchObj.bogusISBN;
+
+                const entry = await getEntryById(id, false, bogusISBN);
                 entries.push(entry);
             }
     
@@ -40,7 +43,12 @@ const SearchResultsPage = () => {
         }
 
         const searchByID = async () => {
-            const entry = await getEntryById(searchID, true);
+            const book = backend.getBookByISBN(searchID);
+            if (book == undefined)
+                return;
+            
+            const bogusISBN = book.bogusISBN;
+            const entry = await getEntryById(searchID, true, bogusISBN);
             setEntryDiv((
                 <div className='Results-Wrapper'>
                     {entry}

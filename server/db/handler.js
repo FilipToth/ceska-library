@@ -51,10 +51,12 @@ class DatabaseHandler
     addBooks = async (books, addLocation = false, toRemove = []) => {
         const algoliaObjects = []
         for (const book of books) {
+            const bogusID = book.bogusISBN == undefined ? false : book.bogusISBN;
             algoliaObjects.push({
                 name: book.title,
                 author: book.author,
-                objectID: book.isbn
+                objectID: book.isbn,
+                bogusISBN: bogusID
             });
         }
 

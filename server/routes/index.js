@@ -424,12 +424,19 @@ router.get('/book-by-isbn', async (req, res, next) => {
 
 router.get('/book-image', async (req, res, next) => {
     const isbn = req.query.isbn;
+    const bogusISBN = req.query.bogusISBN;
+
     const path = `public/images/${isbn}.png`;
     const outsidePath = `${process.env.SERVING_URL}/images/${isbn}.png`;
 
     let exists = fsSync.existsSync(path);
     if (exists) {
         res.send({ success: true, image: outsidePath });
+        return;
+    }
+
+    if (bogusISBN) {
+        res.send({ success: false });
         return;
     }
 

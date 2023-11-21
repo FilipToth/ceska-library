@@ -52,11 +52,13 @@ const BookView = () => {
             for (const [key, book] of Object.entries(books)) {
                 const title = book.name;
                 const author = book.author;
+                const bogusISBN = book.bogusISBN;
                 
                 res.push({
                     isbn: key,
                     title: title,
-                    author: author
+                    author: author,
+                    bogusISBN: bogusISBN
                 })
             }
 
@@ -102,6 +104,7 @@ const BookView = () => {
                             authorName={book.author}
                             locationOpenByDefault={false}
                             id={book.isbn}
+                            bogusISBN={book.bogusISBN}
                         />
                     ))}
                 </div>

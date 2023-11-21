@@ -171,8 +171,8 @@ class Backend {
         return resp.data.book;
     };
 
-    async getBookImage(isbn) {
-        const resp = await axios.get(`${this.base}/book-image?isbn=${isbn}`);
+    async getBookImage(isbn, bogusISBN) {
+        const resp = await axios.get(`${this.base}/book-image?isbn=${isbn}&bogusISBN=${bogusISBN}`);
         if (!resp.data.success)
             return undefined;
         
