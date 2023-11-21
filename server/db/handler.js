@@ -55,8 +55,9 @@ class DatabaseHandler
             algoliaObjects.push({
                 name: book.title,
                 author: book.author,
-                objectID: book.isbn,
-                bogusISBN: bogusID
+                publicNote: book.publicNote == undefined ? '' : book.publicNote,
+                bogusISBN: bogusID,
+                objectID: book.isbn
             });
         }
 
@@ -101,6 +102,9 @@ class DatabaseHandler
             
             if (book.note != undefined)
                 bookData.data[book.isbn].note = book.note;
+
+            if (book.publicNote != undefined)
+                bookData.data[book.isbn].publicNote = book.publicNote;
 
             locationData.data[book.isbn] = {
                 library: book.library,

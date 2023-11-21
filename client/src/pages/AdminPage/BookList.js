@@ -70,7 +70,7 @@ const BookList = ({ popupFunction }) => {
 
     const handleRenderItemEntry = (item) => {
         return (
-            <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} note={item.note} bogusISBN={item.bogusISBN} validISBN={item.validISBN} />
+            <BookListEntry popupFunction={popupFunction} isbn={item.isbn} title={item.title} authorName={item.author} row={item.row} column={item.column} genre={item.genre} note={item.note} publicNote={item.note} bogusISBN={item.bogusISBN} validISBN={item.validISBN} />
         );
     };
 

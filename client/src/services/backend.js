@@ -60,6 +60,7 @@ class Backend {
             column: book.column,
             genre: book.genre,
             note: book.note,
+            publicNote: book.publicNote,
             bogusISBN: book.bogusISBN
         };
 

@@ -16,6 +16,7 @@ const AddBook = ({ popupFunction }) => {
     let column = '';
     let genre = '';
     let note = '';
+    let publicNote = '';
     let bogusISBN = false;
 
     const isbnChange = (e) => {
@@ -50,6 +51,10 @@ const AddBook = ({ popupFunction }) => {
         note = e.target.value;
     };
 
+    const publicNoteChange = (e) => {
+        publicNote = e.target.value;
+    };
+
     const bogusChange = (e) => {
         bogusISBN = e.target.checked;
     };
@@ -69,7 +74,8 @@ const AddBook = ({ popupFunction }) => {
             column: column,
             genre: genre,
             note: note,
-            bogusISBN: bogusISBN,
+            publicNote: publicNote,
+            bogusISBN: bogusISBN
         };
 
         backend.addBook(book, token);
@@ -115,6 +121,7 @@ const AddBook = ({ popupFunction }) => {
                     <p1 className='Inner-Form-Key'>Column</p1>
                     <p1 className='Inner-Form-Key'>Genre</p1>
                     <p1 className='Inner-Form-Key'>Note</p1>
+                    <p1 className='Inner-Form-Key'>Public Note</p1>
                     <p1 className='Inner-Form-Key'>Bogus ISBN?</p1>
                 </div>
                 <div className='Inner-Input-Wrapper'>
@@ -126,6 +133,7 @@ const AddBook = ({ popupFunction }) => {
                     <TextBoxField onChange={columnChange} placeholder={'...'} text={''} />
                     <TextBoxField onChange={genreChange} placeholder={'...'} text={''} id='genre' />
                     <TextBoxField onChange={noteChange} placeholder={'...'} text={''} />
+                    <TextBoxField onChange={publicNoteChange} placeholder={'...'} text={''} />
                     <input type='checkbox' onChange={bogusChange}></input>
                 </div>
             </div>

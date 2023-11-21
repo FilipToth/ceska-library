@@ -96,6 +96,7 @@ router.post('/auth/add-book', async (req, res, next) => {
     const column = req.body.column;
     const genre = req.body.genre;
     const note = req.body.note;
+    const publicNote = req.body.publicNote;
     const bogusISBN = req.body.bogusISBN;
 
     const book = {
@@ -107,6 +108,7 @@ router.post('/auth/add-book', async (req, res, next) => {
         column: column,
         genre: genre,
         note: note,
+        publicNote: publicNote,
         bogusISBN: bogusISBN
     };
     
@@ -213,11 +215,11 @@ router.post('/auth/export-db', async (req, res, next) => {
         case 'Books':
             data = await handler.getBooks();
             filename = 'books.csv';
-            header = 'isbn,title,author,genre,isBogusISBN,library,row,column,note\n';
+            header = 'isbn,title,author,genre,isBogusISBN,library,row,column,note,publicNote\n';
 
             const loc = await handler.getLocations();
             lineCallback = (key, book) => {
-                return `${key},${book.name},${book.author},${book.genre},${book.bogusISBN},${loc.library},${loc.row},${loc.column},${book.note}\n`;
+                return `${key},${book.name},${book.author},${book.genre},${book.bogusISBN},${loc.library},${loc.row},${loc.column},${book.note},${book.publicNote}\n`;
             };
 
             break;
@@ -253,9 +255,9 @@ router.post('/auth/export-db', async (req, res, next) => {
 
 // TODO: Cleanup import functions
 
-const sanitizeUndefined = (value, isString = false, isBool) => {
+const sanitizeUndefined = (value, isString = false, defaultValue = 0) => {
     if (value == 'undefined')
-        return isString ? '0' : 0;
+        return isString ? defaultValue.toString() : defaultValue;
 
     return value;
 };
@@ -300,7 +302,7 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
             isbn: isbn,
             title: book[1],
             author: book[2],
-            genre: book[3],
+            genre: book[3]
         };
 
         if (book.length > 4) {
@@ -308,9 +310,12 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
             entry.library = sanitizeUndefined(book[5], true);
             entry.row = sanitizeUndefined(book[6]);
             entry.column = sanitizeUndefined(book[7]);
+            
+            if (book.length >= 9)
+                entry.note = sanitizeUndefined(book[8], true, '');
 
-            if (book.length == 9)
-                entry.note = book[8]
+            if (book.length >= 10)
+                entry.publicNote = sanitizeUndefined(book[9], true, '');
         }
 
         referencesIsbns.push(isbn);
