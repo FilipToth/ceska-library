@@ -53,12 +53,14 @@ const BookView = () => {
                 const title = book.name;
                 const author = book.author;
                 const bogusISBN = book.bogusISBN;
+                const publicNote = book.publicNote;
                 
                 res.push({
                     isbn: key,
                     title: title,
                     author: author,
-                    bogusISBN: bogusISBN
+                    bogusISBN: bogusISBN,
+                    publicNote: publicNote
                 })
             }
 
@@ -105,6 +107,7 @@ const BookView = () => {
                             locationOpenByDefault={false}
                             id={book.isbn}
                             bogusISBN={book.bogusISBN}
+                            publicNote={book.publicNote}
                         />
                     ))}
                 </div>

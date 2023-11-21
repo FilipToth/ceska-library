@@ -4,7 +4,7 @@ import BookDetails from './BookDetails';
 import CustomButton from 'components/CustomButton';
 import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 
-const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationOpenByDefault, bogusISBN }, ref) => {
+const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationOpenByDefault, bogusISBN, publicNote }, ref) => {
 /*     const book = props.bookName;
     const authorName = props.authorName;
     const id = props.id;
@@ -66,6 +66,9 @@ const LocalSearchResultEntry = forwardRef(({ bookName, authorName, id, locationO
                     <div className='Info-Wrapper'>
                         <p1 className='Book-Name-Text' style={booknameStyle}>{bookName}</p1>
                         <p1 className='Author-Name-Text'>By {authorName}</p1>
+                        { publicNote != undefined &&
+                            <p1 className='Public-Note-Text'>{publicNote}</p1>
+                        }
                     </div>
                     { !bogusISBN &&
                         <CustomButton msg='Check Details' onClick={showDetailsClick} paddingWidth={40} paddingHeight={10} width={130} />
