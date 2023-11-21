@@ -1,13 +1,10 @@
 .Book-List-Entry-Wrapper {
     /* Auto layout */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
-
-    width: 91vw;
 
     padding-left: 2vw;
     padding-right: 2vw;
@@ -17,6 +14,32 @@
     background: #E5EAF1;
     box-shadow: 1px 1px 20px 10px rgba(92, 138, 116, 0.25);
     border-radius: 20px;
+
+    width: 91vw;    
+}
+
+.Book-List-Entry-Notes-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
+.Book-List-Entry-General-Wrapper {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    width: 100%;
 }
 
 .Field-Group-Wrapper {
@@ -34,4 +57,12 @@
 
 .Entry-Text {
     text-align: center;
+}
+
+.Note-Text {
+    color: #5C8A74;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
 }
