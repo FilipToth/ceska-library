@@ -6,6 +6,7 @@ const fsSync = require('fs');
 const papa = require('papaparse');
 const { getBookByISBN } = require('../services/google');
 const { applyIsbnPadding } = require('../isbn');
+const xlsx = require('node-xlsx').default;
 
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
@@ -263,15 +264,50 @@ const sanitizeUndefined = (value, isString = false, defaultValue = 0) => {
 };
 
 const parseBool = (value) => {
+    if (typeof(value) == 'boolean') {
+        return value;
+    }
+
     value = value.toLowerCase();
     value = value.replace(' ', '');
 
     return value == 'true';
 };
 
+const parseSpreadsheet = (file, filename) => {
+    const extension = filename.split('.').pop();
+
+    if (extension == 'csv') {
+        const contents = String(file.buffer);
+        const parsed = papa.parse(contents, {
+            header: false,
+            delimiter: ','
+        });
+
+        console.log(parsed.data.length);
+        console.log(parsed.data[0]);
+
+        if (parsed.errors.length == 1 && parsed.errors[0].type == 'Delimiter') {
+            parsed.errors.pop();
+        }
+        
+        return parsed;
+    }
+    
+    const parsed = xlsx.parse(file);
+    if (parsed.length < 1) {
+        return { errors: ['Invalid xlsx'] };
+    }
+
+    const data = parsed[0].data;
+    return {
+        errors: undefined,
+        data: data
+    };
+};
+
 router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res, next) => {
-    const file = String(req.file.buffer);
-    const parsed = papa.parse(file, { header: false });
+    const parsed = parseSpreadsheet(req.file, req.file.originalname);
 
     // check for parsing errors
     if (parsed.errors != undefined && parsed.errors.length > 0) {
@@ -322,7 +358,10 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         dbEntries.push(entry);
     }
 
+    console.log(dbEntries.length);
+
     const booksToRemove = await handler.differentiateBooks(referencesIsbns, dbEntries);
+    console.log(dbEntries.length);
     await handler.addBooks(dbEntries, true, booksToRemove.length == 0 ? undefined : booksToRemove);
     res.send({ success: true });
 });

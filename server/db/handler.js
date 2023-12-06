@@ -49,8 +49,16 @@ class DatabaseHandler
     }
 
     addBooks = async (books, addLocation = false, toRemove = []) => {
+        const filteredBooks = [];
+        console.log(books.length);
+        for (const book of books) {
+            filteredBooks.push(book);
+        }
+
+        console.log('fuck');
         const algoliaObjects = []
         for (const book of books) {
+
             algoliaObjects.push({
                 name: book.title,
                 author: book.author,
@@ -318,9 +326,12 @@ class DatabaseHandler
     differentiate = async (data, existingIDs, dbEntry) => {
         // difference and add null for missing entries
         const toRemove = [];
-        if (!data)
+        if (!data || data.length == 0)
             return toRemove;
-        
+
+        if (existingIDs.length == 0 || dbEntry.length == 0)
+            return toRemove;
+
         for (const key of Object.keys(data)) {
             if (existingIDs.includes(key))
                 continue;
