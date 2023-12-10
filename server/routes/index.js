@@ -284,9 +284,6 @@ const parseSpreadsheet = (file, filename) => {
             delimiter: ','
         });
 
-        console.log(parsed.data.length);
-        console.log(parsed.data[0]);
-
         if (parsed.errors.length == 1 && parsed.errors[0].type == 'Delimiter') {
             parsed.errors.pop();
         }
@@ -294,7 +291,7 @@ const parseSpreadsheet = (file, filename) => {
         return parsed;
     }
     
-    const parsed = xlsx.parse(file);
+    const parsed = xlsx.parse(file.buffer);
     if (parsed.length < 1) {
         return { errors: ['Invalid xlsx'] };
     }
@@ -358,17 +355,14 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         dbEntries.push(entry);
     }
 
-    console.log(dbEntries.length);
 
     const booksToRemove = await handler.differentiateBooks(referencesIsbns, dbEntries);
-    console.log(dbEntries.length);
     await handler.addBooks(dbEntries, true, booksToRemove.length == 0 ? undefined : booksToRemove);
     res.send({ success: true });
 });
 
 router.post('/auth/import-db-people', upload.single('dbImport'), async (req, res, next) => {
-    const file = String(req.file.buffer);
-    const parsed = papa.parse(file, { header: false });
+    const parsed = parseSpreadsheet(req.file, req.file.originalname);
 
     // check for parsing errors
     if (parsed.errors != undefined && parsed.errors.length > 0) {
@@ -404,8 +398,7 @@ router.post('/auth/import-db-people', upload.single('dbImport'), async (req, res
 });
 
 router.post('/auth/import-db-checkouts', upload.single('dbImport'), async (req, res, next) => {
-    const file = String(req.file.buffer);
-    const parsed = papa.parse(file, { header: false });
+    const parsed = parseSpreadsheet(req.file, req.file.originalname);
 
     // check for parsing errors
     if (parsed.errors != undefined && parsed.errors.length > 0) {

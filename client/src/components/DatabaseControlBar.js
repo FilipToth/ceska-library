@@ -19,6 +19,8 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
             return;
         }
 
+        console.log(resp.path);
+
         const path = resp.path;
         downloadFrameRef.current.src = path;
     };

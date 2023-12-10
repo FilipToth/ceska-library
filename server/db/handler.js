@@ -50,12 +50,10 @@ class DatabaseHandler
 
     addBooks = async (books, addLocation = false, toRemove = []) => {
         const filteredBooks = [];
-        console.log(books.length);
         for (const book of books) {
             filteredBooks.push(book);
         }
 
-        console.log('fuck');
         const algoliaObjects = []
         for (const book of books) {
 
