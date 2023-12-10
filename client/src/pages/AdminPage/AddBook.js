@@ -60,7 +60,7 @@ const AddBook = ({ popupFunction }) => {
     };
 
     const addBook = () => {
-        if (isbn.trim() == '' || title.trim() == '' || author.trim() == '' || library.trim() == '' || row.trim() == '' || column.trim() == '' || genre.trim() == '') {
+        if (isbn.trim() == '' || title.trim() == '' || author.trim() == '' || genre.trim() == '') {
             popupFunction('Some fields are empty!', 2000, false);
             return;
         }
