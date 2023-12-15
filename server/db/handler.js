@@ -329,15 +329,14 @@ class DatabaseHandler
 
         if (existingIDs.length == 0 || dbEntry.length == 0)
             return toRemove;
-
+        
         for (const key of Object.keys(data)) {
             if (existingIDs.includes(key))
                 continue;
             
             toRemove.push(key);
-            dbEntry[key] = null;
         }
-
+        
         return toRemove;
     };
 

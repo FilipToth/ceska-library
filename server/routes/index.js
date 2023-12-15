@@ -355,7 +355,6 @@ router.post('/auth/import-db-books', upload.single('dbImport'), async (req, res,
         dbEntries.push(entry);
     }
 
-
     const booksToRemove = await handler.differentiateBooks(referencesIsbns, dbEntries);
     await handler.addBooks(dbEntries, true, booksToRemove.length == 0 ? undefined : booksToRemove);
     res.send({ success: true });
