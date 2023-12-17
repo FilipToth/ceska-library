@@ -19,8 +19,6 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
             return;
         }
 
-        console.log(resp.path);
-
         const path = resp.path;
         downloadFrameRef.current.src = path;
     };
@@ -30,7 +28,13 @@ const DatabaseControlBar = ({ databaseName, popupFunction }) => {
     };
 
     const deleteAllButtonClick = async () => {
-        backend.purgeDB(token, databaseName);
+        const resp = await backend.purgeDB(token, databaseName);
+        if (!resp.success) {
+            popupFunction('Failed', 2000, true);
+            return;
+        }
+
+        popupFunction('Done!', 2000, false);
     };
 
     const importDBHandleFile = async (e) => {
