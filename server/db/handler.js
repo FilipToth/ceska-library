@@ -318,16 +318,13 @@ class DatabaseHandler
 
     differentiateCheckouts = async (existingIDs, dbEntry) => {
         const data = await handler.getCheckouts();
-        this.differentiate(data, existingIDs, dbEntry);
+        return this.differentiate(data, existingIDs, dbEntry);
     };
 
     differentiate = async (data, existingIDs, dbEntry) => {
         // difference and add null for missing entries
         const toRemove = [];
         if (!data || data.length == 0)
-            return toRemove;
-
-        if (existingIDs.length == 0 || dbEntry.length == 0)
             return toRemove;
         
         for (const key of Object.keys(data)) {
