@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ceska-library/static/css/main.71d15683.css",
-    "main.js": "/ceska-library/static/js/main.1232f87d.js",
+    "main.js": "/ceska-library/static/js/main.67c09a1f.js",
     "static/js/787.8154b777.chunk.js": "/ceska-library/static/js/787.8154b777.chunk.js",
     "index.html": "/ceska-library/index.html",
     "main.71d15683.css.map": "/ceska-library/static/css/main.71d15683.css.map",
-    "main.1232f87d.js.map": "/ceska-library/static/js/main.1232f87d.js.map",
+    "main.67c09a1f.js.map": "/ceska-library/static/js/main.67c09a1f.js.map",
     "787.8154b777.chunk.js.map": "/ceska-library/static/js/787.8154b777.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.71d15683.css",
-    "static/js/main.1232f87d.js"
+    "static/js/main.67c09a1f.js"
   ]
 }
